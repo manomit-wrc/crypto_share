@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Validator;
 use App\User;
 use Auth;
+use App\countries;
+use Image;
 
 class PageController extends Controller
 {
@@ -76,6 +78,79 @@ class PageController extends Controller
             $request->session()->flash("login-status", "Email ID Or Password Didn't Matched");
             return redirect('/login');
         }
+    }
+
+    public function edit_profile_view (){
+        $fetch_all_countries = countries::all()->toArray();
+        return view('frontend.profile')->with('fetch_all_countries', $fetch_all_countries);
+    }
+
+    public function profile_edit(Request $request){
+        $id = base64_decode($request->user_id);
+        Validator::make($request->all(),[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'pincode' => 'required',
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ],[
+            'first_name.required' => "First name can't be left blank.",
+            'last_name.required' => "Last name can't be left blank.",
+            'address.required' => "Address can't be left blank.",
+            'state.required' => "State name can't be left blank.",
+            'country.required' => "Country name can't be left blank.",
+            'city.required' => "City name can't be left blank.",
+            'pincode.required' => "Pincode can't be left blank.",
+            'profile_image.required' => "Profile image can't be left blank."
+        ])->validate();
+
+
+        if($request->hasFile('profile_image')) {
+          $file = $request->file('profile_image') ;
+
+          $fileName = time().'_'.$file->getClientOriginalName() ;
+
+          //thumb destination path
+          
+          $destinationPath_2 = public_path().'/upload/profile_image/resize' ;
+
+          $img = Image::make($file->getRealPath());
+
+          
+          $img->resize(1920, 500, function ($constraint){
+              $constraint->aspectRatio();
+          })->save($destinationPath_2.'/'.$fileName);
+
+          //original destination path
+          $destinationPath = public_path().'/upload/profile_image/original/' ;
+          $file->move($destinationPath,$fileName);
+        }
+        else {
+          $fileName = '';
+        }
+
+        $obj = User::find($id);
+        $obj->first_name = $request->first_name;
+        $obj->last_name = $request->last_name;
+        $obj->street_address = $request->address;
+        $obj->country_id = $request->country;
+        $obj->state = $request->state;
+        $obj->city = $request->city;
+        $obj->pincode = $request->pincode;
+        $obj->image = $fileName;
+
+        if($obj->save()){
+            $request->session()->flash("submit-status", "Profile eidt successfully.");
+            return redirect('/dashboard');
+        }else{
+            $request->session()->flash("submit-status", "Profile eidt failed.");
+            return redirect('/edit_profile');
+        }
+
+
     }
 
     public function logout() {

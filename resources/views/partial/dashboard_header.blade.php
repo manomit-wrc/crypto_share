@@ -84,11 +84,11 @@
 			<li class="dropdown navbar-user">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 					<img src="storage/dashboard/assets/img/user-13.jpg" alt="" /> 
-					<span class="hidden-xs">Adam Schwartz</span> <b class="caret"></b>
+					<span class="hidden-xs">{{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}</span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
-					<li><a href="javascript:;">Profile</a></li>
+					<li><a href="/edit_profile">Profile</a></li>
 					<li><a href="javascript:;">Change Password</a></li>
 					<li class="divider"></li>
 					<li><a href="/logout">Log Out</a></li>

@@ -19,6 +19,8 @@ Route::post('/login/submit', 'PageController@submit_login');
 
 Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/dashboard','DashboardController@index');
+	Route::get('/edit_profile', 'PageController@edit_profile_view');
+	Route::post('/profile_edit', 'PageController@profile_edit');
 	Route::get('/logout', 'PageController@logout');
 });
 

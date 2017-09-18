@@ -8,7 +8,7 @@
 					<a href="javascript:;"><img src="storage/dashboard/assets/img/user-13.jpg" alt="" /></a>
 				</div>
 				<div class="info">
-					Sean Ngu
+					{{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}
 					<small>Front end developer</small>
 				</div>
 			</li>
