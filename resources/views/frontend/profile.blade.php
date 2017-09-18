@@ -31,12 +31,13 @@
                         <div class="profile-left">
                             <!-- begin profile-image -->
                             <div class="profile-image">
-                                <img src="assets/img/profile-cover.jpg" />
-                                <i class="fa fa-user hide"></i>
+                                <img class="form-group" width="200" height="175" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}">
+
+                                <input class="form-group" type="hidden" name="exiting_profile_image" id="exiting_profile_image" value="{{Auth::guard('crypto')->user()->image}}">
                             </div>
                             <!-- end profile-image -->
                             <div class="m-b-10">
-                                <input type="file" name="profile_image">
+                                <input type="file" name="profile_image" id="profile_image">
 
                                 <span class="text-danger">{{ $errors->first('profile_image') }}</span>
                             </div>
@@ -87,11 +88,13 @@
                                             <tr>
                                                 <td class="field">Country/Region</td>
                                                 <td>
-                                                    <select class="form-control input-inline input-xs" name="country">
+                                                    <select name="country">
                                                         <option value="">Select Country</option>
                                                         @foreach($fetch_all_countries as $value)
 
-                                                            <option value="{{$value['id']}}">{{$value['name']}}</option>
+                                                            <option value="{{$value['id']}}" @if((Auth::guard('crypto')->user()->country_id)==$value['id']) selected @endif>
+                                                                {{$value['name']}}
+                                                            </option>
 
                                                         @endforeach
                                                     </select>
