@@ -89,7 +89,7 @@
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
 					<li><a href="/edit_profile">Profile</a></li>
-					<li><a href="javascript:;">Change Password</a></li>
+					<li><a href="/change_pass">Change Password</a></li>
 					<li class="divider"></li>
 					<li><a href="/logout">Log Out</a></li>
 				</ul>
