@@ -87,6 +87,7 @@ class PageController extends Controller
 
     public function profile_edit(Request $request){
         $id = base64_decode($request->user_id);
+
         Validator::make($request->all(),[
             'first_name' => 'required',
             'last_name' => 'required',
@@ -95,7 +96,7 @@ class PageController extends Controller
             'country' => 'required',
             'city' => 'required',
             'pincode' => 'required',
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'profile_image' => 'required_with|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'first_name.required' => "First name can't be left blank.",
             'last_name.required' => "Last name can't be left blank.",
@@ -104,7 +105,9 @@ class PageController extends Controller
             'country.required' => "Country name can't be left blank.",
             'city.required' => "City name can't be left blank.",
             'pincode.required' => "Pincode can't be left blank.",
-            'profile_image.required' => "Profile image can't be left blank."
+            'profile_image.required_with' => "Profile image can't be left blank.",
+            'profile_image.image|mimes:jpeg,png,jpg,gif,svg' => 'Please choose proper image type',
+            'profile_image.max:2048' => 'Maximum file size should be 2 MB'
         ])->validate();
 
 
@@ -120,7 +123,7 @@ class PageController extends Controller
           $img = Image::make($file->getRealPath());
 
           
-          $img->resize(1920, 500, function ($constraint){
+          $img->resize(175, 175, function ($constraint){
               $constraint->aspectRatio();
           })->save($destinationPath_2.'/'.$fileName);
 
@@ -129,7 +132,7 @@ class PageController extends Controller
           $file->move($destinationPath,$fileName);
         }
         else {
-          $fileName = '';
+          $fileName = $request->exiting_profile_image;
         }
 
         $obj = User::find($id);
