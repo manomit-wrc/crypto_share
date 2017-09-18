@@ -31,7 +31,7 @@
                         <div class="profile-left">
                             <!-- begin profile-image -->
                             <div class="profile-image">
-                                <img class="form-group" width="200" height="175" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}">
+                                <img class="form-group" id="image" width="200" height="175" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}">
 
                                 <input class="form-group" type="hidden" name="exiting_profile_image" id="exiting_profile_image" value="{{Auth::guard('crypto')->user()->image}}">
                             </div>
@@ -139,7 +139,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button id="submit" name="submit" type="submit" class="btn btn-primary btn-block">Edit</button>
+                              <button id="submit" name="submit" type="submit" class="btn btn-primary" style="    margin-left: 100px;">Edit</button>
                               <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}" >
                             </div>
                         </div>

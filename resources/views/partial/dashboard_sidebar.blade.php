@@ -5,7 +5,7 @@
 		<ul class="nav">
 			<li class="nav-profile">
 				<div class="image">
-					<a href="javascript:;"><img src="storage/dashboard/assets/img/user-13.jpg" alt="" /></a>
+					<a href="javascript:;"><img id="sidebar_image_preview" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}" alt="" /></a>
 				</div>
 				<div class="info">
 					{{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}

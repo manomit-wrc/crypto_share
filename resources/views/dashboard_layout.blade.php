@@ -189,6 +189,40 @@
   ga('create', 'UA-53034621-1', 'auto');
   ga('send', 'pageview');
 
+
+//for profile image preview & size validation
+
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#image_preview').attr('src', e.target.result);
+                $('#header_image_preview').attr('src', e.target.result);
+                $('#sidebar_image_preview').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#profile_image").change(function(){
+        readURL(this);
+    });
+
+     $(document).on('change','#profile_image',function(){
+          files = this.files;
+          size = files[0].size;
+          //max size 50kb => 50*1000
+          if( size > 2000000){
+             alert('Please upload less than 2MB file');
+             return false;
+          }
+          return true;
+     });
+
+//end
+
 </script>
 </body>
 
