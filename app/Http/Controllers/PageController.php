@@ -48,6 +48,7 @@ class PageController extends Controller
     	$user->last_name = $request->last_name;
     	$user->email = $request->email;
     	$user->password = bcrypt($request->password);
+        $user->role_code = "SITEUSR";
 
     	if($user->save()) {
     		$request->session()->flash("message", "Registration completed successfully");
