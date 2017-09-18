@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use App\countries;
 use Image;
+use Hash;
 
 class PageController extends Controller
 {
@@ -16,11 +17,11 @@ class PageController extends Controller
     }
 
     public function login() {
-    	return view('frontend.login');	
+    	return view('frontend.login');
     }
 
     public function register() {
-    	return view('frontend.register');		
+    	return view('frontend.register');
     }
 
     public function submit_registration(Request $request) {
@@ -71,7 +72,6 @@ class PageController extends Controller
         ])->validate();
 
         if(Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->remember)) {
-            
             return redirect('/dashboard');
         }
         else {
@@ -149,8 +149,36 @@ class PageController extends Controller
             $request->session()->flash("submit-status", "Profile eidt failed.");
             return redirect('/edit_profile');
         }
+    }
 
+    public function change_pass() {
+        return view('frontend.change_pass');
+    }
 
+    public function update_password(Request $request) {
+        $id = base64_decode($request->user_id);
+        Validator::make($request->all(),[
+            'old_pass' => 'required',
+            'new_pass' => 'required|different:old_pass|min:6',
+            're_pass' => 'required|same:new_pass'
+        ])->validate();
+
+        $obj = User::find($id);
+
+        if (Hash::check($request->old_pass, $obj->password)) {
+            $obj->password = bcrypt($request->new_pass);
+            if ($obj->save()) {
+                $request->session()->flash("submit-status", "Password changed successfully.");
+                return redirect('/dashboard');
+            } else {
+                $request->session()->flash("submit-status", "Password change failed.");
+                return redirect('/change_pass');
+            }
+        }
+        else {
+            $request->session()->flash("submit-status", "Old password does not match the database password");
+            return redirect('/change_pass');
+        }
     }
 
     public function logout() {
