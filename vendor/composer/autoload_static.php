@@ -301,6 +301,9 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
     );
 
     public static $classMap = array (
+        'AddFieldToGroup' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
+        'CreateCountriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_085659_create_countries_table.php',
+        'CreateGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_111723_create_groups_table.php',
         'AddFieldNameToUsersTabel' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
         'CreateCountriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_085659_create_countries_table.php',
         'CreateOrganizationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_114135_create_organizations_table.php',

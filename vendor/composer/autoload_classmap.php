@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFieldToGroup' => $baseDir . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
+    'CreateCountriesTable' => $baseDir . '/database/migrations/2017_09_18_085659_create_countries_table.php',
+    'CreateGroupsTable' => $baseDir . '/database/migrations/2017_09_19_111723_create_groups_table.php',
     'AddFieldNameToUsersTabel' => $baseDir . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
     'CreateCountriesTable' => $baseDir . '/database/migrations/2017_09_18_085659_create_countries_table.php',
     'CreateOrganizationsTable' => $baseDir . '/database/migrations/2017_09_18_114135_create_organizations_table.php',

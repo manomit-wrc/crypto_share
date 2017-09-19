@@ -22,52 +22,34 @@
 		<!-- begin sidebar nav -->
 		<ul class="nav">
 			<li class="nav-header">Navigation</li>
-			<li class="has-sub active">
-				<a href="/dashboard">
-				    <i class="fa fa-laptop"></i>
-				    <span>Dashboard</span>
-			    </a>
-			</li>
-			<li class="has-sub">
-				<a href="javascript:;">
-					<span>Organization</span>
-				</a>
-				<ul class="sub-menu">
-				    <li><a href="">Edit</a></li>
-				</ul>
-			</li>
-			<li class="has-sub">
-				<a href="/testimonial">
-					<span>Testimonial</span>
-				</a>
-			</li>
-			<li class="has-sub">
-				<a href="/pricing">
-					<span>Pricing</span>
-				</a>
-			</li>
-			<li class="has-sub">
-				<a href="/users">
-					<span>User Lists</span>
-				</a>
-			</li>
+			
 			<li class="has-sub {{ (Request::is('dashboard') ? 'active' : '') }}">
 				<a href="/dashboard">
-				    {{-- <b class="caret pull-right"></b>
-				    <i class="fa fa-laptop"></i> --}}
 				    <span>Dashboard</span>
 			    </a>
-				{{-- <ul class="sub-menu">
-				    <li><a href="index-2.html">Dashboard v1</a></li>
-				    <li><a href="index_v2.html">Dashboard v2</a></li>
-				</ul> --}}
 			</li>
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEADM')
 
-				<li class="has-sub {{ (Request::is('view-settings') ? 'active' : '') }}">
+				<li class="has-sub {{ (Request::segment(1) === 'view-settings' ? 'active' : '')}}">
 					<a href="/view-settings">
 						<span>Organization</span>
+					</a>
+				</li>
+
+				<li class="has-sub {{(Request::segment(1) === 'testimonial' ? 'active' : '' )}}">
+					<a href="/testimonial">
+						<span>Testimonial</span>
+					</a>
+				</li>
+				<li class="has-sub {{(Request::segment(1) === 'pricing' ? 'active' : '' )}}">
+					<a href="/pricing">
+						<span>Pricing</span>
+					</a>
+				</li>
+				<li class="has-sub {{(Request::segment(1) === 'users' ? 'active' : '' )}}">
+					<a href="/users">
+						<span>User Lists</span>
 					</a>
 				</li>
 			
@@ -75,13 +57,10 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
 
-				<li class="has-sub {{ (Request::is('addGroupByUser') ? 'active' : '') }}">
-					<a href="javascript:;">
+				<li class="has-sub {{ (Request::is('addGroupByUser' or 'create-group') ? 'active' : '')}}">
+					<a href="/addGroupByUser">
 						<span>Group</span>
 					</a>
-					<ul class="sub-menu">
-					    <li {{ (Request::is('addGroupByUser') ? 'class=active' : '') }}><a href="/addGroupByUser">Create Group</a></li>
-					</ul>
 				</li>
 			
 			@endif

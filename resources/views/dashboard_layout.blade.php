@@ -28,6 +28,8 @@
 	{!! Html::style('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/gritter/css/jquery.gritter.css') !!}
+    {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
+    {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
     
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	
@@ -143,6 +145,11 @@
 	{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
+
+    {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/jquery.dataTables.js') !!}
+    {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js') !!}
+    {!! Html::script('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') !!}
+    {!! Html::script('storage/dashboard/assets/js/table-manage-default.demo.min.js') !!}
 	
 	<!--[if lt IE 9]>
 		<script src="storage/dashboard/assets/crossbrowserjs/html5shiv.js"></script>
@@ -178,6 +185,7 @@
 		$(document).ready(function() {
 			App.init();
 			Dashboard.init();
+            TableManageDefault.init();
 		});
 	</script>
 <script>
