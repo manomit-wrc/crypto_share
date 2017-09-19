@@ -18,6 +18,10 @@ class User extends Authenticatable
         'first_name', 'last_name', 'email', 'password', 'street_address', 'country_id', 'state', 'city', 'pincode', 'image', 'role_code' 
     ];
 
+    public function countries() {
+        return $this->belongsTo('\App\countries', 'country_id');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

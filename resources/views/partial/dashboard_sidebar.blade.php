@@ -22,6 +22,35 @@
 		<!-- begin sidebar nav -->
 		<ul class="nav">
 			<li class="nav-header">Navigation</li>
+			<li class="has-sub active">
+				<a href="/dashboard">
+				    <i class="fa fa-laptop"></i>
+				    <span>Dashboard</span>
+			    </a>
+			</li>
+			<li class="has-sub">
+				<a href="javascript:;">
+					<span>Organization</span>
+				</a>
+				<ul class="sub-menu">
+				    <li><a href="">Edit</a></li>
+				</ul>
+			</li>
+			<li class="has-sub">
+				<a href="/testimonial">
+					<span>Testimonial</span>
+				</a>
+			</li>
+			<li class="has-sub">
+				<a href="/pricing">
+					<span>Pricing</span>
+				</a>
+			</li>
+			<li class="has-sub">
+				<a href="/users">
+					<span>User Lists</span>
+				</a>
+			</li>
 			<li class="has-sub {{ (Request::is('dashboard') ? 'active' : '') }}">
 				<a href="/dashboard">
 				    {{-- <b class="caret pull-right"></b>
