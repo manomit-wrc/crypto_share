@@ -83,7 +83,7 @@
 			</li>
 			<li class="dropdown navbar-user">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-					<img src="storage/dashboard/assets/img/user-13.jpg" alt="" /> 
+					<img id="header_image_preview" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}" alt="" /> 
 					<span class="hidden-xs">{{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}</span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">
