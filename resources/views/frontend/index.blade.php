@@ -555,22 +555,27 @@
         <div class="carousel testimonials slide" data-ride="carousel" id="testimonials">
             <!-- begin carousel-inner -->
             <div class="carousel-inner text-center">
+                @foreach($all_testimonial AS $key=>$val)
+                
                 <!-- begin item -->
-                <div class="item active">
+                <div class="item @if($key == 0) active @endif">
                     <blockquote>
                         <i class="fa fa-quote-left"></i>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra, nulla ut interdum fringilla,<br />
-                        urna massa cursus lectus, eget rutrum lectus neque non ex.
+                        {{$val->client_comment}}
                         <i class="fa fa-quote-right"></i>
                     </blockquote>
-                    <div class="name"> — <span class="text-theme">Mark Doe</span>, Designer</div>
+                    <div class="name"> — <span class="text-theme">{{$val->client_name}}</span>, {{$val->client_designation}}</div>
                 </div>
                 <!-- end item -->
+               
+                @endforeach
             </div>
             <!-- end carousel-inner -->
             <!-- begin carousel-indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#testimonials" data-slide-to="0" class="active"></li>
+                @foreach($all_testimonial AS $key=>$val)
+                <li data-target="#testimonials" data-slide-to="{{$key}}" @if($key == 0) class="active" @endif></li>
+                @endforeach
             </ol>
             <!-- end carousel-indicators -->
         </div>
@@ -591,92 +596,29 @@
         </p>
         <!-- begin pricing-table -->
         <ul class="pricing-table col-4">
-            <li data-animation="true" data-animation-type="fadeInUp">
+            @foreach($all_pricing AS $key=>$val)
+            <li @if($key == 2) class="highlight" @endif data-animation="true" data-animation-type="fadeInUp">
                 <div class="pricing-container">
-                    <h3>Starter</h3>
+                    <h3>{{$val->pricing_title}}</h3>
                     <div class="price">
                         <div class="price-figure">
-                            <span class="price-number">FREE</span>
+                            <span class="price-number">{{$val->pricing_amount}}</span>
                         </div>
                     </div>
                     <ul class="features">
-                        <li>1GB Storage</li>
-                        <li>2 Clients</li>
-                        <li>5 Active Projects</li>
-                        <li>5 Colors</li>
-                        <li>Free Goodies</li>
-                        <li>24/7 Email support</li>
+                        <li>{{$val->storage}} Storage</li>
+                        <li>{{$val->no_of_clients}} Clients</li>
+                        <li>{{$val->active_projects}} Active Projects</li>
+                        <li>{{$val->colors}} Colors</li>
+                        <li>{{$val->goodies}} Goodies</li>
+                        <li>{{$val->email_support}} Email support</li>
                     </ul>
                     <div class="footer">
                         <a href="#" class="btn btn-inverse btn-block">Buy Now</a>
                     </div>
                 </div>
             </li>
-            <li data-animation="true" data-animation-type="fadeInUp">
-                <div class="pricing-container">
-                    <h3>Basic</h3>
-                    <div class="price">
-                        <div class="price-figure">
-                            <span class="price-number">$9.99</span>
-                            <span class="price-tenure">per month</span>
-                        </div>
-                    </div>
-                    <ul class="features">
-                        <li>2GB Storage</li>
-                        <li>5 Clients</li>
-                        <li>10 Active Projects</li>
-                        <li>10 Colors</li>
-                        <li>Free Goodies</li>
-                        <li>24/7 Email support</li>
-                    </ul>
-                    <div class="footer">
-                        <a href="#" class="btn btn-inverse btn-block">Buy Now</a>
-                    </div>
-                </div>
-            </li>
-            <li class="highlight" data-animation="true" data-animation-type="fadeInUp">
-                <div class="pricing-container">
-                    <h3>Premium</h3>
-                    <div class="price">
-                        <div class="price-figure">
-                            <span class="price-number">$19.99</span>
-                            <span class="price-tenure">per month</span>
-                        </div>
-                    </div>
-                    <ul class="features">
-                        <li>5GB Storage</li>
-                        <li>10 Clients</li>
-                        <li>20 Active Projects</li>
-                        <li>20 Colors</li>
-                        <li>Free Goodies</li>
-                        <li>24/7 Email support</li>
-                    </ul>
-                    <div class="footer">
-                        <a href="#" class="btn btn-theme btn-block">Buy Now</a>
-                    </div>
-                </div>
-            </li>
-            <li data-animation="true" data-animation-type="fadeInUp">
-                <div class="pricing-container">
-                    <h3>Lifetime</h3>
-                    <div class="price">
-                        <div class="price-figure">
-                            <span class="price-number">$999</span>
-                        </div>
-                    </div>
-                    <ul class="features">
-                        <li>Unlimited Storage</li>
-                        <li>Unlimited Clients</li>
-                        <li>Unlimited Projects</li>
-                        <li>Unlimited Colors</li>
-                        <li>Free Goodies</li>
-                        <li>24/7 Email support</li>
-                    </ul>
-                    <div class="footer">
-                        <a href="#" class="btn btn-inverse btn-block">Buy Now</a>
-                    </div>
-                </div>
-            </li>
+            @endforeach
         </ul>
     </div>
     <!-- end container -->

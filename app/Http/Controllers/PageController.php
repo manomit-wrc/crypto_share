@@ -10,11 +10,15 @@ use App\countries;
 use Image;
 use Hash;
 use App\Organization;
+use App\Testimonial;
+use App\Pricing;
 
 class PageController extends Controller
 {
     public function index() {
-    	return view('frontend.index');
+        $testimonial = Testimonial::All();
+        $pricing = Pricing::All();
+    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing]);
     }
 
     public function login() {
