@@ -9,6 +9,7 @@ use Auth;
 use App\countries;
 use Image;
 use Hash;
+use App\Organization;
 
 class PageController extends Controller
 {
@@ -151,6 +152,60 @@ class PageController extends Controller
         }else{
             $request->session()->flash("submit-status", "Profile eidt failed.");
             return redirect('/edit_profile');
+        }
+    }
+
+    public function view_settings () {
+        $fetch_details = Organization::all()->toArray();
+        $fetch_all_countries = countries::all()->toArray();
+
+        return view('frontend.settings')->with('fetch_details' , $fetch_details[0])
+                                        ->with('fetch_all_countries', $fetch_all_countries);
+    }
+
+    public function edit_settings (Request $request) {
+        Validator::make($request->all(), [
+            'fullname' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'phone_number' => 'required | max:10 | regex:/^[0-9]*$/',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'pincode' => 'required',
+            'fb_link' => 'required',
+            'tw_link' => 'required',
+            'linkedin_link' => 'required'
+        ], [
+            'fullname.required' => "Full Name can't be left blank",
+            'email.required' => "Email can't be left blank",
+            'address.required' => "Address can't be left blank",
+            'phone_number.required' => "Phone number can't be left blank",
+            'country.required' => "Country can't be left blank",
+            'state.required' => "State can't be left blank",
+            'city.required' => "City can't be left blank",
+            'pincode.required' => "Pincode can't be left blank",
+            'fb_link.required' => "Facebook link can't be left blank",
+            'tw_link.required' => "Twitter link can't be left blank",
+            'linkedin_link.required' => "Linkedin link can't be left blank"
+        ])->validate();
+
+        $edit = Organization::find('1');
+        $edit->name = $request->fullname;
+        $edit->email = $request->email;
+        $edit->address = $request->address;
+        $edit->phone_no = $request->phone_number;
+        $edit->country_id = $request->country;
+        $edit->state_name = $request->state;
+        $edit->city_name = $request->city;
+        $edit->pincode = $request->pincode;
+        $edit->facebook = $request->fb_link;
+        $edit->twitter = $request->tw_link;
+        $edit->linkedin = $request->linkedin_link;
+
+        if($edit->save()){
+            $request->session()->flash("submit-status", "Edit Successfully.");
+            return redirect('/view-settings');
         }
     }
 

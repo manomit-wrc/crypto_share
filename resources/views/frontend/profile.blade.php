@@ -17,7 +17,7 @@
 			<h1 class="page-header">Profile Page</h1>
 
             @if(Session::has('submit-status'))
-              <p class="login-box-msg" style="color: red;">{{ Session::get('submit-status') }}</p>
+              <p class="login-box-msg" style="color: green;">{{ Session::get('submit-status') }}</p>
             @endif
 			
             <!-- end page-header -->
