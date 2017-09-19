@@ -23,6 +23,8 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/profile_edit', 'PageController@profile_edit');
 	Route::get('/change_pass', 'PageController@change_pass');
 	Route::post('/update_password', 'PageController@update_password');
+	Route::get('/view-settings', 'PageController@view_settings');
+	Route::post('/edit_settings', 'PageController@edit_settings');
 	Route::get('/logout', 'PageController@logout');
 });
 

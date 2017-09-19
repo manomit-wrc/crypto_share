@@ -33,7 +33,7 @@
 					<span>Organization</span>
 				</a>
 				<ul class="sub-menu">
-				    <li><a href="email_inbox.html">Edit</a></li>
+				    <li><a href="/view-settings">Edit</a></li>
 				</ul>
 			</li>
 			
