@@ -24,11 +24,11 @@
 			<!-- begin row -->
 			<div class="row">
                 <!-- begin col-6 -->
-			    <div class="col-md-6">
+			    <div class="col-md-12">
 			        <!-- begin panel -->
                     <div class="panel panel-inverse" data-sortable-id="form-validation-1">
                         <div class="panel-heading">
-                            <h4 class="panel-title">Website Settings Edit</h4>
+                            <h4 class="panel-title">Website Settings</h4>
                         </div>
                         <div class="panel-body panel-form">
                             <form class="form-horizontal form-bordered" data-parsley-validate="true" name="settings_edit_form" id="settings_edit_form" method="POST" action="/edit_settings" enctype="multipart/form-data">

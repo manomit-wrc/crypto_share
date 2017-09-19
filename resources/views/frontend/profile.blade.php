@@ -31,13 +31,19 @@
                         <div class="profile-left">
                             <!-- begin profile-image -->
                             <div class="profile-image">
-                                <img class="form-group" id="image" width="200" height="175" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}">
 
-                                <input class="form-group" type="hidden" name="exiting_profile_image" id="exiting_profile_image" value="{{Auth::guard('crypto')->user()->image}}">
+                                <?php if(empty(Auth::guard('crypto')->user()->image)){?>
+                                    <img class="form-group image_preview" width="200" height="175" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
+                                <?php }else{?>
+                                    <img class="form-group image_preview" width="200" height="175" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}">
+
+                                    <input class="form-group" type="hidden" name="exiting_profile_image" id="exiting_profile_image" value="{{Auth::guard('crypto')->user()->image}}">
+                                <?php } ?>
+
                             </div>
                             <!-- end profile-image -->
                             <div class="m-b-10">
-                                <input type="file" name="profile_image" id="profile_image">
+                                <input type="file" name="profile_image" class="profile_image">
 
                                 <span class="text-danger">{{ $errors->first('profile_image') }}</span>
                             </div>
