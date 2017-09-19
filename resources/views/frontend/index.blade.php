@@ -566,35 +566,11 @@
                     <div class="name"> — <span class="text-theme">Mark Doe</span>, Designer</div>
                 </div>
                 <!-- end item -->
-                <!-- begin item -->
-                <div class="item">
-                    <blockquote>
-                        <i class="fa fa-quote-left"></i>
-                        Donec cursus ligula at ante vulputate laoreet. Nulla egestas sit amet lorem non bibendum.<br />
-                        Nulla eget risus velit. Pellentesque tincidunt velit vitae tincidunt finibus.
-                        <i class="fa fa-quote-right"></i>
-                    </blockquote>
-                    <div class="name"> — <span class="text-theme">Joe Smith</span>, Developer</div>
-                </div>
-                <!-- end item -->
-                <!-- begin item -->
-                <div class="item">
-                    <blockquote>
-                        <i class="fa fa-quote-left"></i>
-                        Sed tincidunt quis est sed ultrices. Sed feugiat auctor ipsum, sit amet accumsan elit vestibulum<br />
-                        fringilla. In sollicitudin ac ligula eget vestibulum.
-                        <i class="fa fa-quote-right"></i>
-                    </blockquote>
-                    <div class="name"> — <span class="text-theme">Linda Adams</span>, Programmer</div>
-                </div>
-                <!-- end item -->
             </div>
             <!-- end carousel-inner -->
             <!-- begin carousel-indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#testimonials" data-slide-to="0" class="active"></li>
-                <li data-target="#testimonials" data-slide-to="1" class=""></li>
-                <li data-target="#testimonials" data-slide-to="2" class=""></li>
             </ol>
             <!-- end carousel-indicators -->
         </div>

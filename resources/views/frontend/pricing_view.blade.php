@@ -9,11 +9,11 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
-            <li class="active">Testimonial</li>
+            <li class="active">Pricing</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header">Testimonial Lists</h1>
+        <h1 class="page-header">Pricing Lists</h1>
 
         <!-- end page-header -->
         <div class="row">
@@ -23,7 +23,7 @@
             <!-- begin col-12 -->
 		    <div class="col-md-12">
                 <div class="pull-right">
-                    <a href="/testimonial/add"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
+                    <a href="/pricing/add"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
                 </div>
                 <div style="clear: both;"></div>
 		        <!-- begin panel -->
@@ -35,21 +35,31 @@
                         <table id="data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Designation</th>
-                                    <th>Comments</th>
+                                    <th>Title</th>
+                                    <th>Amount</th>
+                                    <th>Storage</th>
+                                    <th>Clients</th>
+                                    <th>Active Projects</th>
+                                    <th>Colors</th>
+                                    <th>Goodies</th>
+                                    <th>Status</th>
                                     <th>Date</th>
                                     <th style="text-align: right;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
-                            	@foreach ($all_testimonial AS $testimonial)
+                            	@foreach ($all_pricing AS $pricing)
                                 <tr class="odd">
-                                    <td>{{$testimonial->client_name}}</td>
-                                    <td>{{$testimonial->client_designation}}</td>
-                                    <td>{{$testimonial->client_comment}}</td>
-                                    <td>{{$testimonial->created_at->format('jS M, Y')}}</td>
-                                    <td style="text-align: right;"><a href="/testimonial/edit/{{$testimonial->id}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a><a href="/testimonial/delete/{{$testimonial->id}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                                    <td>{{$pricing->pricing_title}}</td>
+                                    <td>{{$pricing->pricing_amount}}</td>
+                                    <td>{{$pricing->storage}}</td>
+                                    <td>{{$pricing->no_of_clients}}</td>
+                                    <td>{{$pricing->active_projects}}</td>
+                                    <td>{{$pricing->colors}}</td>
+                                    <td>{{$pricing->goodies}}</td>
+                                    <td>@if($pricing->status == '1') Active @else In-Active @endif</td>
+                                    <td>{{$pricing->created_at->format('jS M, Y')}}</td>
+                                    <td style="text-align: right;"><a href="/pricing/edit/{{$pricing->id}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a><a href="/pricing/delete/{{$pricing->id}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

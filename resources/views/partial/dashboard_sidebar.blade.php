@@ -18,23 +18,33 @@
 		<ul class="nav">
 			<li class="nav-header">Navigation</li>
 			<li class="has-sub active">
-				<a href="javascript:;">
-				    <b class="caret pull-right"></b>
+				<a href="/dashboard">
 				    <i class="fa fa-laptop"></i>
 				    <span>Dashboard</span>
 			    </a>
-				<ul class="sub-menu">
-				    <li class="active"><a href="index-2.html">Dashboard v1</a></li>
-				    <li><a href="index_v2.html">Dashboard v2</a></li>
-				</ul>
 			</li>
 			<li class="has-sub">
 				<a href="javascript:;">
 					<span>Organization</span>
 				</a>
 				<ul class="sub-menu">
-				    <li><a href="email_inbox.html">Edit</a></li>
+				    <li><a href="">Edit</a></li>
 				</ul>
+			</li>
+			<li class="has-sub">
+				<a href="/testimonial">
+					<span>Testimonial</span>
+				</a>
+			</li>
+			<li class="has-sub">
+				<a href="/pricing">
+					<span>Pricing</span>
+				</a>
+			</li>
+			<li class="has-sub">
+				<a href="/users">
+					<span>User Lists</span>
+				</a>
 			</li>
 			
 	        <!-- begin sidebar minify button -->

@@ -25,6 +25,19 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/update_password', 'PageController@update_password');
 	Route::get('/testimonial', 'TestimonialController@index');
 	Route::get('/testimonial/add', 'TestimonialController@testimonial_add');
+	Route::post('/insert_testimonial', 'TestimonialController@insert_testimonial');
+	Route::get('/testimonial/edit/{id}', 'TestimonialController@testimonial_edit');
+	Route::post('/update_testimonial', 'TestimonialController@update_testimonial');
+	Route::get('/testimonial/delete/{id}', 'TestimonialController@delete_testimonial');
+	Route::get('/pricing', 'PricingController@index');
+	Route::get('/pricing/add', 'PricingController@pricing_add');
+	Route::post('/insert_pricing', 'PricingController@insert_pricing');
+	Route::get('/pricing/edit/{id}', 'PricingController@pricing_edit');
+	Route::post('/update_pricing', 'PricingController@update_pricing');
+	Route::get('/pricing/delete/{id}', 'PricingController@delete_pricing');
+	Route::get('/users', 'UserController@index');
+	Route::get('/users/deact_user/{id}', 'UserController@deact_user');
+	Route::get('/users/activate_user/{id}', 'UserController@activate_user');
 	Route::get('/logout', 'PageController@logout');
 });
 
