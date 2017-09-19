@@ -38,6 +38,9 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/users', 'UserController@index');
 	Route::get('/users/deact_user/{id}', 'UserController@deact_user');
 	Route::get('/users/activate_user/{id}', 'UserController@activate_user');
+	Route::get('/view-settings', 'PageController@view_settings');
+	Route::post('/edit_settings', 'PageController@edit_settings');
+	Route::get('/addGroupByUser', 'PageController@add_group_by_user');
 	Route::get('/logout', 'PageController@logout');
 });
 

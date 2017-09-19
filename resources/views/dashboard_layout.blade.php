@@ -197,20 +197,20 @@
             var reader = new FileReader();
             
             reader.onload = function (e) {
-                $('#image_preview').attr('src', e.target.result);
-                $('#header_image_preview').attr('src', e.target.result);
-                $('#sidebar_image_preview').attr('src', e.target.result);
+                $('.image_preview').attr('src', e.target.result);
+                $('.header_image_preview').attr('src', e.target.result);
+                $('.sidebar_image_preview').attr('src', e.target.result);
             }
             
             reader.readAsDataURL(input.files[0]);
         }
     }
     
-    $("#profile_image").change(function(){
+    $(".profile_image").change(function(){
         readURL(this);
     });
 
-     $(document).on('change','#profile_image',function(){
+     $(document).on('change','.profile_image',function(){
           files = this.files;
           size = files[0].size;
           //max size 50kb => 50*1000
