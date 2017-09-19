@@ -10,7 +10,6 @@
 			<ol class="breadcrumb pull-right">
 				<li><a href="javascript:;">Home</a></li>
 				<li><a href="javascript:;">Organization</a></li>
-				<li class="active">Edit</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
