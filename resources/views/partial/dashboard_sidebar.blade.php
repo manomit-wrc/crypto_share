@@ -36,7 +36,7 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEADM')
 
-				<li class="has-sub {{ (Request::is('view-settings') ? 'active' : '') }}">
+				<li class="has-sub {{ (Request::is('view-settings') ? 'active' : '')}}">
 					<a href="/view-settings">
 						<span>Organization</span>
 					</a>
@@ -46,13 +46,10 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
 
-				<li class="has-sub {{ (Request::is('addGroupByUser') ? 'active' : '') }}">
-					<a href="javascript:;">
+				<li class="has-sub {{ (Request::is('addGroupByUser' or 'create-group') ? 'active' : '')}}">
+					<a href="/addGroupByUser">
 						<span>Group</span>
 					</a>
-					<ul class="sub-menu">
-					    <li {{ (Request::is('addGroupByUser') ? 'class=active' : '') }}><a href="/addGroupByUser">Create Group</a></li>
-					</ul>
 				</li>
 			
 			@endif

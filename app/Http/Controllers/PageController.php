@@ -10,6 +10,7 @@ use App\countries;
 use Image;
 use Hash;
 use App\Organization;
+use App\Group;
 
 class PageController extends Controller
 {
@@ -207,6 +208,96 @@ class PageController extends Controller
             $request->session()->flash("submit-status", "Edit Successfully.");
             return redirect('/view-settings');
         }
+    }
+
+    public function add_group_by_user () {
+        $fetch_all_group = Group::where('group_created_by', Auth::guard('crypto')->user()->id)
+        ->where('current_status',1)
+        ->orderby('id','desc')
+        ->get()
+        ->toArray();
+
+        return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group);
+    }
+
+    public function create_group(){
+        return view('frontend.group.create_group');
+    }
+
+    public function add_create_groups(Request $request){
+        Validator::make($request->all(),[
+            'group_name' => 'required',
+            'group_type' => 'required',
+            'status' => 'required'
+        ], [
+            'group_name.required' => "Please enter group name.",
+            'group_type.required' => "Please select group type.",
+            'status.required' => "Please select status."
+        ])->validate();
+
+        $add = new Group();
+        $add->group_name = $request->group_name;
+        $add->group_type = $request->group_type;
+        $add->status = $request->status;
+        $add->group_created_by = Auth::guard('crypto')->user()->id;
+        $add->current_status = 1;
+
+        if($add->save()){
+            $request->session()->flash("submit-status", "Group added successfully.");
+            return redirect('/addGroupByUser');
+        }else{
+           $request->session()->flash("error-status", "Group added failed.");
+            return redirect('/create-group'); 
+        }
+    }
+
+    public function add_group_edit($group_id){
+        $id = base64_decode($group_id);
+
+        $fetch_details = Group::find($id)->toArray();
+
+        return view('frontend.group.edit_group')->with('fetch_details', $fetch_details);
+
+    }
+
+    public function edit_create_groups (Request $request, $group_id){
+        $id = base64_decode($group_id);
+
+        Validator::make($request->all(),[
+            'group_name' => 'required',
+            'group_type' => 'required',
+            'status' => 'required'
+        ], [
+            'group_name.required' => "Please enter group name.",
+            'group_type.required' => "Please select group type.",
+            'status.required' => "Please select status."
+        ])->validate();
+
+        $edit = Group::find($id);
+        $edit->group_name = $request->group_name;
+        $edit->group_type = $request->group_type;
+        $edit->status = $request->status;
+
+        if($edit->save()){
+            $request->session()->flash("submit-status", "Group edited successfully.");
+            return redirect('/addGroupByUser');
+        }else{
+            $request->session()->flash("error-status", "Group added failed.");
+            return redirect('/add_group_edit/{group_id}'); 
+        }
+
+    }
+
+    public function add_group_delete(Request $request, $group_id){
+        $id = base64_decode($group_id);
+
+        $delete = Group::find($id);
+        $delete->current_status = 5;
+        if($delete->save()){
+            $request->session()->flash("submit-status", "Group deleted successfully.");
+            return redirect('/addGroupByUser');
+        }
+
     }
 
     public function change_pass() {
