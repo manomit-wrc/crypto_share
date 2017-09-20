@@ -42,7 +42,7 @@
 								<div class="form-group {{ $errors->has('group_name') ? 'has-error' : '' }}">
 									<label class="control-label col-md-4 col-sm-4" for="fullname">Group Name :</label>
 									<div class="col-md-6 col-sm-6">
-										<input class="form-control" type="text" id="group_name" name="group_name" placeholder="Full Name" value="{{ old('group_name') }}" data-parsley-required="true" />
+										<input class="form-control" type="text" id="group_name" name="group_name" placeholder="Group Name" value="{{ old('group_name') }}" data-parsley-required="true" />
 
 										<span class="text-danger">{{ $errors->first('group_name') }}</span>
 									</div>
