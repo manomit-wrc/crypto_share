@@ -59,6 +59,8 @@
 													<ul class="dropdown-menu">
 														<li><a href="/group/edit/{{base64_encode($value['id'])}}">Edit</a></li>
 														<li><a href="/add_group_delete/{{base64_encode($value['id'])}}" onclick="return confirm('Are you sure?')">Delete</a></li>
+
+														<li><a href="">Invite Friend</a></li>
 													</ul>
 												</div>
 	                                        </td>

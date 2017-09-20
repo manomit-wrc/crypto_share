@@ -21,7 +21,6 @@
 		<!-- end sidebar user -->
 		<!-- begin sidebar nav -->
 		<ul class="nav">
-			<li class="nav-header">Navigation</li>
 			
 			<li class="has-sub {{ (Request::is('dashboard') ? 'active' : '') }}">
 				<a href="/dashboard">
