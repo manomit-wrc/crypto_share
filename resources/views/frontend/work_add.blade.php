@@ -42,7 +42,8 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Image</label>
                         <div class="col-md-10">
-                            <input type="file" name="image" class="form-control" />
+                            <input type="file" name="image" id="image" class="form-control" />
+                            <img src="{{ url('upload/work_image/default.png') }}" class="img-responsive img-team" height="100px" width="100px">
                         </div>
                         @if ($errors->first('image'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('image') }}</span>@endif
                     </div>

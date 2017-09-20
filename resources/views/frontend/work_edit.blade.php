@@ -43,7 +43,12 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Image</label>
                         <div class="col-md-10">
-                            <input type="file" name="image" class="form-control" />
+                            <input type="file" name="image" id="image" class="form-control" />
+                            @if($work->image && file_exists(public_path() ."/upload/work_image/resize/".$work->image))
+                                <img src="{{ url('upload/work_image/resize/'.$work->image) }}" height="100" width="100" class="img-responsive img-team">
+                            @else
+                                <img src="{{ url('upload/work_image/default.png') }}" height="100" width="100" class="img-responsive img-team">
+                            @endif
                         </div>
                         @if ($errors->first('image'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('image') }}</span>@endif
                     </div>

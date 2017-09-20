@@ -43,7 +43,13 @@
                     <tbody><!--  class="even" -->
                         @foreach($all_work AS $work)
                         <tr class="odd">
-                            <td><img src="{{url('/upload/work_image/resize/'.$work->image)}}" alt="{{$work->title}}" width="50" height="50" /></td>
+                            <td>
+                                @if($work->image && file_exists(public_path() ."/upload/work_image/resize/".$work->image))
+                                <img src="{{url('/upload/work_image/resize/'.$work->image)}}" alt="{{$work->title}}" width="50" height="50" class="img-responsive" />
+                                @else
+                                <img src="{{ url('upload/work_image/default.png') }}" height="50" width="50" class="img-responsive" />
+                                @endif
+                            </td>
                             <td>{{$work->title}}</td>
                             <td>{{$work->description}}</td>
                             <td>@if($work->status == '1') Active @else In-Active @endif</td>
