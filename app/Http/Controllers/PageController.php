@@ -377,6 +377,7 @@ class PageController extends Controller
 
     }
 
+
     public function change_pass() {
         return view('frontend.change_pass');
     }

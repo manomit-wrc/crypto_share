@@ -34,12 +34,9 @@
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
-<<<<<<< HEAD
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-	
-=======
->>>>>>> 354a127addfd29a0e0978c85f46f6a872811d6a0
+
 	<!-- ================== END BASE JS ================== -->
 </head>
 <body>

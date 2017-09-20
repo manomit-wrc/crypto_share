@@ -48,6 +48,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/add_group_delete/{group_id}', 'PageController@add_group_delete');
 	Route::get('/group/join-groups-list', 'PageController@join_group_list');
 	Route::post('/join_group_request_sent', 'PageController@join_group_request_sent');
+	
 	Route::get('/work', 'WorkController@index');
 	Route::get('/work/add', 'WorkController@work_add');
 	Route::post('/insert_work', 'WorkController@insert_work');
