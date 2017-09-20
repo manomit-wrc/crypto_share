@@ -299,7 +299,7 @@ class PageController extends Controller
         $delete->current_status = 5;
         if($delete->save()){
             $request->session()->flash("submit-status", "Group deleted successfully.");
-            return redirect('/addGroupByUser');
+            return redirect('/group');
         }
 
     }
