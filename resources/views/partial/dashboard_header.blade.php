@@ -17,6 +17,26 @@
 			<li>
 				<a href="/" target="_blank"><i class="fa fa-globe"></i> View Site</a>
 			</li>
+			{{-- //use for notification// --}}
+			<li class="dropdown">
+						<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
+							<i class="fa fa-bell-o"></i>
+							<span class="label">5</span>
+						</a>
+						<ul class="dropdown-menu media-list pull-right animated fadeInDown">
+                            <li class="dropdown-header">Notifications (5)</li>
+                            <li class="media">
+                                <a href="javascript:;">
+                                    <div class="media-left"><i class="fa fa-bug media-object bg-red"></i></div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">Server Error Reports</h6>
+                                        <div class="text-muted f-s-11">3 minutes ago</div>
+                                    </div>
+                                </a>
+                            </li>
+						</ul>
+					</li>
+			{{-- //end// --}}
 			<li class="dropdown navbar-user">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 

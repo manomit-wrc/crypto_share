@@ -54,7 +54,13 @@
 	                                        <td>{{$value['group_created_by'] }}</td>
 	                                        <td>{{$value['status'] == 1 ? 'Active' : 'Inactive'}}</td>
 	                                        <td>
-	                                        	<button type="button" class="btn btn-info m-r-5 m-b-5" data-toggle="modal" data-target="#myModal">Join Group</button>
+	                                        	@if($value['invitation_status'] == 1)
+	                                        		<div><i class="fa fa-2x fa-check"></i></div>
+                                        		@elseif($value['invitation_status'] == 2)
+                                        			<button type="button" class="btn btn-info m-r-5 m-b-5" disabled="">Pending</button>
+	                                        	@elseif($value['invitation_status'] == 0)
+	                                        		<button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$value['id']}}" group_type="{{$value['group_type']}}">Join Group</button>
+	                                        	@endif
 	                                        </td>
 	                                    </tr>
                                 	@endforeach
@@ -82,22 +88,25 @@
       </div>
       <div class="modal-body">
         <div class="panel-body">
-            <form action="javascript:void(0)" id="join_group_id" name="join_group_id">
+            <form action="javascript:void(0)" id="join_group_form" name="join_group_form">
+            <input type="hidden" name="user_id" id="append_group_id" value="" group_type="">
                 <fieldset>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Notes</label>
-                        <textarea style="height: 150px;" cols="" rows="" class="form-control" id="notes" name="notes" placeholder="Group Type" required=""> </textarea>
+                        <textarea style="height: 150px;" cols="" rows="" class="form-control" id="notes" name="notes"></textarea>
                     </div>
                 </fieldset>
+
+                <div class="">
+			      	<button type="submit" class="btn btn-default" id="join_group_submit">Join</button>
+
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+		      	</div>
             </form>
         </div>
       </div>
-      <div class="modal-footer">
-      	<button type="submit" class="btn btn-default" id="join_group_submit">Join</button>
-
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-      </div>
+      
     </div>
 
   </div>

@@ -13,6 +13,7 @@ use App\Organization;
 use App\Testimonial;
 use App\Pricing;
 use App\Group;
+use App\Invitation;
 
 class PageController extends Controller
 {
@@ -327,14 +328,53 @@ class PageController extends Controller
 
         foreach ($fetch_group_list as $key => $value) {
             $user_id = $value['user_id'];
+            $group_id = $value['id'];
 
-            $fetch_user_name = User::find($user_id)->toArray();
-            
+            $fetch_user_name = User::find($user_id)->toArray();            
             $group_created_by = $fetch_user_name['first_name'].' '.$fetch_user_name['last_name'];
+
+            $exit_user_in_invitation = Invitation::where('user_id',Auth::guard('crypto')->user()->id)
+            ->where('group_id',$group_id)
+            ->get()
+            ->toArray();
+
+            if(!empty($exit_user_in_invitation)){
+                $invitation_status = $exit_user_in_invitation[0]['status'];
+            }else{
+                $invitation_status = 0;
+            }
+
             $fetch_group_list[$key]['group_created_by'] = $group_created_by;
+            $fetch_group_list[$key]['invitation_status'] = $invitation_status;
         }
 
         return view('frontend.group.join_group')->with('fetch_group_list', $fetch_group_list);
+
+    }
+
+    public function join_group_request_sent(Request $request){
+
+        $group_id = $request->group_id;
+        
+        $group_type = $request->group_type;
+        if($group_type == 'og'){
+            $status = 1;
+        }else{
+            $status = 2;
+        }
+
+        $notes = $request->notes;
+
+        $add = new Invitation();
+        $add->group_id = $group_id;
+        $add->user_id = Auth::guard('crypto')->user()->id;
+        $add->status = $status;
+        $add->notes = $notes;
+
+        if($add->save()){
+            echo 1;
+            exit();
+        }
 
     }
 
