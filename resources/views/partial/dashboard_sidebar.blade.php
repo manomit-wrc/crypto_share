@@ -58,7 +58,7 @@
 				</li>
 				<li class="has-sub {{(Request::segment(1) === 'teams' ? 'active' : '' )}}">
 					<a href="/teams">
-						<span>Work</span>
+						<span>Team</span>
 					</a>
 				</li>
 			
