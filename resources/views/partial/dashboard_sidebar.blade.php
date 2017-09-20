@@ -21,7 +21,6 @@
 		<!-- end sidebar user -->
 		<!-- begin sidebar nav -->
 		<ul class="nav">
-			<li class="nav-header">Navigation</li>
 			
 			<li class="has-sub {{ (Request::is('dashboard') ? 'active' : '') }}">
 				<a href="/dashboard">
@@ -57,8 +56,8 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
 
-				<li class="has-sub {{ (Request::is('addGroupByUser' or 'create-group') ? 'active' : '')}}">
-					<a href="/addGroupByUser">
+				<li class="has-sub {{ (Request::segment(1) === 'group' ? 'active' : '')}}">
+					<a href="/group">
 						<span>Group</span>
 					</a>
 				</li>
