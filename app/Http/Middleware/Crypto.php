@@ -20,13 +20,7 @@ class Crypto
         if(!Auth::guard('crypto')->check())
         {
             return redirect("/");
-        } else {
-            if($request->segment(1) == 'login' || $request->segment(1) == 'register') {
-                return redirect('/dashboard');
-            }
-            else {
-                return $next($request);
-            }
-        } 
+        }
+        return $next($request);
     }
 }
