@@ -47,7 +47,7 @@ class TestimonialController extends Controller
     public function update_testimonial(Request $request) {
     	$id = $request->testimonial_id;
         Validator::make($request->all(),[
-            'client_name' => 'required|max:50|unique:testimonials,client_name',
+            'client_name' => 'required|max:50|unique:testimonials,client_name,'.$id,
             'client_desg' => 'required',
             'client_comments' => 'required'
         ])->validate();

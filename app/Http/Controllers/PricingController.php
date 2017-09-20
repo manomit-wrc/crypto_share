@@ -58,7 +58,7 @@ class PricingController extends Controller
     public function update_pricing(Request $request) {
     	$id = $request->pricing_id;
         Validator::make($request->all(),[
-            'pricing_title' => 'required|max:50|unique:pricings,pricing_title',
+            'pricing_title' => 'required|max:50|unique:pricings,pricing_title,'.$id,
             'pricing_amount' => 'required',
             'storage' => 'required',
             'no_of_clients' => 'required',

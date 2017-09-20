@@ -30,12 +30,10 @@
 	{!! Html::style('storage/dashboard/assets/plugins/gritter/css/jquery.gritter.css') !!}
     {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
     {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
-    
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
-	
 	<!-- ================== END BASE JS ================== -->
 </head>
 <body>
@@ -177,8 +175,7 @@
 
 	{!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/dashboard.min.js') !!}
-	{!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
-
+    {!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	
 	<script>
