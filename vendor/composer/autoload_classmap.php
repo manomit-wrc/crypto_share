@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddFieldNameToUsersTabel' => $baseDir . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
     'AddFieldToGroup' => $baseDir . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
+    'AddImageToTeams' => $baseDir . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
     'AddUserIdInGroupTabls' => $baseDir . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',
     'CreateCountriesTable' => $baseDir . '/database/migrations/2017_09_18_085659_create_countries_table.php',
     'CreateGroupsTable' => $baseDir . '/database/migrations/2017_09_19_111723_create_groups_table.php',
@@ -15,6 +16,7 @@ return array(
     'CreateOrganizationsTable' => $baseDir . '/database/migrations/2017_09_18_114135_create_organizations_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePricingsTable' => $baseDir . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
+    'CreateTeamsTable' => $baseDir . '/database/migrations/2017_09_20_090515_create_teams_table.php',
     'CreateTestimonialsTable' => $baseDir . '/database/migrations/2017_09_18_130925_create_testimonials_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateWorksTable' => $baseDir . '/database/migrations/2017_09_20_065931_create_works_table.php',

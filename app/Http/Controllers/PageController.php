@@ -242,7 +242,7 @@ class PageController extends Controller
 
     public function add_create_groups(Request $request){
         Validator::make($request->all(),[
-            'group_name' => 'required',
+            'group_name' => 'required | unique:groups,group_name',
             'group_type' => 'required',
             'status' => 'required'
         ], [
@@ -252,7 +252,7 @@ class PageController extends Controller
         ])->validate();
 
         $add = new Group();
-        $add->group_name = $request->group_name;
+        $add->group_name = ucwords($request->group_name);
         $add->group_type = $request->group_type;
         $add->status = $request->status;
         $add->user_id = Auth::guard('crypto')->user()->id;
@@ -280,7 +280,7 @@ class PageController extends Controller
         $id = base64_decode($group_id);
 
         Validator::make($request->all(),[
-            'group_name' => 'required',
+            'group_name' => 'required | unique:groups,group_name,'.$id,
             'group_type' => 'required',
             'status' => 'required'
         ], [
@@ -290,7 +290,7 @@ class PageController extends Controller
         ])->validate();
 
         $edit = Group::find($id);
-        $edit->group_name = $request->group_name;
+        $edit->group_name = ucwords($request->group_name);
         $edit->group_type = $request->group_type;
         $edit->status = $request->status;
 
@@ -313,6 +313,27 @@ class PageController extends Controller
             $request->session()->flash("submit-status", "Group deleted successfully.");
             return redirect('/group');
         }
+
+    }
+
+    public function join_group_list (){
+        $fetch_group_list = Group::where('status',1)
+        ->where('current_status',1)
+        ->where('user_id', '!=' , Auth::guard('crypto')->user()->id)
+        ->orderby('id','desc')
+        ->get()
+        ->toArray();
+
+        foreach ($fetch_group_list as $key => $value) {
+            $user_id = $value['user_id'];
+
+            $fetch_user_name = User::find($user_id)->toArray();
+            
+            $group_created_by = $fetch_user_name['first_name'].' '.$fetch_user_name['last_name'];
+            $fetch_group_list[$key]['group_created_by'] = $group_created_by;
+        }
+
+        return view('frontend.group.join_group')->with('fetch_group_list', $fetch_group_list);
 
     }
 
