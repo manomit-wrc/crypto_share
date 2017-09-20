@@ -57,8 +57,8 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
 
-				<li class="has-sub {{ (Request::is('addGroupByUser' or 'create-group') ? 'active' : '')}}">
-					<a href="/addGroupByUser">
+				<li class="has-sub {{ (Request::segment(1) === 'group' ? 'active' : '')}}">
+					<a href="/group">
 						<span>Group</span>
 					</a>
 				</li>

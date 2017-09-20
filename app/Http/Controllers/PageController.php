@@ -215,7 +215,7 @@ class PageController extends Controller
     }
 
     public function add_group_by_user () {
-        $fetch_all_group = Group::where('group_created_by', Auth::guard('crypto')->user()->id)
+        $fetch_all_group = Group::where('user_id', Auth::guard('crypto')->user()->id)
         ->where('current_status',1)
         ->orderby('id','desc')
         ->get()
@@ -243,15 +243,15 @@ class PageController extends Controller
         $add->group_name = $request->group_name;
         $add->group_type = $request->group_type;
         $add->status = $request->status;
-        $add->group_created_by = Auth::guard('crypto')->user()->id;
+        $add->user_id = Auth::guard('crypto')->user()->id;
         $add->current_status = 1;
 
         if($add->save()){
             $request->session()->flash("submit-status", "Group added successfully.");
-            return redirect('/addGroupByUser');
+            return redirect('/group');
         }else{
            $request->session()->flash("error-status", "Group added failed.");
-            return redirect('/create-group'); 
+            return redirect('/group/add'); 
         }
     }
 
@@ -284,10 +284,10 @@ class PageController extends Controller
 
         if($edit->save()){
             $request->session()->flash("submit-status", "Group edited successfully.");
-            return redirect('/addGroupByUser');
+            return redirect('/group');
         }else{
             $request->session()->flash("error-status", "Group added failed.");
-            return redirect('/add_group_edit/{group_id}'); 
+            return redirect('/group/edit/{group_id}'); 
         }
 
     }

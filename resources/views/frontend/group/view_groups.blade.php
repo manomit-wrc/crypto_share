@@ -20,7 +20,7 @@
             @endif
 			
 			<div class="box-footer">
-		      <a href="/create-group"><button type="submit" class="btn btn-primary">Create Group</button></a>
+		      <a href="/group/add"><button type="submit" class="btn btn-primary">Create Group</button></a>
 		    </div>
 		    <br>
 
@@ -57,7 +57,7 @@
 	                                        	<div class="btn-group m-r-5 m-b-5">
 													<a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false">Action <span class="caret"></span></a>
 													<ul class="dropdown-menu">
-														<li><a href="/add_group_edit/{{base64_encode($value['id'])}}">Edit</a></li>
+														<li><a href="/group/edit/{{base64_encode($value['id'])}}">Edit</a></li>
 														<li><a href="/add_group_delete/{{base64_encode($value['id'])}}" onclick="return confirm('Are you sure?')">Delete</a></li>
 													</ul>
 												</div>
