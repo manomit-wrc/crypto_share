@@ -11,6 +11,7 @@ return array(
     'AddUserIdInGroupTabls' => $baseDir . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',
     'CreateCountriesTable' => $baseDir . '/database/migrations/2017_09_18_085659_create_countries_table.php',
     'CreateGroupsTable' => $baseDir . '/database/migrations/2017_09_19_111723_create_groups_table.php',
+    'CreateInvitationsTable' => $baseDir . '/database/migrations/2017_09_20_051435_create_invitations_table.php',
     'CreateOrganizationsTable' => $baseDir . '/database/migrations/2017_09_18_114135_create_organizations_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePricingsTable' => $baseDir . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
