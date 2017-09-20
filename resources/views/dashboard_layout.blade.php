@@ -231,6 +231,14 @@
 
 //end
 
+    $('#join_group_id').on('click', function(){
+        alert ("123");
+        var valid = $('#join_group_id').valid();
+        if(valid){
+
+        }
+    });
+
 </script>
 </body>
 

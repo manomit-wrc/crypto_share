@@ -8,22 +8,17 @@
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb pull-right">
 				<li><a href="javascript:;">Home</a></li>
-				<li><a href="javascript:;">Groups</a></li>
+				<li><a href="javascript:;">Join Groups</a></li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
-			<h1 class="page-header">Groups Listing</h1>
+			<h1 class="page-header">Join Groups Listing</h1>
 			<!-- end page-header -->
 
 			@if(Session::has('submit-status'))
               	<p class="login-box-msg" style="color: green;">{{ Session::get('submit-status') }}</p>
             @endif
 			
-			<div class="box-footer">
-		      <a href="/group/add"><button type="button" class="btn btn-success m-r-5 m-b-5">Create Group</button></a>
-
-		      <a href="/group/join-groups-list"><button type="button" class="btn btn-success m-r-5 m-b-5">Join Groups</button></a>
-		    </div>
 		    <br>
 
 			<!-- begin row -->
@@ -33,7 +28,7 @@
 			        <!-- begin panel -->
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
-                            <h4 class="panel-title">Groups Listing</h4>
+                            <h4 class="panel-title">Join Groups Listing</h4>
                         </div>
                         <div class="panel-body">
                             <table id="data-table" class="table table-striped table-bordered">
@@ -42,23 +37,24 @@
                                         <th>Sr. No</th>
                                         <th>Group Name</th>
                                         <th>Group Type(s)</th>
+                                        <th>Group Admin Name</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=0;?>
-                                	@foreach($fetch_all_group as $key => $value)
+                                	@foreach($fetch_group_list as $key => $value)
                                 		
                                 		<tr class="odd gradeX">
 	                                        <td><?php echo ++$i; ?></td>
 	                                        <td>{{$value['group_name']}}</td>
 	                                        <td>{{$value['group_type'] == 'cg' ? 'Close Group' : 'Open Group'}}</td>
+	                                        
+	                                        <td>{{$value['group_created_by'] }}</td>
 	                                        <td>{{$value['status'] == 1 ? 'Active' : 'Inactive'}}</td>
 	                                        <td>
-												<a href="/group/edit/{{base64_encode($value['id'])}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
-
-												<a href="/add_group_delete/{{base64_encode($value['id'])}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+	                                        	<button type="button" class="btn btn-info m-r-5 m-b-5" data-toggle="modal" data-target="#myModal">Join Group</button>
 	                                        </td>
 	                                    </tr>
                                 	@endforeach
@@ -74,5 +70,37 @@
             <!-- end row -->
 		</div>
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Join Group</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+            <form action="javascript:void(0)" id="join_group_id" name="join_group_id">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Notes</label>
+                        <textarea style="height: 150px;" cols="" rows="" class="form-control" id="notes" name="notes" placeholder="Group Type" required=""> </textarea>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="submit" class="btn btn-default" id="join_group_submit">Join</button>
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
 
 @endsection
