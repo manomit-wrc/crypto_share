@@ -182,67 +182,34 @@
         <!-- begin row -->
         <div class="row">
             <!-- begin col-4 -->
+            @foreach($team as $key=>$value)
             <div class="col-md-4 col-sm-4">
                 <!-- begin team -->
                 <div class="team">             
                     <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-1.jpg" alt="Ryan Teller" />
+                        @if($value->image && file_exists(public_path() ."/upload/teams/".$value->image))
+                            
+                            <img src="{{ url('upload/teams/'.$value->image) }}" alt="{{ $value->first_name }}" />
+                        @else
+                            <img src="{{ url('upload/teams/default.png') }}" alt="Default" />
+                            
+                        @endif
+                        
                     </div>
                     <div class="info">
-                        <h3 class="name">Ryan Teller</h3>
-                        <div class="title text-theme">FOUNDER</div>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+                        <h3 class="name">{{ $value->first_name }}&nbsp;{{ $value->last_name }}</h3>
+                        <div class="title text-theme">{{ $value->designation }}</div>
+                        <p>{{ $value->description }}</p>
                         <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->facebook_url != '' ? $value->facebook_url: 'javascript:void(0)' }}"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->twitter_url != '' ? $value->twitter_url: 'javascript:void(0)' }}"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->google_plus_url != '' ? $value->google_plus_url: 'javascript:void(0)' }}"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
                         </div>
                     </div>                     
                 </div>
                 <!-- end team -->
             </div>
-            <!-- end col-4 -->
-            <!-- begin col-4 -->
-            <div class="col-md-4 col-sm-4">
-                <!-- begin team -->
-                <div class="team">             
-                    <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-2.jpg" alt="Jonny Cash" />
-                    </div>
-                    <div class="info">
-                        <h3 class="name">Johnny Cash</h3>
-                        <div class="title text-theme">WEB DEVELOPER</div>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                        <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
-                        </div>
-                    </div>                     
-                </div>
-                <!-- end team -->
-            </div>
-            <!-- end col-4 -->
-            <!-- begin col-4 -->
-            <div class="col-md-4 col-sm-4">
-                <!-- begin team -->
-                <div class="team">             
-                    <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-3.jpg" alt="Mia Donovan" />
-                    </div>
-                    <div class="info">
-                        <h3 class="name">Mia Donovan</h3>
-                        <div class="title text-theme">WEB DESIGNER</div>
-                        <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. </p>
-                        <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
-                        </div>
-                    </div>                     
-                </div>
-                <!-- end team -->
-            </div>
+            @endforeach
             <!-- end col-4 -->
         </div>
         <!-- end row -->
@@ -410,130 +377,23 @@
         </p>
         <!-- begin row -->
         <div class="row row-space-10">
+            @foreach($work AS $key=>$val)
             <!-- begin col-3 -->
             <div class="col-md-3 col-sm-6">
                 <!-- begin work -->
                 <div class="work">
                     <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-1.jpg" alt="Work 1" /></a>
+                        <a href="#"><img src="{{url('/upload/work_image/resize/'.$val->image)}}" alt="{{$val->title}}" /></a>
                     </div>
                     <div class="desc">
-                        <span class="desc-title">Aliquam molestie</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
+                        <span class="desc-title">{{$val->title}}</span>
+                        <span class="desc-text">{{$val->description}}</span>
                     </div>
                 </div>
                 <!-- end work -->
             </div>
             <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-3.jpg" alt="Work 3" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Quisque at pulvinar lacus</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-5.jpg" alt="Work 5" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Vestibulum et erat ornare</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-7.jpg" alt="Work 7" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Sed vitae mollis magna</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-        </div>
-        <!-- end row -->
-        <!-- begin row -->
-        <div class="row row-space-10">
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-2.jpg" alt="Work 2" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Suspendisse at mattis odio</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-4.jpg" alt="Work 4" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Aliquam vitae commodo diam</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-6.jpg" alt="Work 6" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Phasellus eu vehicula lorem</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
-            <!-- begin col-3 -->
-            <div class="col-md-3 col-sm-6">
-                <!-- begin work -->
-                <div class="work">
-                    <div class="image">
-                        <a href="#"><img src="storage/frontend/assets/img/work-8.jpg" alt="Work 8" /></a>
-                    </div>
-                    <div class="desc">
-                        <span class="desc-title">Morbi bibendum pellentesque</span>
-                        <span class="desc-text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-                <!-- end work -->
-            </div>
-            <!-- end col-3 -->
+            @endforeach
         </div>
         <!-- end row -->
     </div>

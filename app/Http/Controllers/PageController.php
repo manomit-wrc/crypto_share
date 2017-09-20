@@ -12,33 +12,32 @@ use Hash;
 use App\Organization;
 use App\Testimonial;
 use App\Pricing;
+use App\Work;
 use App\Group;
 use App\Invitation;
+use App\Team;
 
 class PageController extends Controller
 {
-
-
+    
     public function index() {
         $testimonial = Testimonial::All();
-        $pricing = Pricing::All();
+        $pricing = Pricing::where('status','1')->get();
+        $work = Work::where('status','1')->get();
         $contact_details = Organization::with('countries')->get()->toArray();
-        //echo "<pre>";
-        //print_r($contact_details); exit;
-    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details]);
+        $team = Team::where('status','1')->get();
+    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details, 'work'=>$work, 'team' => $team]);
     }
 
     public function login(Request $request) {
         if(Auth::guard('crypto')->check() && $request->segment(1) == 'login') {
-
             return redirect('/dashboard');
         }
     	return view('frontend.login');
     }
 
-    public function register() {
+    public function register(Request $request) {
         if(Auth::guard('crypto')->check() && $request->segment(1) == 'register') {
-            
             return redirect('/dashboard');
         }
     	return view('frontend.register');

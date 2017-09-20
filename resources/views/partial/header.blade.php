@@ -27,8 +27,8 @@
                 <li><a href="#client" data-click="scroll-to-target">CLIENT</a></li>
                 <li><a href="#pricing" data-click="scroll-to-target">PRICING</a></li>
                 <li><a href="#contact" data-click="scroll-to-target">CONTACT</a></li>
-                @if(null !== Auth::guard('crypto')->user())
-                    <li><a href="/logout">LOGOUT</a></li>
+                @if(Auth::guard('crypto')->check())
+                    <li><a href="/dashboard">DASHBOARD</a></li>
                 @else
                     <li><a href="/login">LOGIN</a></li>
                 @endif

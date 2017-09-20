@@ -15,15 +15,10 @@
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     {!! Html::style('storage/frontend/assets/plugins/bootstrap/css/bootstrap.min.css') !!}
-    
     {!! Html::style('storage/frontend/assets/plugins/font-awesome/css/font-awesome.min.css') !!}
-    
     {!! Html::style('storage/frontend/assets/css/animate.min.css') !!}
-    
     {!! Html::style('storage/frontend/assets/css/style.min.css') !!}
-    
     {!! Html::style('storage/frontend/assets/css/style-responsive.min.css') !!}
-    
     {!! Html::style('storage/frontend/assets/css/theme/default.css') !!}
     
     <!-- ================== END BASE CSS STYLE ================== -->

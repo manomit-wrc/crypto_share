@@ -9,12 +9,12 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
-            <li><a href="/testimonial">Testimonial</a></li>
+            <li><a href="/work">Work</a></li>
             <li class="active">Edit</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header">Edit Existing Testimonial</h1>
+        <h1 class="page-header">Edit Existing Work</h1>
 
         <!-- end page-header -->
         <!-- begin profile-container -->
@@ -23,29 +23,45 @@
                 <p class="login-box-msg" style="color: red;">{{ Session::get('submit-status') }}</p>
             @endif
             <div class="row">
-                <form name="add_testimonial" method="POST" action="/update_testimonial" class="form-horizontal">
+                <form name="add_work" method="POST" action="/update_work" class="form-horizontal" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="testimonial_id" value="{{$testimonial->id}}">
+                    <input type="hidden" name="work_id" value="{{$work->id}}">
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Client Name</label>
+                        <label class="col-md-2 control-label">Title</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="client_name" placeholder="Client Name" type="text" value="{{ $testimonial->client_name }}">
+                            <input class="form-control" name="title" placeholder="Title" type="text" value="{{ $work->title }}">
                         </div>
-                        @if ($errors->first('client_name'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_name') }}</span>@endif
+                        @if ($errors->first('title'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('title') }}</span>@endif
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Client Designation</label>
+                        <label class="col-md-2 control-label">Description</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="client_desg" placeholder="Client Designation" type="text" value="{{ $testimonial->client_designation }}">
+                            <textarea name="description" class="form-control" rows="3" cols="" placeholder="Description">{{ $work->description }}</textarea>
                         </div>
-                        @if ($errors->first('client_desg'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_desg') }}</span>@endif
+                        @if ($errors->first('description'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('description') }}</span>@endif
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Client Comments</label>
+                        <label class="col-md-2 control-label">Image</label>
                         <div class="col-md-10">
-                            <textarea name="client_comments" class="form-control" rows="3" cols="" placeholder="Client Comments">{{ $testimonial->client_comment }}</textarea>
+                            <input type="file" name="image" id="image" class="form-control" />
+                            @if($work->image && file_exists(public_path() ."/upload/work_image/resize/".$work->image))
+                                <img src="{{ url('upload/work_image/resize/'.$work->image) }}" height="100" width="100" class="img-responsive img-team">
+                            @else
+                                <img src="{{ url('upload/work_image/default.png') }}" height="100" width="100" class="img-responsive img-team">
+                            @endif
                         </div>
-                        @if ($errors->first('client_comments'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_comments') }}</span>@endif
+                        @if ($errors->first('image'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('image') }}</span>@endif
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Status</label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="status">
+                                <option value="" disabled>Please Select</option>
+                                <option value="1" @if($work->status == '1') selected @endif>Active</option>
+                                <option value="0" @if($work->status == '0') selected @endif>In-Active</option>
+                            </select>
+                        </div>
+                        @if ($errors->first('status'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('status') }}</span>@endif
                     </div>
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-2">

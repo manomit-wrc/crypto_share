@@ -46,7 +46,13 @@
                             <tbody><!--  class="even" -->
                             	@foreach ($all_users AS $user)
                                 <tr class="odd">
-                                    <td><img src="{{url('/upload/profile_image/resize/'.$user['image'])}}" alt="{{$user['first_name']}} {{$user['last_name']}}" height="50" width="50"></td>
+                                    <td>
+                                        @if($user['image'] && file_exists(public_path() ."/upload/profile_image/resize/".$user['image']))
+                                        <img src="{{url('/upload/profile_image/resize/'.$user['image'])}}" alt="{{$user['first_name']}} {{$user['last_name']}}" height="50" width="50" class="img-responsive">
+                                        @else
+                                        <img src="{{ url('upload/profile_image/default.png') }}" height="50" width="50" class="img-responsive">
+                                        @endif
+                                    </td>
                                     <td>{{$user['first_name']}} {{$user['last_name']}}</td>
                                     <td>{{$user['email']}}</td>
                                     <td>{{$user['street_address']}}</td>

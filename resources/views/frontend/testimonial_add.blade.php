@@ -28,21 +28,21 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Client Name</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="client_name" placeholder="Client Name" type="text" value="">
+                            <input class="form-control" name="client_name" placeholder="Client Name" type="text" value="{{old('client_name')}}">
                         </div>
                         @if ($errors->first('client_name'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_name') }}</span>@endif
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label">Client Designation</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="client_desg" placeholder="Client Designation" type="text">
+                            <input class="form-control" name="client_desg" placeholder="Client Designation" type="text" value="{{old('client_desg')}}">
                         </div>
                         @if ($errors->first('client_desg'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_desg') }}</span>@endif
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label">Client Comments</label>
                         <div class="col-md-10">
-                            <textarea name="client_comments" class="form-control" rows="3" cols="" placeholder="Client Comments"></textarea>
+                            <textarea name="client_comments" class="form-control" rows="3" cols="" placeholder="Client Comments">{{old('client_comments')}}</textarea>
                         </div>
                         @if ($errors->first('client_comments'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('client_comments') }}</span>@endif
                     </div>

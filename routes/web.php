@@ -55,5 +55,14 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/update_work', 'WorkController@update_work');
 	Route::get('/work/delete/{id}', 'WorkController@delete_work');
 	Route::get('/logout', 'PageController@logout');
+
+	
+
+	Route::resource('teams', 'TeamController', ['only' => [
+    	'index', 'create', 'store','edit'
+	]]);
+
+	Route::get('/teams/delete/{id}','TeamController@destroy');
+	Route::post('/teams/{id}','TeamController@update');
 });
 
