@@ -182,67 +182,34 @@
         <!-- begin row -->
         <div class="row">
             <!-- begin col-4 -->
+            @foreach($team as $key=>$value)
             <div class="col-md-4 col-sm-4">
                 <!-- begin team -->
                 <div class="team">             
                     <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-1.jpg" alt="Ryan Teller" />
+                        @if($value->image && file_exists(public_path() ."/upload/teams/".$value->image))
+                            
+                            <img src="{{ url('upload/teams/'.$value->image) }}" alt="{{ $value->first_name }}" />
+                        @else
+                            <img src="{{ url('upload/teams/default.png') }}" alt="Default" />
+                            
+                        @endif
+                        
                     </div>
                     <div class="info">
-                        <h3 class="name">Ryan Teller</h3>
-                        <div class="title text-theme">FOUNDER</div>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+                        <h3 class="name">{{ $value->first_name }}&nbsp;{{ $value->last_name }}</h3>
+                        <div class="title text-theme">{{ $value->designation }}</div>
+                        <p>{{ $value->description }}</p>
                         <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->facebook_url != '' ? $value->facebook_url: 'javascript:void(0)' }}"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->twitter_url != '' ? $value->twitter_url: 'javascript:void(0)' }}"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
+                            <a href="{{ $value->google_plus_url != '' ? $value->google_plus_url: 'javascript:void(0)' }}"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
                         </div>
                     </div>                     
                 </div>
                 <!-- end team -->
             </div>
-            <!-- end col-4 -->
-            <!-- begin col-4 -->
-            <div class="col-md-4 col-sm-4">
-                <!-- begin team -->
-                <div class="team">             
-                    <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-2.jpg" alt="Jonny Cash" />
-                    </div>
-                    <div class="info">
-                        <h3 class="name">Johnny Cash</h3>
-                        <div class="title text-theme">WEB DEVELOPER</div>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                        <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
-                        </div>
-                    </div>                     
-                </div>
-                <!-- end team -->
-            </div>
-            <!-- end col-4 -->
-            <!-- begin col-4 -->
-            <div class="col-md-4 col-sm-4">
-                <!-- begin team -->
-                <div class="team">             
-                    <div class="image" data-animation="true" data-animation-type="flipInX">
-                        <img src="storage/frontend/assets/img/user-3.jpg" alt="Mia Donovan" />
-                    </div>
-                    <div class="info">
-                        <h3 class="name">Mia Donovan</h3>
-                        <div class="title text-theme">WEB DESIGNER</div>
-                        <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. </p>
-                        <div class="social">
-                            <a href="#"><i class="fa fa-facebook fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-twitter fa-lg fa-fw"></i></a>
-                            <a href="#"><i class="fa fa-google-plus fa-lg fa-fw"></i></a>
-                        </div>
-                    </div>                     
-                </div>
-                <!-- end team -->
-            </div>
+            @endforeach
             <!-- end col-4 -->
         </div>
         <!-- end row -->

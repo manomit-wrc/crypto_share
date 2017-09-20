@@ -22,9 +22,10 @@ class PageController extends Controller
         $testimonial = Testimonial::All();
         $pricing = Pricing::All();
         $contact_details = Organization::with('countries')->get()->toArray();
+        $team = \App\Team::where('status','1')->get();
         //echo "<pre>";
         //print_r($contact_details); exit;
-    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details]);
+    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details, 'team' => $team]);
     }
 
     public function login(Request $request) {
