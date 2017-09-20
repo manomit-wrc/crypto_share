@@ -16,17 +16,30 @@ use App\Group;
 
 class PageController extends Controller
 {
+
+
     public function index() {
         $testimonial = Testimonial::All();
         $pricing = Pricing::All();
-    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing]);
+        $contact_details = Organization::with('countries')->get()->toArray();
+        //echo "<pre>";
+        //print_r($contact_details); exit;
+    	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details]);
     }
 
-    public function login() {
+    public function login(Request $request) {
+        if(Auth::guard('crypto')->check() && $request->segment(1) == 'login') {
+
+            return redirect('/dashboard');
+        }
     	return view('frontend.login');
     }
 
     public function register() {
+        if(Auth::guard('crypto')->check() && $request->segment(1) == 'register') {
+            
+            return redirect('/dashboard');
+        }
     	return view('frontend.register');
     }
 
@@ -357,6 +370,6 @@ class PageController extends Controller
 
     public function logout() {
         Auth::guard('crypto')->logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

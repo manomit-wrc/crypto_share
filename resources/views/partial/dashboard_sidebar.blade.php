@@ -51,6 +51,11 @@
 						<span>User Lists</span>
 					</a>
 				</li>
+				<li class="has-sub {{(Request::segment(1) === 'work' ? 'active' : '' )}}">
+					<a href="/work">
+						<span>Work</span>
+					</a>
+				</li>
 			
 			@endif
 

@@ -40,7 +40,7 @@
                                     <th>City</th>
                                     <th>Pincode</th>
                                     <th>Status</th>
-                                    <th style="text-align: right;">Action</th>
+                                    <th style="text-align: right; width: 5%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
