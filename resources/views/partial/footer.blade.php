@@ -9,11 +9,9 @@
             
         </p>
         <p class="social-list">
-            <a href="#"><i class="fa fa-facebook fa-fw"></i></a>
-            <a href="#"><i class="fa fa-instagram fa-fw"></i></a>
-            <a href="#"><i class="fa fa-twitter fa-fw"></i></a>
-            <a href="#"><i class="fa fa-google-plus fa-fw"></i></a>
-            <a href="#"><i class="fa fa-dribbble fa-fw"></i></a>
+            <a href="{{$contact_details[0]['facebook']}}" target="_blank"><i class="fa fa-facebook fa-fw"></i></a>
+            <a href="{{$contact_details[0]['twitter']}}" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+            <a href="{{$contact_details[0]['linkedin']}}" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a>
         </p>
     </div>
 </div>

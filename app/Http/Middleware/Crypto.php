@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Illuminate\Http\Request;
 
 class Crypto
 {
@@ -14,12 +15,18 @@ class Crypto
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if(!Auth::guard('crypto')->check())
         {
-            return redirect("/login");
-        }
-        return $next($request);
+            return redirect("/");
+        } else {
+            if($request->segment(1) == 'login' || $request->segment(1) == 'register') {
+                return redirect('/dashboard');
+            }
+            else {
+                return $next($request);
+            }
+        } 
     }
 }

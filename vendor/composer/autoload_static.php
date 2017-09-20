@@ -312,6 +312,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'CreatePricingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
         'CreateTestimonialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_130925_create_testimonials_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateWorksTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_065931_create_works_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'DeleteGroupCreatedByFromGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051030_delete_group_created_by_from_groups_table.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
