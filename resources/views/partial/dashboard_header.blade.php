@@ -14,6 +14,9 @@
 		
 		<!-- begin header navigation right -->
 		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<a href="/" target="_blank"><i class="fa fa-globe"></i> View Site</a>
+			</li>
 			<li class="dropdown navbar-user">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 

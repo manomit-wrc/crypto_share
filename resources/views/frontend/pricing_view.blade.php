@@ -44,7 +44,7 @@
                                     <th>Goodies</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th style="text-align: right;">Action</th>
+                                    <th style="text-align: right; width: 8%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->

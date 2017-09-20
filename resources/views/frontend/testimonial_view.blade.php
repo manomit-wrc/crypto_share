@@ -35,11 +35,11 @@
                         <table id="data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
+                                    <th style="width: 10%;">Client Name</th>
                                     <th>Designation</th>
                                     <th>Comments</th>
-                                    <th>Date</th>
-                                    <th style="text-align: right;">Action</th>
+                                    <th style="width: 10%;">Date</th>
+                                    <th style="text-align: right; width: 8%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
