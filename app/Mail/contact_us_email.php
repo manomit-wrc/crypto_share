@@ -20,11 +20,12 @@ class contact_us_email extends Mailable
     public $email;
     public $comment;
 
-    public function __construct($name,$email,$comment)
+    public function __construct($name,$email,$msg)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->comment = $comment;
+        $this->comment = $msg;
+        
     }
 
     /**

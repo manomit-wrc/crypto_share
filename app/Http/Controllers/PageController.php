@@ -16,11 +16,11 @@ use App\Work;
 use App\Group;
 use App\Invitation;
 use App\Team;
-use App\Contact_us;
+use App\ContactUs;
 use Mail;
 use App\Mail\contact_us_email;
 use App\Mail\RegistrationEmail;
-use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Mail;
 use Config;
 
 class PageController extends Controller
@@ -44,7 +44,7 @@ class PageController extends Controller
     }
     
     public function index() {
-        $testimonial = Testimonial::All();
+        $testimonial = Testimonial::all();
         $pricing = Pricing::where('status','1')->get();
         $work = Work::where('status','1')->get();
         $contact_details = Organization::with('countries')->get()->toArray();
@@ -53,19 +53,25 @@ class PageController extends Controller
     }
 
     public function contact_us_submit(Request $request){
-        $add = new Contact_us();
-        $add->name = $request->name;
-        $add->email = $request->email;
-        $add->msg = $request->msg;
+        $name = $request->name;
+        $email = $request->email;
+        $msg = $request->msg;
 
-        if($add->submit()){
+        $add = new ContactUs();
+        $add->name = $name;
+        $add->email = $email;
+        $add->msg = $msg;
+
+        if($add->save()){
             $to_email = 'sobhandas30@gmail.com';
             try{
-                Mail::to($to_email)->send(new contact_us_email($request->name,$request->email,$request->msg));
-                return response()->json(['code'=>100,'message'=>'succeess']);
-            }catch(\Exception $e){
-
-                return response()->json(['code'=>500,'message'=>'error']);
+                Mail::to($to_email)->send(new contact_us_email($name,$email,$msg));
+                echo 1;
+            }catch(Exception $e){
+                echo "<pre>";
+                print_r($e);
+                die();
+                return response()->json(['code'=>500,'message'=>$e]);
             }
         }
 

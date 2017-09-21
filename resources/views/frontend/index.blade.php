@@ -516,7 +516,7 @@
             <!-- end col-6 -->
             <!-- begin col-6 -->
             <div class="col-md-6 form-col" data-animation="true" data-animation-type="fadeInRight">
-                <form class="form-horizontal" name="contact_us_form" id="contact_us_form">
+                <form class="form-horizontal" action="javascript:void(0)" name="contact_us_form" id="contact_us_form">
                     <div class="form-group">
                         <label class="control-label col-md-3">Name <span class="text-theme">*</span></label>
                         <div class="col-md-9">
@@ -538,7 +538,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3"></label>
                         <div class="col-md-9 text-left">
-                            <button type="submit" class="btn btn-theme btn-block" id="contact_us_submit">Send Message</button>
+                            <button type="button" class="btn btn-theme btn-block" id="contact_us_submit">Send Message</button>
                         </div>
                     </div>
                 </form>

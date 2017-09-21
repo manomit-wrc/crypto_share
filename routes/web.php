@@ -16,6 +16,7 @@ Route::get('/login', 'PageController@login');
 Route::get('/register', 'PageController@register');
 Route::post('/register/submit', 'PageController@submit_registration');
 Route::post('/login/submit', 'PageController@submit_login');
+Route::post('/contact-us-form', 'PageController@contact_us_submit');
 
 Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/dashboard','DashboardController@index');
@@ -53,7 +54,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/pending-request', 'PageController@group_pending_request');
 	Route::get('/group/pending_request_accept/{group_id}', 'PageController@pending_request_accept');
 	Route::get('/group/pending_request_decline/{group_id}', 'PageController@pending_request_decline');
-	Route::post('/contact-us-form', 'PageController@contact_us_submit');
+	
 	
 	Route::get('/work', 'WorkController@index');
 	Route::get('/work/add', 'WorkController@work_add');
