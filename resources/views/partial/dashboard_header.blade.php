@@ -21,24 +21,24 @@
 			<li class="dropdown">
 						<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
 							<i class="fa fa-bell-o"></i>
-							@if(Auth::guard('crypto')->user()->role_code != 'SITEADM')
+							@if((Auth::guard('crypto')->user()->role_code != 'SITEADM') && $total_record>0)
 								<span class="label">{{$total_record}}</span>
 							@endif
 						</a>
 						<ul class="dropdown-menu media-list pull-right animated fadeInDown">
 							@if(Auth::guard('crypto')->user()->role_code != 'SITEADM')
 								<li class="dropdown-header">Notifications ({{$total_record}})</li>
+								<li class="media">
+	                                <a href="/group/pending-request">
+	                                    <div class="media-left"><i class="fa fa-2x fa-bullhorn media-object bg-red"></i></div>
+	                                    <div class="media-body">
+	                                        <h6 class="media-heading">You have {{$total_record}} group pending request.</h6>
+	                                    </div>
+	                                </a>
+	                            </li>
 							@endif
                             
-                            <li class="media">
-                                <a href="javascript:;">
-                                    <div class="media-left"><i class="fa fa-bug media-object bg-red"></i></div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">Server Error Reports</h6>
-                                        <div class="text-muted f-s-11">3 minutes ago</div>
-                                    </div>
-                                </a>
-                            </li>
+                            
 						</ul>
 					</li>
 			{{-- //end// --}}

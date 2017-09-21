@@ -259,6 +259,15 @@ class PageController extends Controller
         ->get()
         ->toArray();
 
+        $details = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
+        ->get()->toArray();
+        // echo "<pre>";
+        // print_r($fetch_all_group);
+        // echo "<hr>";
+        // print_r($details);
+        // echo "</pre>";
+        // die();
+
         return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group);
     }
 
@@ -394,12 +403,62 @@ class PageController extends Controller
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->status = $status;
         $add->notes = $notes;
+        $add->read_status = 1;
 
         if($add->save()){
             echo 1;
             exit();
         }
 
+    }
+
+    public function group_pending_request () {
+        $details = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
+        ->orderby('id','desc')
+        ->get()
+        ->toArray();
+
+        foreach($details as $key=>$value){
+            $id = $value['id'];
+            $edit = Invitation::find($id);
+            $edit->read_status = 0;
+            
+            if($edit->save()){
+                $sent_invitation_user_id = $value['user_id'];
+
+                $find_user = User::find($sent_invitation_user_id);
+                $sent_invitation_user_name = $find_user['first_name'].' '.$find_user['last_name'];
+
+                $details[$key]['sent_invitation_user_name'] = $sent_invitation_user_name;
+            }
+        }
+
+        return view('frontend.group.pending_request')->with('details', $details);
+    }
+
+    public function pending_request_accept(Request $request,$group_id){
+        $id = base64_decode($group_id);
+
+        $edit = Invitation::find($id);
+        $edit->status = 1;
+
+        if($edit->save()){
+            $request->session()->flash("submit-status", "Request accepted successfully.");
+            return redirect('/group/pending-request');
+        }
+
+    }
+
+    public function pending_request_decline (Request $request,$group_id){
+        $id = base64_decode($group_id);
+
+        $edit = Invitation::find($id);
+        $edit->status = 5;
+
+        if($edit->save()){
+            $request->session()->flash("submit-status", "Request declined successfully.");
+            return redirect('/group/pending-request');
+        }
     }
 
 
