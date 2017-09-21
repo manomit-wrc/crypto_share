@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->role_code = Auth::user()->role_code;
-            if($this->role_code == "SITEUSR") {
+            if ($this->role_code == "SITEUSR") {
                 echo "Permission Defined";
                 die();
             }
@@ -26,7 +26,7 @@ class UserController extends Controller
     }
     
     public function index() {
-    	$user = User::with('countries')->where('role_code','SITEUSR')->get()->toArray();
+    	$user = User::with('countries')->where([['id', '<>', Auth::user()->id],['email', '<>', 'admin@wrc.com']])->get()->toArray();
     	return view('frontend.user_view')->with('all_users', $user);
     }
 
@@ -56,16 +56,16 @@ class UserController extends Controller
     	}
     }
 
-    public function change_access($id, Request $request) {
+    public function grant_access($id, Request $request) {
         $user = User::find($id);
         $user->role_code = 'SITEADM';
-        $user_exist_in_group = Group::where('user_id', $id)->get()->toArray();
-        $user_exist_in_invitation = Invitation::where('user_id', $id)->get()->toArray();
+        $user_exist_in_group = Group::where('user_id', $id)->get();
+        $user_exist_in_invitation = Invitation::where('user_id', $id)->get();
         $count_group = count($user_exist_in_group);
         $count_invitation = count($user_exist_in_invitation);
 
         if ($count_group > 0 || $count_invitation > 0) {
-            $request->session()->flash("submit-status", "User access changed can't be possible because there are some activity associated with this user.");
+            $request->session()->flash("submit-status", "User access change can't be possible because there are some activity associated with this user.");
             return redirect('/users');
         } else {
             $user_convert = new UserConvert();
@@ -74,9 +74,21 @@ class UserController extends Controller
                 $request->session()->flash("submit-status", "User access changed successfully.");
                 return redirect('/users');
             } else {
-                $request->session()->flash("submit-status", "User access changed failed.");
+                $request->session()->flash("submit-status", "User access change failed.");
                 return redirect('/users');
             }
+        }
+    }
+
+    public function revoke_access($id, Request $request) {
+        $user = User::find($id);
+        $user->role_code = 'SITEUSR';
+        if ($user->save() && UserConvert::where('user_id', $id)->delete()) {
+            $request->session()->flash("submit-status", "User access revoked successfully.");
+            return redirect('/users');
+        } else {
+            $request->session()->flash("submit-status", "User access revoke failed.");
+            return redirect('/users');
         }
     }
 }
