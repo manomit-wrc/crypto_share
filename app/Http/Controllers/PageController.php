@@ -32,12 +32,11 @@ class PageController extends Controller
                     echo "Permission Defined";
                     die();
                 }
-                 
             }
             return $next($request);
-            
         });
     }
+    
     public function index() {
         $testimonial = Testimonial::All();
         $pricing = Pricing::where('status','1')->get();
@@ -89,6 +88,7 @@ class PageController extends Controller
     	$user->email = $request->email;
     	$user->password = bcrypt($request->password);
         $user->role_code = "SITEUSR";
+        $user->status = "1";
 
     	if($user->save()) {
     		$request->session()->flash("message", "Registration completed successfully");

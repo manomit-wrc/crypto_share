@@ -22,6 +22,7 @@ class WorkController extends Controller
             return $next($request);
         });
     }
+    
     public function index() {
     	$work = Work::All();
     	return view('frontend.work_view')->with('all_work', $work);

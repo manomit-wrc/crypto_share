@@ -12,8 +12,6 @@ Class GeneralComposer {
  	  	$details = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
         ->get()->toArray();
         $view->with('total_record', count($details));
- 	  }	
- 	  
-      
+ 	  }
  }
 }
