@@ -16,6 +16,9 @@ use App\Work;
 use App\Group;
 use App\Invitation;
 use App\Team;
+use App\Mail\RegistrationEmail;
+use Illuminate\Support\Facades\Mail;
+use Config;
 
 class PageController extends Controller
 {
@@ -88,9 +91,13 @@ class PageController extends Controller
     	$user->email = $request->email;
     	$user->password = bcrypt($request->password);
         $user->role_code = "SITEUSR";
-        $user->status = "1";
+        $user->status = "2";
 
-    	if($user->save()) {
+        $user->active_token = str_replace("/", "", Hash::make(str_random(30)));
+
+    	if ($user->save()) {
+            $activation_link = config('app.url').'activate/'.$user->active_token."/".time();
+            Mail::to($request->input('email'))->send(new RegistrationEmail($activation_link));
     		$request->session()->flash("message", "Registration completed successfully");
     	}
     	else {
