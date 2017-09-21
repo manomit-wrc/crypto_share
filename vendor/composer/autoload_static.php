@@ -306,6 +306,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'AddFieldToInvitations' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',
         'AddImageToTeams' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
         'AddUserIdInGroupTabls' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',
+        'CreateContactUsesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_113107_create_contact_uses_table.php',
         'CreateCountriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_085659_create_countries_table.php',
         'CreateGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_111723_create_groups_table.php',
         'CreateInvitationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051435_create_invitations_table.php',

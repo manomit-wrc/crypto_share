@@ -16,6 +16,9 @@ use App\Work;
 use App\Group;
 use App\Invitation;
 use App\Team;
+use App\Contact_us;
+use Mail;
+use App\Mail\contact_us_email;
 
 class PageController extends Controller
 {
@@ -44,6 +47,25 @@ class PageController extends Controller
         $contact_details = Organization::with('countries')->get()->toArray();
         $team = Team::where('status','1')->get();
     	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details, 'work'=>$work, 'team' => $team]);
+    }
+
+    public function contact_us_submit(Request $request){
+        $add = new Contact_us();
+        $add->name = $request->name;
+        $add->email = $request->email;
+        $add->msg = $request->msg;
+
+        if($add->submit()){
+            $to_email = 'sobhandas30@gmail.com';
+            try{
+                Mail::to($to_email)->send(new contact_us_email($request->name,$request->email,$request->msg));
+                return response()->json(['code'=>100,'message'=>'succeess']);
+            }catch(\Exception $e){
+
+                return response()->json(['code'=>500,'message'=>'error']);
+            }
+        }
+
     }
 
     public function login(Request $request) {
@@ -251,15 +273,6 @@ class PageController extends Controller
         ->orderby('id','desc')
         ->get()
         ->toArray();
-
-        $details = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
-        ->get()->toArray();
-        // echo "<pre>";
-        // print_r($fetch_all_group);
-        // echo "<hr>";
-        // print_r($details);
-        // echo "</pre>";
-        // die();
 
         return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group);
     }

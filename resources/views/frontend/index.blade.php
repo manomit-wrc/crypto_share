@@ -516,29 +516,29 @@
             <!-- end col-6 -->
             <!-- begin col-6 -->
             <div class="col-md-6 form-col" data-animation="true" data-animation-type="fadeInRight">
-                <form class="form-horizontal">
+                <form class="form-horizontal" name="contact_us_form" id="contact_us_form">
                     <div class="form-group">
                         <label class="control-label col-md-3">Name <span class="text-theme">*</span></label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" />
+                            <input type="text" name="contact_us_name" id="contact_us_name" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3">Email <span class="text-theme">*</span></label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" />
+                            <input type="text" name="contact_us_email" id="contact_us_email" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3">Message <span class="text-theme">*</span></label>
                         <div class="col-md-9">
-                            <textarea class="form-control" rows="10"></textarea>
+                            <textarea class="form-control" rows="10" id="contact_us_msg" name="contact_us_msg"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3"></label>
                         <div class="col-md-9 text-left">
-                            <button type="submit" class="btn btn-theme btn-block">Send Message</button>
+                            <button type="submit" class="btn btn-theme btn-block" id="contact_us_submit">Send Message</button>
                         </div>
                     </div>
                 </form>

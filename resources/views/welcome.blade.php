@@ -25,6 +25,8 @@
     
     <!-- ================== BEGIN BASE JS ================== -->
     {!! Html::script('storage/frontend/assets/plugins/pace/pace.min.js') !!}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     
     <!-- ================== END BASE JS ================== -->
 </head>
@@ -62,3 +64,61 @@
 </body>
 
 </html>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        
+        //contact us form validation & submit
+        $('#contact_us_form').validate({
+          rules:{
+            contact_us_name:{
+              required: true
+            },
+            contact_us_email:{
+              required: true,
+              email: true
+            },
+            contact_us_msg:{
+              required: true
+            }
+          },
+          messages:{
+            contact_us_name:{
+              required: "<font color='red'>Please enter your name</font>"
+            },
+            contact_us_email:{
+              required: "<font color='red'>Please enter your email</font>",
+              email: "<font color='red'>Please enter your valid email</font>",
+            },
+            contact_us_msg:{
+              required: "<font color='red'>Please enter your messages</font>"
+            }
+          }
+        });
+
+        $('#contact_us_submit').on('click', function(){
+          var valid = $('#contact_us_form').validate();
+          if(valid){
+            var name = $('#contact_us_name').val();
+            var email = $('#contact_us_email').val();
+            var msg = $('#contact_us_msg').val();
+
+            $.ajax({
+                type:"POST",
+                url: '/contact-us-form',
+                data:{
+                    name:name,
+                    email:email,
+                    msg:msg,
+                    _token: '{{csrf_token()}}'
+                }
+            });
+          }
+        });
+        //end
+    });  
+</script>
