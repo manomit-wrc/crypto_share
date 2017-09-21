@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use Image;
+use Auth;
 
 class TeamController extends Controller
 {
@@ -13,6 +14,19 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role_code = Auth::user()->role_code;
+            if($this->role_code == "SITEUSR") {
+                echo "Permission Defined";
+                die();
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $teams = \App\Team::all();

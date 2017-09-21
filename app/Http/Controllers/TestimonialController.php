@@ -6,9 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Testimonial;
 use Validator;
+use Auth;
 
 class TestimonialController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role_code = Auth::user()->role_code;
+            if($this->role_code == "SITEUSR") {
+                echo "Permission Defined";
+                die();
+            }
+            return $next($request);
+        });
+    }
     public function index() {
     	$testimonial = Testimonial::All();
     	return view('frontend.testimonial_view')->with('all_testimonial', $testimonial);

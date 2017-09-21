@@ -6,9 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pricing;
 use Validator;
+use Auth;
 
 class PricingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role_code = Auth::user()->role_code;
+            if($this->role_code == "SITEUSR") {
+                echo "Permission Defined";
+                die();
+            }
+            return $next($request);
+        });
+    }
 	public function index() {
     	$pricing = Pricing::All();
     	return view('frontend.pricing_view')->with('all_pricing', $pricing);
