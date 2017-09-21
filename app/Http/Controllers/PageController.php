@@ -19,7 +19,25 @@ use App\Team;
 
 class PageController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if(Auth::guard('crypto')->check()) {
+                $this->role_code = Auth::user()->role_code;
+                if($this->role_code == "SITEADM" && $request->segment(1) == "group") {
+                    echo "Permission Defined";
+                    die();
+                }
+                if($this->role_code == "SITEUSR" && $request->segment(1) == "view-settings") {
+                    echo "Permission Defined";
+                    die();
+                }
+                 
+            }
+            return $next($request);
+            
+        });
+    }
     public function index() {
         $testimonial = Testimonial::All();
         $pricing = Pricing::where('status','1')->get();

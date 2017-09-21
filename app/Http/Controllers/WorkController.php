@@ -7,9 +7,21 @@ use App\Http\Controllers\Controller;
 use Image;
 use App\Work;
 use Validator;
+use Auth;
 
 class WorkController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role_code = Auth::user()->role_code;
+            if($this->role_code == "SITEUSR") {
+                echo "Permission Defined";
+                die();
+            }
+            return $next($request);
+        });
+    }
     public function index() {
     	$work = Work::All();
     	return view('frontend.work_view')->with('all_work', $work);
