@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('pincode', 15)->nullable();
             $table->string('image', 150)->nullable();
             $table->string('role_code', 20)->nullable();
+            $table->string('active_token');
             $table->rememberToken();
             $table->timestamps();
         });
