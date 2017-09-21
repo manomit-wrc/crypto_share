@@ -40,7 +40,7 @@
                                     <th>City</th>
                                     <th>Pincode</th>
                                     <th>Status</th>
-                                    <th style="text-align: right; width: 5%;">Action</th>
+                                    <th style="text-align: right; width: 10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
@@ -61,7 +61,7 @@
                                     <td>{{$user['city']}}</td>
                                     <td>{{$user['pincode']}}</td>
                                     <td>@if($user['status'] == '1') Active @else In-Active @endif</td>
-                                    <td style="text-align: right;">@if($user['status'] == '1') <a href="/users/deact_user/{{$user['id']}}" onclick="return confirm('Do you really want to de-activate the current user ?');" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a> @else <a href="/users/activate_user/{{$user['id']}}" onclick="return confirm('Do you really want to activate the current user ?');" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a> @endif</td>
+                                    <td style="text-align: right;">@if($user['status'] == '1')<a href="/users/deact_user/{{$user['id']}}" onclick="return confirm('Do you really want to de-activate the current user ?');" title="De-activate User" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>@else<a href="/users/activate_user/{{$user['id']}}" onclick="return confirm('Do you really want to activate the current user ?');" title="Activate User" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a>@endif&nbsp;&nbsp;@if($user['role_code'] == 'SITEUSR')<a href="/users/grant_access/{{$user['id']}}" onclick="return confirm('Do you really want to change the current user to admin ?');" title="Grant Permission" class="btn btn-primary btn-sm"><i class="fa fa-key"></i></a>@else<a href="/users/revoke_access/{{$user['id']}}" onclick="return confirm('Do you really want to revoke the current access from the user ?');" title="Revoke Permission" class="btn btn-primary btn-sm"><i class="fa fa-key"></i></a>@endif</td>
                                 </tr>
                                 @endforeach
                             </tbody>

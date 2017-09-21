@@ -21,6 +21,7 @@ class PricingController extends Controller
             return $next($request);
         });
     }
+    
 	public function index() {
     	$pricing = Pricing::All();
     	return view('frontend.pricing_view')->with('all_pricing', $pricing);

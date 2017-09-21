@@ -19,6 +19,7 @@ return array(
     'CreatePricingsTable' => $baseDir . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
     'CreateTeamsTable' => $baseDir . '/database/migrations/2017_09_20_090515_create_teams_table.php',
     'CreateTestimonialsTable' => $baseDir . '/database/migrations/2017_09_18_130925_create_testimonials_table.php',
+    'CreateUserConvertsTable' => $baseDir . '/database/migrations/2017_09_21_070046_create_user_converts_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateWorksTable' => $baseDir . '/database/migrations/2017_09_20_065931_create_works_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

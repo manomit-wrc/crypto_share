@@ -21,6 +21,7 @@ class TestimonialController extends Controller
             return $next($request);
         });
     }
+    
     public function index() {
     	$testimonial = Testimonial::All();
     	return view('frontend.testimonial_view')->with('all_testimonial', $testimonial);

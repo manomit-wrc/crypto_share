@@ -211,11 +211,9 @@ class TeamController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-
         $team = \App\Team::find($id);
         if($team->delete()) {
             $request->session()->flash("submit-status", "Member deleted successfully");
-            
         }
         else {
             $request->session()->flash("submit-status", "Please try again");

@@ -38,6 +38,8 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/users', 'UserController@index');
 	Route::get('/users/deact_user/{id}', 'UserController@deact_user');
 	Route::get('/users/activate_user/{id}', 'UserController@activate_user');
+	Route::get('/users/grant_access/{id}', 'UserController@grant_access');
+	Route::get('/users/revoke_access/{id}', 'UserController@revoke_access');
 	Route::get('/view-settings', 'PageController@view_settings');
 	Route::post('/edit_settings', 'PageController@edit_settings');
 	Route::get('/group', 'PageController@add_group_by_user');
@@ -59,13 +61,11 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/update_work', 'WorkController@update_work');
 	Route::get('/work/delete/{id}', 'WorkController@delete_work');
 	Route::get('/logout', 'PageController@logout');
-
 	
-
 	Route::resource('teams', 'TeamController', ['only' => [
     	'index', 'create', 'store','edit'
 	]]);
-
+	
 	Route::get('/teams/delete/{id}','TeamController@destroy');
 	Route::post('/teams/{id}','TeamController@update');
 });
