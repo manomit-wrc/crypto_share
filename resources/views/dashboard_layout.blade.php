@@ -143,6 +143,8 @@
             $('#join_group_submit').on('click', function(){
                 var valid = $('#join_group_form').valid();
                 if(valid){
+                    $('#join_group_submit').prop('disabled', false);
+
                     var group_id = $("#append_group_id").val();
                     var group_type = $("#append_group_id").attr('group_type');
                     var notes = $('#notes').val();
@@ -158,14 +160,13 @@
                         },
                         success: function(data){
                             if(data == 1){
+                              $('#join_group_submit').prop('disabled', true);
+
                               $.confirm({
                                   title: 'Confirmation!',
                                   content: 'Applied successfully',
                                   buttons: {
                                       OK: function () {
-                                        window.location.reload();
-                                      },
-                                      cancel: function () {
                                         window.location.reload();
                                       }
                                   }
