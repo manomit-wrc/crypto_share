@@ -101,8 +101,11 @@
         });
 
         $('#contact_us_submit').on('click', function(){
-          var valid = $('#contact_us_form').validate();
+          var valid = $('#contact_us_form').valid();
+
           if(valid){
+            $('#contact_us_submit').prop('disabled', false);
+
             var name = $('#contact_us_name').val();
             var email = $('#contact_us_email').val();
             var msg = $('#contact_us_msg').val();
@@ -115,6 +118,22 @@
                     email:email,
                     msg:msg,
                     _token: '{{csrf_token()}}'
+                },
+                async: false,
+                success: function(data){
+                    if(data == 1){
+                        $('#contact_us_submit').prop('disabled', true);
+
+                        $.confirm({
+                              title: 'Confirmation!',
+                              content: 'Applied successfully',
+                              buttons: {
+                                  OK: function () {
+                                    window.location.reload();
+                                  }
+                              }
+                        });
+                    }
                 }
             });
           }
