@@ -25,17 +25,16 @@ use Config;
 
 class PageController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware(function ($request, $next) {
-            if(Auth::guard('crypto')->check()) {
+            if (Auth::guard('crypto')->check()) {
                 $this->role_code = Auth::user()->role_code;
-                if($this->role_code == "SITEADM" && $request->segment(1) == "group") {
-                    echo "Permission Defined";
+                if ($this->role_code == "SITEADM" && $request->segment(1) == "group") {
+                    echo "Permission Denied";
                     die();
                 }
-                if($this->role_code == "SITEUSR" && $request->segment(1) == "view-settings") {
-                    echo "Permission Defined";
+                if ($this->role_code == "SITEUSR" && $request->segment(1) == "view-settings") {
+                    echo "Permission Denied";
                     die();
                 }
             }
@@ -52,7 +51,7 @@ class PageController extends Controller
     	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details, 'work'=>$work, 'team' => $team]);
     }
 
-    public function contact_us_submit(Request $request){
+    public function contact_us_submit(Request $request) {
         $name = $request->name;
         $email = $request->email;
         $msg = $request->msg;
@@ -62,7 +61,7 @@ class PageController extends Controller
         $add->email = $email;
         $add->msg = $msg;
 
-        if($add->save()){
+        if ($add->save()) {
             $to_email = 'sobhandas30@gmail.com';
             try{
                 Mail::to($to_email)->send(new contact_us_email($name,$email,$msg));
@@ -74,18 +73,17 @@ class PageController extends Controller
                 return response()->json(['code'=>500,'message'=>$e]);
             }
         }
-
     }
 
     public function login(Request $request) {
-        if(Auth::guard('crypto')->check() && $request->segment(1) == 'login') {
+        if (Auth::guard('crypto')->check() && $request->segment(1) == 'login') {
             return redirect('/dashboard');
         }
     	return view('frontend.login');
     }
 
     public function register(Request $request) {
-        if(Auth::guard('crypto')->check() && $request->segment(1) == 'register') {
+        if (Auth::guard('crypto')->check() && $request->segment(1) == 'register') {
             return redirect('/dashboard');
         }
     	return view('frontend.register');
@@ -113,6 +111,8 @@ class PageController extends Controller
 			'aggrement.required' => 'Select aggrement'
 		])->validate();
 
+        $config_details = Organization::all()->toArray();
+
     	$user = new User();
     	$user->first_name = $request->first_name;
     	$user->last_name = $request->last_name;
@@ -125,13 +125,24 @@ class PageController extends Controller
 
     	if ($user->save()) {
             $activation_link = config('app.url').'activate/'.$user->active_token."/".time();
-            Mail::to($request->input('email'))->send(new RegistrationEmail($activation_link));
-    		$request->session()->flash("message", "Registration completed successfully");
+            Mail::to($request->email)->send(new RegistrationEmail($activation_link, $config_details[0]['email']));
+    		$request->session()->flash("message", "Registration completed successfully. One activation link has been sent to your email to activate your account.");
     	}
     	else {
-    		$request->session()->flash("error_message", "Please try again");
+    		$request->session()->flash("error_message", "There are some problem occured in registration process. Please try again!");
     	}
     	return redirect('/register');
+    }
+
+    public function activate_reg($token, $activate_time, Request $request) {
+        $user = User::where('active_token', '=', $token);
+        if ($user->update(['status' => '1'])) {
+            $request->session()->flash("message", "You are now active and can log in with your credentials.");
+            return redirect('/register');
+        } else {
+            $request->session()->flash("error_message", "User activation failed.");
+            return redirect('/register');
+        }
     }
 
     public function submit_login(Request $request) {
@@ -143,21 +154,25 @@ class PageController extends Controller
             'password.required' => 'Enter password'
         ])->validate();
 
-        if(Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->remember)) {
+        if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password, 'status'=>'1'], $request->remember)) {
             return redirect('/dashboard');
         }
+        else if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password, 'status'=>'2'], $request->remember)) {
+            $request->session()->flash("login-status", "User is not active. Please activate your account to log in!");
+            return redirect('/login');
+        }
         else {
-            $request->session()->flash("login-status", "Email ID Or Password Didn't Matched");
+            $request->session()->flash("login-status", "Email Address or Password didn't matched!");
             return redirect('/login');
         }
     }
 
-    public function edit_profile_view (){
+    public function edit_profile_view () {
         $fetch_all_countries = countries::all()->toArray();
         return view('frontend.profile')->with('fetch_all_countries', $fetch_all_countries);
     }
 
-    public function profile_edit(Request $request){
+    public function profile_edit(Request $request) {
         $id = base64_decode($request->user_id);
 
         Validator::make($request->all(),[
@@ -183,28 +198,21 @@ class PageController extends Controller
         ])->validate();
 
 
-        if($request->hasFile('profile_image')) {
-          $file = $request->file('profile_image') ;
-
-          $fileName = time().'_'.$file->getClientOriginalName() ;
-
-          //thumb destination path
-          
-          $destinationPath_2 = public_path().'/upload/profile_image/resize' ;
-
-          $img = Image::make($file->getRealPath());
-
-          
-          $img->resize(175, 175, function ($constraint){
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $fileName = time().'_'.$file->getClientOriginalName();
+            //thumb destination path
+            $destinationPath_2 = public_path().'/upload/profile_image/resize/';
+            $img = Image::make($file->getRealPath());
+            $img->resize(175, 175, function ($constraint) {
               $constraint->aspectRatio();
-          })->save($destinationPath_2.'/'.$fileName);
-
-          //original destination path
-          $destinationPath = public_path().'/upload/profile_image/original/' ;
-          $file->move($destinationPath,$fileName);
+            })->save($destinationPath_2.'/'.$fileName);
+            //original destination path
+            $destinationPath = public_path().'/upload/profile_image/original/';
+            $file->move($destinationPath,$fileName);
         }
         else {
-          $fileName = $request->exiting_profile_image;
+            $fileName = $request->exiting_profile_image;
         }
 
         $obj = User::find($id);
@@ -217,11 +225,11 @@ class PageController extends Controller
         $obj->pincode = $request->pincode;
         $obj->image = $fileName;
 
-        if($obj->save()){
-            $request->session()->flash("submit-status", "Profile eidt successfully.");
+        if ($obj->save()) {
+            $request->session()->flash("submit-status", "Profile edited successfully.");
             return redirect('/dashboard');
-        }else{
-            $request->session()->flash("submit-status", "Profile eidt failed.");
+        } else {
+            $request->session()->flash("submit-status", "Profile edit failed.");
             return redirect('/edit_profile');
         }
     }
@@ -274,7 +282,7 @@ class PageController extends Controller
         $edit->twitter = $request->tw_link;
         $edit->linkedin = $request->linkedin_link;
 
-        if($edit->save()){
+        if ($edit->save()) {
             $request->session()->flash("submit-status", "Edit Successfully.");
             return redirect('/view-settings');
         }
@@ -294,7 +302,7 @@ class PageController extends Controller
         return view('frontend.group.create_group');
     }
 
-    public function add_create_groups(Request $request){
+    public function add_create_groups(Request $request) {
         Validator::make($request->all(),[
             'group_name' => 'required | unique:groups,group_name',
             'group_type' => 'required',
@@ -312,25 +320,22 @@ class PageController extends Controller
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->current_status = 1;
 
-        if($add->save()){
+        if ($add->save()) {
             $request->session()->flash("submit-status", "Group added successfully.");
             return redirect('/group');
-        }else{
+        } else {
            $request->session()->flash("error-status", "Group added failed.");
             return redirect('/group/add'); 
         }
     }
 
-    public function add_group_edit($group_id){
+    public function add_group_edit($group_id) {
         $id = base64_decode($group_id);
-
         $fetch_details = Group::find($id)->toArray();
-
         return view('frontend.group.edit_group')->with('fetch_details', $fetch_details);
-
     }
 
-    public function edit_create_groups (Request $request, $group_id){
+    public function edit_create_groups (Request $request, $group_id) {
         $id = base64_decode($group_id);
 
         Validator::make($request->all(),[
@@ -348,14 +353,13 @@ class PageController extends Controller
         $edit->group_type = $request->group_type;
         $edit->status = $request->status;
 
-        if($edit->save()){
+        if ($edit->save()) {
             $request->session()->flash("submit-status", "Group edited successfully.");
             return redirect('/group');
-        }else{
+        } else {
             $request->session()->flash("error-status", "Group added failed.");
             return redirect('/group/edit/{group_id}'); 
         }
-
     }
 
     public function add_group_delete(Request $request, $group_id){
@@ -363,14 +367,13 @@ class PageController extends Controller
 
         $delete = Group::find($id);
         $delete->current_status = 5;
-        if($delete->save()){
+        if ($delete->save()) {
             $request->session()->flash("submit-status", "Group deleted successfully.");
             return redirect('/group');
         }
-
     }
 
-    public function join_group_list (){
+    public function join_group_list () {
         $fetch_group_list = Group::where('status',1)
         ->where('current_status',1)
         ->where('user_id', '!=' , Auth::guard('crypto')->user()->id)
@@ -390,9 +393,9 @@ class PageController extends Controller
             ->get()
             ->toArray();
 
-            if(!empty($exit_user_in_invitation)){
+            if (!empty($exit_user_in_invitation)) {
                 $invitation_status = $exit_user_in_invitation[0]['status'];
-            }else{
+            } else {
                 $invitation_status = 0;
             }
 
@@ -401,34 +404,29 @@ class PageController extends Controller
         }
 
         return view('frontend.group.join_group')->with('fetch_group_list', $fetch_group_list);
-
     }
 
-    public function join_group_request_sent(Request $request){
-
+    public function join_group_request_sent(Request $request) {
         $group_id = $request->group_id;
         
         $group_type = $request->group_type;
-        if($group_type == 'og'){
+        if ($group_type == 'og') {
             $status = 1;
-        }else{
+        } else {
             $status = 2;
         }
 
         $notes = $request->notes;
-
         $add = new Invitation();
         $add->group_id = $group_id;
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->status = $status;
         $add->notes = $notes;
         $add->read_status = 1;
-
-        if($add->save()){
+        if ($add->save()) {
             echo 1;
             exit();
         }
-
     }
 
     public function group_pending_request () {
@@ -437,7 +435,7 @@ class PageController extends Controller
         ->get()
         ->toArray();
 
-        foreach($details as $key=>$value){
+        foreach ($details as $key=>$value) {
             $id = $value['id'];
             $edit = Invitation::find($id);
             $edit->read_status = 0;
@@ -455,31 +453,29 @@ class PageController extends Controller
         return view('frontend.group.pending_request')->with('details', $details);
     }
 
-    public function pending_request_accept(Request $request,$group_id){
+    public function pending_request_accept(Request $request,$group_id) {
         $id = base64_decode($group_id);
 
         $edit = Invitation::find($id);
         $edit->status = 1;
 
-        if($edit->save()){
+        if ($edit->save()) {
             $request->session()->flash("submit-status", "Request accepted successfully.");
             return redirect('/group/pending-request');
         }
-
     }
 
-    public function pending_request_decline (Request $request,$group_id){
+    public function pending_request_decline (Request $request,$group_id) {
         $id = base64_decode($group_id);
 
         $edit = Invitation::find($id);
         $edit->status = 5;
 
-        if($edit->save()){
+        if ($edit->save()) {
             $request->session()->flash("submit-status", "Request declined successfully.");
             return redirect('/group/pending-request');
         }
     }
-
 
     public function change_pass() {
         return view('frontend.change_pass');

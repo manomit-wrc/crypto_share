@@ -22,11 +22,11 @@
             <small>Create your Crypto Share Account. It’s free and always will be.</small>
         </h1>
         @if (Session::has('message'))
-            <div class="alert alert-info" id="result7">{{ Session::get('message') }}</div>
+            <div class="m-l-10 m-r-10"><br /><div class="alert alert-info" id="result7">{{ Session::get('message') }}</div></div>
         @endif
-       @if (Session::has('error_message'))
-          <div class="alert alert-danger" id="result8">{{ Session::get('error_message') }}</div>
-       @endif
+        @if (Session::has('error_message'))
+            <div class="m-l-10 m-r-10"><br /><div class="alert alert-danger" id="result8">{{ Session::get('error_message') }}</div></div>
+        @endif
         <!-- end register-header -->
         <!-- begin register-content -->
         <div class="register-content">

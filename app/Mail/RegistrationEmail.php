@@ -17,9 +17,12 @@ class RegistrationEmail extends Mailable
      * @return void
      */
     public $activation_link;
-    public function __construct($activation_link)
+    public $config_email;
+
+    public function __construct($activation_link, $config_email)
     {
         $this->activation_link = $activation_link;
+        $this->config_email = $config_email;
     }
 
     /**
@@ -30,6 +33,6 @@ class RegistrationEmail extends Mailable
     public function build()
     {
         //return $this->view('view.name');
-        return $this->from('sayan@wrctpl.com','Crypto Share')->subject('Activation Link from Crypto Share')->view('emails.registration');
+        return $this->from($this->config_email, 'Crypto Share')->subject('Activation Link from Crypto Share')->view('emails.registration');
     }
 }
