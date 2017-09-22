@@ -35,7 +35,7 @@ class contact_us_email extends Mailable
      */
     public function build()
     {
-        return $this->from('sobhan@wrctpl.com', 'Crypto Share')
+        return $this->from('partho@wrctpl.com', 'Crypto Share')
         ->subject('Contact Us')
         ->view('email.contact_us');
     }
