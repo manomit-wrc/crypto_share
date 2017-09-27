@@ -22,6 +22,7 @@ use App\Mail\contact_us_email;
 use App\Mail\RegistrationEmail;
 // use Illuminate\Support\Facades\Mail;
 use Config;
+use Illuminate\Support\Facades\App;
 
 class PageController extends Controller
 {
@@ -43,6 +44,7 @@ class PageController extends Controller
     }
     
     public function index() {
+
         $testimonial = Testimonial::all();
         $pricing = Pricing::where('status','1')->get();
         $work = Work::where('status','1')->get();

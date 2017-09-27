@@ -61,6 +61,22 @@
     <!-- end #page-container -->
     
     @include('partial/footer_script')
+  <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('397f69f15f677e2fd465', {
+      cluster: 'ap2',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('test-channel');
+    channel.bind('test-event', function(data) {
+      console.log(data.text);
+    });
+  </script>
 </body>
 
 </html>

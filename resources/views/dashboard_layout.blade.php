@@ -7,6 +7,7 @@
 <!-- Mirrored from seantheme.com/color-admin-v3.0/admin/html/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 15 Sep 2017 12:24:45 GMT -->
 <head>
 	<meta charset="utf-8" />
+  
 	<title>Crypto Share Admin | Dashboard</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
