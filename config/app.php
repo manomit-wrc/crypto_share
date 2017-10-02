@@ -169,7 +169,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         //
-
+        Vinkla\Pusher\PusherServiceProvider::class,
         /*
          * Application Service Providers...
          */

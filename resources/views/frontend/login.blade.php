@@ -29,7 +29,7 @@
         <!-- end login-header -->
         <!-- begin login-content -->
         @if (Session::has('login-status'))
-            <div class="alert alert-info" id="result7">{{ Session::get('login-status') }}</div>
+            <div class="m-l-10 m-r-10"><br /><div class="alert alert-info" id="result7">{{ Session::get('login-status') }}</div></div>
         @endif
         <div class="login-content">
             <form action="/login/submit" method="POST" class="margin-bottom-0">

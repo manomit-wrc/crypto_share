@@ -11,12 +11,15 @@
 |
 */
 
+
 Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 Route::get('/register', 'PageController@register');
 Route::post('/register/submit', 'PageController@submit_registration');
 Route::post('/login/submit', 'PageController@submit_login');
+Route::get('/activate/{token}/{time}', 'PageController@activate_reg');
 Route::post('/contact-us-form', 'PageController@contact_us_submit');
+
 
 Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/dashboard','DashboardController@index');
@@ -70,5 +73,10 @@ Route::group(['middleware' => ['crypto']], function() {
 	
 	Route::get('/teams/delete/{id}','TeamController@destroy');
 	Route::post('/teams/{id}','TeamController@update');
+
+	Route::get('/chat', 'ChatController@index');
+	Route::post('/chat/message', 'ChatController@postMessage');
+	Route::post('/chat/user-typing','ChatController@user_typing');
+	Route::get('/chat/load-message', 'ChatController@loadMessage');
 });
 

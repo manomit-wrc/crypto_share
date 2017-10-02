@@ -9,7 +9,7 @@ Class GeneralComposer {
  {
  	  if(Auth::guard('crypto')->check())
  	  {
- 	  	$details = \App\Invitation::with('groups')->where([['status','=','2'],['read_status','=','1'],['user_id','<>',Auth::guard('crypto')->user()->id]])
+ 	  	$details = \App\Invitation::with('groups')->where([['read_status','=','1'],['user_id','<>',Auth::guard('crypto')->user()->id]])
         ->get()->toArray();
         $view->with('total_record', count($details));
  	  }
