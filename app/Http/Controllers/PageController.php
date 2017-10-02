@@ -117,7 +117,7 @@ class PageController extends Controller
     	$user->first_name = $request->first_name;
     	$user->last_name = $request->last_name;
     	$user->email = $request->email;
-    	$user->password = bcrypt($request->password);
+    	$user->passssword = bcrypt($request->password);
         $user->role_code = "SITEUSR";
         $user->status = "2";
 
