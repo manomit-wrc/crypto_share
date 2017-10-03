@@ -201,7 +201,10 @@
             });
 
 
+            $('.panel.panel-chat > .panel-bodyy').hide();
+            $('.panel.panel-chat > .panel-footer').hide();
 
+            
             $(".panel.panel-chat > .panel-heading > .chatMinimize").click(function(){
                 if($(this).parent().parent().hasClass('mini'))
                 {

@@ -250,38 +250,36 @@
                     $("#coin_full_name").val(ui.item.label);
                     $("#coin_name").val(ui.item.value);
                     $("#coin_id").val(ui.item.id);
-                    return false;
+                    var coin_name = $('#coin_name').val();
+                    $.ajax({
+                        url: '/get_price/'+coin_name,
+                        type: 'GET',
+                        dataType: 'json',
+                        beforeSend: function() {
+                            setTimeout(function() {
+                                $('#loading').addClass('loading');
+                            }, 3000);
+                        },
+                        success: function(data) {
+                            $("#tab1_current_price").val(data.USD);
+                            $("#tab2_current_price").val(data.USD);
+                            $("#tab3_current_price").val(data.USD);
+                            $("#tab1_trade_price").val(data.USD);
+                            $("#tab2_trade_price").val(data.USD);
+                            $("#tab3_trade_price").val(data.USD);
+                        },
+                        error: function() {
+                            //alert('error');
+                        },
+                        complete: function() {
+                            $('#loading').removeClass('loading');
+                        }
+                    });
                 }
             });
         });
     
-        $("#coin_full_name").blur(function() {
-            var coin_name = $('#coin_name').val();
-            $.ajax({
-                url: '/get_price/'+coin_name,
-                type: 'GET',
-                dataType: 'json',
-                beforeSend: function() {
-                    setTimeout(function() {
-                        $('#loading').addClass('loading');
-                    }, 3000);
-                },
-                success: function(data) {
-                    $("#tab1_current_price").val(data.USD);
-                    $("#tab2_current_price").val(data.USD);
-                    $("#tab3_current_price").val(data.USD);
-                    $("#tab1_trade_price").val(data.USD);
-                    $("#tab2_trade_price").val(data.USD);
-                    $("#tab3_trade_price").val(data.USD);
-                },
-                error: function() {
-                    //alert('error');
-                },
-                complete: function() {
-                    $('#loading').removeClass('loading');
-                }
-            });
-        });
+        
 
         $("#tab1").click(function() {
             var tran_type = 1;
