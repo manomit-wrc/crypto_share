@@ -145,8 +145,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button id="submit" name="submit" type="submit" class="btn btn-primary" style="    margin-left: 100px;">Edit</button>
-                              <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}" >
+                              <button id="submit" name="submit" type="submit" class="btn btn-primary" style="margin-left: 100px;">Edit</button>
+                              <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}">
                             </div>
                         </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\CoinList;
 
 class TransactionController extends Controller
 {
@@ -20,6 +21,7 @@ class TransactionController extends Controller
     }
     
 	public function index() {
-    	return view('frontend.transaction_add');
+        $coin_list = CoinList::All();
+    	return view('frontend.transaction_add')->with('coin_list', $coin_list);
     }
 }

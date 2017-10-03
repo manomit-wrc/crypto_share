@@ -30,10 +30,11 @@
             <div class="row">
                 <form name="add_transaction" method="POST" action="/add_transaction" class="form-horizontal">
                     {{ csrf_field() }}
+                    <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Search for Coins</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="search_coin" placeholder="Search for Coins" type="text" value="{{old('search_coin')}}">
+                            <input class="form-control" name="search_coin" id="search_coin" placeholder="Search for Coins" type="text" value="{{old('search_coin')}}">
                         </div>
                         @if ($errors->first('search_coin'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('search_coin') }}</span>@endif
                     </div>
@@ -232,5 +233,18 @@
 <!-- begin scroll to top btn -->
 	<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
 	<!-- end scroll to top btn -->
+    <script type="text/javascript">
+        $( function() {
+            var availableCoins = [
+                @foreach($coin_list as $coin)
+                "{{$coin->full_name}}",
+                @endforeach
+            ];
+            $( "#search_coin" ).autocomplete({
+                source: availableCoins
+            });
+        });
+    </script>
 	
 @endsection
+
