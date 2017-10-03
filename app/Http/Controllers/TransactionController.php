@@ -23,8 +23,16 @@ class TransactionController extends Controller
     }
     
 	public function index() {
+        $user_id = Auth::user()->id;
+        $user_coin_data_list = UserCoin::with('coinlists')->where('user_id',$user_id)->get();
+        //echo "<pre>";
+        //print_r($user_coin_data_list); exit;
+    	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
+    }
+
+    public function add_transaction() {
         $coin_list = CoinList::All();
-    	return view('frontend.transaction_add')->with('coin_list', $coin_list);
+        return view('frontend.transaction_add')->with('coin_list', $coin_list);
     }
 
     public function get_price($coin_name) {
@@ -37,7 +45,7 @@ class TransactionController extends Controller
         echo $json;
     }
 
-    public function add_transaction(Request $request) {
+    public function insert_transaction(Request $request) {
         $user_id = base64_decode($request->user_id);
         Validator::make($request->all(),[
             'coin_full_name' => 'required'
@@ -71,6 +79,7 @@ class TransactionController extends Controller
             $user_coin->trade_price = $request->tab3_trade_price;
             $user_coin->quantity = $request->tab3_qty;
             $user_coin->total_value = $request->tab3_total_val;
+            $user_coin->notes = '';
             $user_coin->trade_date = date('Y-m-d');
         }
 
@@ -80,6 +89,17 @@ class TransactionController extends Controller
         } else {
             $request->session()->flash("submit-status", "Transaction added failed.");
             return redirect('/transaction');
+        }
+    }
+
+    public function delete_transaction($id, Request $request) {
+        $user_coin = UserCoin::find($id);
+        if ($user_coin->delete()) {
+            $request->session()->flash("submit-status", "Transaction deleted successfully.");
+            return redirect('/transaction');
+        } else {
+            $request->session()->flash("submit-status", "Transaction delete failed.");
+            return redirect('/transaction/');
         }
     }
 }

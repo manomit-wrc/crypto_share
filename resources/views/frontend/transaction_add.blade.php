@@ -22,6 +22,7 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
+            <li><a href="/transaction">Transaction</a></li>
             <li class="active">Add Transaction</li>
         </ol>
         <!-- end breadcrumb -->
@@ -35,7 +36,7 @@
                 <p class="login-box-msg" style="color: red;">{{ Session::get('submit-status') }}</p>
             @endif
             <div class="row">
-                <form name="add_transaction" method="POST" action="/add_transaction" class="form-horizontal">
+                <form name="add_transaction" method="POST" action="/insert_transaction" class="form-horizontal">
                     {{ csrf_field() }}
                     <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}">
                     <input type="hidden" name="tran_type" id="tran_type" value="1">
