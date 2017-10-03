@@ -5,6 +5,13 @@
     .tab-content {
         border: 1px solid #ccc;
     }
+    .ui-autocomplete {
+        height: 200px;
+        overflow: scroll;
+    }
+    .loading {
+        background: url('/storage/dashboard/assets/img/loading.gif') no-repeat;
+    }
 </style>
 
 <!-- begin #sidebar -->
@@ -31,31 +38,32 @@
                 <form name="add_transaction" method="POST" action="/add_transaction" class="form-horizontal">
                     {{ csrf_field() }}
                     <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}">
+                    <input type="hidden" name="tran_type" id="tran_type" value="1">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Search for Coins</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="search_coin" id="search_coin" placeholder="Search for Coins" type="text" value="{{old('search_coin')}}">
+                            <input class="form-control" name="coin_full_name" id="coin_full_name" placeholder="Search for Coins" type="text" value="{{old('coin_full_name')}}">
+                            <input type="hidden" name="coin_name" id="coin_name">
+                            <input type="hidden" name="coin_id" id="coin_id">
                         </div>
-                        @if ($errors->first('search_coin'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('search_coin') }}</span>@endif
+                        @if ($errors->first('coin_full_name'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('coin_full_name') }}</span>@endif
                     </div>
+                    <div id="loading"></div>
                     <div class="col-md-2"></div>
                     <div class="col-md-10" style="padding-left: 5px;">
                         <ul class="nav nav-pills">
                             <li class="active">
-                                <a href="#use_100_chips" data-toggle="tab">
-                                    <span class="visible-xs"></span>
+                                <a id="tab1" href="#use_100_chips" data-toggle="tab">
                                     <span class="hidden-xs">Use 100 Chips</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#input_trade_targets" data-toggle="tab">
-                                    <span class="visible-xs"></span>
+                                <a id="tab2" href="#input_trade_targets" data-toggle="tab">
                                     <span class="hidden-xs">Input Trade with Targets</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#watch" data-toggle="tab">
-                                    <span class="visible-xs"></span>
+                                <a id="tab3" href="#watch" data-toggle="tab">
                                     <span class="hidden-xs">Watch</span>
                                 </a>
                             </li>
@@ -65,32 +73,31 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Current Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_current_price" placeholder="Current Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Current Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_price" placeholder="Trade Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab1_trade_price" id="tab1_trade_price" placeholder="Trade Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Enter Qty.</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_qty" placeholder="Qty." type="text" value="{{old('tab1_qty')}}">
+                                        <input class="form-control" name="tab1_qty" id="tab1_qty" placeholder="Qty." type="number" value="{{old('tab1_qty')}}">
                                     </div>
-                                    @if ($errors->first('tab1_qty'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab1_qty') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_total_val" placeholder="Total Value" type="text" value="" disabled>
+                                        <input class="form-control" name="tab1_total_val" id="tab1_total_val" placeholder="Total Value" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_date" placeholder="Trade Date" type="text" value="" disabled>
+                                        <input class="form-control" name="tab1_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -98,14 +105,12 @@
                                     <div class="col-md-10">
                                         <textarea name="tab1_notes" class="form-control" rows="3" cols="" placeholder="Notes">{{old('tab1_notes')}}</textarea>
                                     </div>
-                                    @if ($errors->first('tab1_notes'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab1_notes') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
                                     </div>
-                                    @if ($errors->first('tab1_chip_qty'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab1_chip_qty') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">&nbsp;</label>
@@ -125,32 +130,31 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Current Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_current_price" placeholder="Current Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Current Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_price" placeholder="Trade Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab2_trade_price" id="tab2_trade_price" placeholder="Trade Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Enter Qty.</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_qty" placeholder="Qty." type="text" value="{{old('tab2_qty')}}">
+                                        <input class="form-control" name="tab2_qty" id="tab2_qty" placeholder="Qty." type="number" value="{{old('tab2_qty')}}">
                                     </div>
-                                    @if ($errors->first('tab2_qty'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab2_qty') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_total_val" placeholder="Total Value" type="text" value="" disabled>
+                                        <input class="form-control" name="tab2_total_val" id="tab2_total_val" placeholder="Total Value" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_date" placeholder="Trade Date" type="text" value="" disabled>
+                                        <input class="form-control" name="tab2_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -158,60 +162,55 @@
                                     <div class="col-md-10">
                                         <textarea name="tab2_notes" class="form-control" rows="3" cols="" placeholder="Notes">{{old('tab2_notes')}}</textarea>
                                     </div>
-                                    @if ($errors->first('tab2_notes'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab2_notes') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 1</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target1" placeholder="Target 1" type="text" value="{{old('tab2_target1')}}">
+                                        <input class="form-control" name="tab2_target1" placeholder="Target 1" type="number" value="{{old('tab2_target1')}}">
                                     </div>
-                                    @if ($errors->first('tab2_target1'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab2_target1') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 2</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target2" placeholder="Target 2" type="text" value="{{old('tab2_target2')}}">
+                                        <input class="form-control" name="tab2_target2" placeholder="Target 2" type="number" value="{{old('tab2_target2')}}">
                                     </div>
-                                    @if ($errors->first('tab2_target2'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab2_target2') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 3</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target3" placeholder="Target 3" type="text" value="{{old('tab2_target3')}}">
+                                        <input class="form-control" name="tab2_target3" placeholder="Target 3" type="number" value="{{old('tab2_target3')}}">
                                     </div>
-                                    @if ($errors->first('tab2_target3'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab2_target3') }}</span>@endif
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="watch">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Current Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_current_price" placeholder="Current Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Current Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_trade_price" placeholder="Trade Price" type="text" value="" disabled>
+                                        <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Enter Qty.</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_qty" placeholder="Qty." type="text" value="{{old('tab3_qty')}}">
+                                        <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Qty." type="number" value="{{old('tab3_qty')}}">
                                     </div>
-                                    @if ($errors->first('tab3_qty'))<span class="input-group col-md-offset-2 text-danger">{{ $errors->first('tab3_qty') }}</span>@endif
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_total_val" placeholder="Total Value" type="text" value="" disabled>
+                                        <input class="form-control" name="tab3_total_val" id="tab3_total_val" placeholder="Total Value" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_trade_date" placeholder="Trade Date" type="text" value="" disabled>
+                                        <input class="form-control" name="tab3_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
                                     </div>
                                 </div>
                             </div>
@@ -235,14 +234,94 @@
 	<!-- end scroll to top btn -->
     <script type="text/javascript">
         $( function() {
-            var availableCoins = [
+            var coinList = [
                 @foreach($coin_list as $coin)
-                "{{$coin->full_name}}",
+                {label:"{{$coin->full_name}}",value:"{{$coin->name}}",id:"{{$coin->id}}"},
                 @endforeach
             ];
-            $( "#search_coin" ).autocomplete({
-                source: availableCoins
+            $( "#coin_full_name" ).autocomplete({
+                source: coinList,
+                focus: function(event, ui) {
+                    $("#coin_full_name").val(ui.item.label);
+                    return false;
+                },
+                select: function(event, ui) {
+                    $("#coin_full_name").val(ui.item.label);
+                    $("#coin_name").val(ui.item.value);
+                    $("#coin_id").val(ui.item.id);
+                    return false;
+                }
             });
+        });
+    
+        $("#coin_full_name").blur(function() {
+            var coin_name = $('#coin_name').val();
+            $.ajax({
+                url: '/get_price/'+coin_name,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function() {
+                    setTimeout(function() {
+                        $('#loading').addClass('loading');
+                    }, 3000);
+                },
+                success: function(data) {
+                    $("#tab1_current_price").val(data.USD);
+                    $("#tab2_current_price").val(data.USD);
+                    $("#tab3_current_price").val(data.USD);
+                    $("#tab1_trade_price").val(data.USD);
+                    $("#tab2_trade_price").val(data.USD);
+                    $("#tab3_trade_price").val(data.USD);
+                },
+                error: function() {
+                    //alert('error');
+                },
+                complete: function() {
+                    $('#loading').removeClass('loading');
+                }
+            });
+        });
+
+        $("#tab1").click(function() {
+            var tran_type = 1;
+            $('#tran_type').val(tran_type);
+        });
+
+        $("#tab2").click(function() {
+            var tran_type = 2;
+            $('#tran_type').val(tran_type);
+        });
+
+        $("#tab3").click(function() {
+            var tran_type = 3;
+            $('#tran_type').val(tran_type);
+        });
+
+        $("#tab1_qty").blur(function() {
+            if ($("#tab1_qty").val() != '') {
+                var cur_price = parseFloat($("#tab1_current_price").val());
+                var qty = parseFloat($("#tab1_qty").val());
+                var tot_val = (cur_price * qty);
+                $('#tab1_total_val').val(tot_val);
+            }
+        });
+
+        $("#tab2_qty").blur(function() {
+            if ($("#tab2_qty").val() != '') {
+                var cur_price = parseFloat($("#tab2_current_price").val());
+                var qty = parseFloat($("#tab2_qty").val());
+                var tot_val = (cur_price * qty);
+                $('#tab2_total_val').val(tot_val);
+            }
+        });
+
+        $("#tab3_qty").blur(function() {
+            if ($("#tab3_qty").val() != '') {
+                var cur_price = parseFloat($("#tab3_current_price").val());
+                var qty = parseFloat($("#tab3_qty").val());
+                var tot_val = (cur_price * qty);
+                $('#tab3_total_val').val(tot_val);
+            }
         });
     </script>
 	
