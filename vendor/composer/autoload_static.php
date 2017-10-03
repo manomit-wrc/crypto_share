@@ -33,6 +33,10 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         array (
             'Webmozart\\Assert\\' => 17,
         ),
+        'V' => 
+        array (
+            'Vinkla\\Pusher\\' => 14,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Util\\' => 22,
@@ -80,6 +84,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
+            'GrahamCampbell\\Manager\\' => 23,
         ),
         'F' => 
         array (
@@ -118,6 +123,10 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Vinkla\\Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vinkla/pusher/src',
         ),
         'Symfony\\Polyfill\\Util\\' => 
         array (
@@ -227,6 +236,10 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
+        'GrahamCampbell\\Manager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/graham-campbell/manager/src',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
@@ -306,10 +319,12 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'AddFieldToInvitations' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',
         'AddImageToTeams' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
         'AddUserIdInGroupTabls' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',
+        'CreateCoinListsTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_03_071906_create_coin_lists_table.php',
         'CreateContactUsesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_133707_create_contact_uses_table.php',
         'CreateCountriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_085659_create_countries_table.php',
         'CreateGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_111723_create_groups_table.php',
         'CreateInvitationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051435_create_invitations_table.php',
+        'CreateMessagesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_26_214846_create_messages_table.php',
         'CreateOrganizationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_114135_create_organizations_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePricingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
@@ -773,6 +788,9 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'Pusher' => __DIR__ . '/..' . '/pusher/pusher-php-server/lib/Pusher.php',
+        'PusherException' => __DIR__ . '/..' . '/pusher/pusher-php-server/lib/Pusher.php',
+        'PusherInstance' => __DIR__ . '/..' . '/pusher/pusher-php-server/lib/Pusher.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',

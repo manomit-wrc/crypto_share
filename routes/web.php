@@ -78,5 +78,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/chat/message', 'ChatController@postMessage');
 	Route::post('/chat/user-typing','ChatController@user_typing');
 	Route::get('/chat/load-message', 'ChatController@loadMessage');
+
+	Route::get('/dashboard/coinList','DashboardController@coinList');
 });
 
