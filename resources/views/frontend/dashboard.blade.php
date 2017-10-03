@@ -305,7 +305,7 @@
                 </div>
             </div>
             
-			<div class="panel panel-inverse" data-sortable-id="index-5">
+			{{-- <div class="panel panel-inverse" data-sortable-id="index-5">
 				<div class="panel-heading">
 					<div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -367,7 +367,7 @@
 						</div>
 					</form>
                 </div>
-			</div>
+			</div> --}}
 		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->

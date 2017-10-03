@@ -71,11 +71,7 @@
 						<span>Group</span>
 					</a>
 				</li>
-				<li class="has-sub {{ (Request::segment(1) === 'chat' ? 'active' : '')}}">
-					<a href="/chat">
-						<span>Chat</span>
-					</a>
-				</li>
+				
 			
 			@endif
 

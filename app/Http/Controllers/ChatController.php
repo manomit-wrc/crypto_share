@@ -42,11 +42,13 @@ class ChatController extends Controller
         else {
             $image = "/upload/profile_image/default.png";   
         }
+        
         $message = [
             'text' => e($request->input('chat_text')),
             'username' => Auth::guard('crypto')->user()->first_name,
             'avatar' => $image,
-            'timestamp' => (time()*1000)
+            'timestamp' => (time()*1000),
+            'user_id' => Auth::guard('crypto')->user()->id
         ];
         $this->pusher->trigger($this->chatChannel, 'new-message', $message);
     }
@@ -71,11 +73,18 @@ class ChatController extends Controller
             else {
                 $image = "/upload/profile_image/default.png";   
             }
+            if(Auth::guard('crypto')->user()->id == $value['user_id']) {
+                $className = 'messageMe';
+            }
+            else {
+                $className = 'messageHer';
+            }
             $chatArray[] = array(
                 'username' => $value['users']['first_name'], 
                 'avatar' => $image,
                 'text' => $value['chat_text'],
-                'timestamp' => $value['created_at']
+                'timestamp' => $value['created_at'],
+                'className' => $className
             );
         }
         return response()->json([$chatArray]);
