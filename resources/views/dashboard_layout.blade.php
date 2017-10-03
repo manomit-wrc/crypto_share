@@ -37,6 +37,7 @@
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
@@ -88,7 +89,6 @@
 </div>
 	
 	<!-- ================== BEGIN BASE JS ================== -->
-	{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
