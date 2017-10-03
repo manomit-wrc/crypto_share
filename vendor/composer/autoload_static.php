@@ -330,6 +330,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'CreatePricingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
         'CreateTeamsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_090515_create_teams_table.php',
         'CreateTestimonialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_130925_create_testimonials_table.php',
+        'CreateUserCoinsTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_03_083114_create_user_coins_table.php',
         'CreateUserConvertsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_070046_create_user_converts_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'CreateWorksTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_065931_create_works_table.php',
