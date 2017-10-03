@@ -10,26 +10,22 @@ use Auth;
 
 class ChatController extends Controller
 {
-    protected  $pusher;
+    protected $pusher;
     protected $user;
     protected $chatChannel;
 
     const DEFAULT_CHAT_CHANNEL = 'chat';
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->pusher = App::make('pusher');
         $this->chatChannel = self::DEFAULT_CHAT_CHANNEL;
     }
 
-    public function index()
-    {
-        
+    public function index() {
         return view('frontend.chat.index', ['chatChannel' => $this->chatChannel]);
     }
 
-    public function postMessage(Request $request)
-    {
+    public function postMessage(Request $request) {
         $message = new \App\Message();
         $message->user_id = Auth::guard('crypto')->user()->id;
         $message->chat_text = e($request->input('chat_text'));
@@ -51,8 +47,7 @@ class ChatController extends Controller
         $this->pusher->trigger($this->chatChannel, 'new-message', $message);
     }
 
-    public function user_typing(Request $request)
-    {
+    public function user_typing(Request $request) {
         $message = [
             'user_id' => Auth::guard('crypto')->user()->id,
             'username' => Auth::guard('crypto')->user()->first_name

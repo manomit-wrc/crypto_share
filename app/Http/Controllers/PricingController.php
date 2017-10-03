@@ -15,7 +15,7 @@ class PricingController extends Controller
         $this->middleware(function ($request, $next) {
             $this->role_code = Auth::user()->role_code;
             if($this->role_code == "SITEUSR") {
-                echo "Permission Defined";
+                echo "Permission Denied";
                 die();
             }
             return $next($request);
