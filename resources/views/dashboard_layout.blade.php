@@ -70,24 +70,7 @@
 	</div>
 	<!-- end page container -->
 
-  <div class="container">
-  <div class="row">
-      <div class="panel panel-chat">
-        <div class="panel-heading">
-            <a href="#" class="chatMinimize" onclick="return false"><span>Group Chat</span></a>
-            
-            <div class="clearFix"></div>
-        </div>
-        <div class="panel-bodyy">
-            
-            <div class="clearFix"></div>
-        </div>
-        <div class="panel-footer">
-            <textarea name="textMessage" id="textMessage" cols="0" rows="0"></textarea>
-        </div>
-    </div>
-  </div>
-</div>
+
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
@@ -200,36 +183,7 @@
             });
 
 
-            $('.panel.panel-chat > .panel-bodyy').hide();
-            $('.panel.panel-chat > .panel-footer').hide();
-
-            
-            $(".panel.panel-chat > .panel-heading > .chatMinimize").click(function(){
-                if($(this).parent().parent().hasClass('mini'))
-                {
-                    $(this).parent().parent().removeClass('mini').addClass('normal');
-
-                    $('.panel.panel-chat > .panel-bodyy').animate({height: "250px"}, 500).show();
-
-                    $('.panel.panel-chat > .panel-footer').animate({height: "75px"}, 500).show();
-                }
-                else
-                {
-                    $(this).parent().parent().removeClass('normal').addClass('mini');
-
-                    $('.panel.panel-chat > .panel-bodyy').animate({height: "0"}, 500);
-
-                    $('.panel.panel-chat > .panel-footer').animate({height: "0"}, 500);
-
-                    setTimeout(function() {
-                        $('.panel.panel-chat > .panel-bodyy').hide();
-                        $('.panel.panel-chat > .panel-footer').hide();
-                    }, 500);
-
-
-                }
-
-            });
+        
             
 		});
 	</script>
@@ -290,100 +244,9 @@
 //end
 
 </script>
-<script src="https://cdn.rawgit.com/samsonjs/strftime/master/strftime-min.js"></script>
-<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 
-<script>  
-    Pusher.log = function(msg) {
-        console.log(msg);
-    };
-</script>
-<script>
-    function init() {
-        // send button click handling
-        $('.send-message').click(sendMessage);
-        $('#textMessage').keypress(checkSend);
-        $.get( "/chat/load-message", function( data ) {
-            
-            for(var i=0;i<data[0].length;i++)
-            {
-                $(".panel-bodyy").append('<div class="'+data[0][i].className+'"><img src="'+data[0][i].avatar+'" alt=""/><span>'+data[0][i].text+'</span><div class="clearFix"></div></div>');
-            }
-        });
-    }
 
-    // Send on enter/return key
-    function checkSend(e) {
-        if (e.keyCode === 13) {
-            return sendMessage();
-        }
-        
-    }
 
-    // Handle the send button being clicked
-    function sendMessage() {
-        var messageText = $('#textMessage').val();
-        if(messageText.length < 3) {
-            return false;
-        }
-
-        // Build POST data and make AJAX request
-        var data = {chat_text: messageText, _token: "{{ csrf_token() }}"};
-        $.post('/chat/message', data).success(sendMessageSuccess);
-
-        // Ensure the normal browser event doesn't take place
-        return false;
-    }
-
-    // Handle the success callback
-    function sendMessageSuccess() {
-        $('#textMessage').val('')
-        console.log('message sent successfully');
-    }
-
-    // Build the UI for a new message and add to the DOM
-    function addMessage(data) {
-        var current_user_id = "{{Auth::guard('crypto')->user()->id}}";
-        var className = '';
-        if(current_user_id != data.user_id) {
-            className = 'messageHer';
-        }
-        else {
-            className = 'messageMe';
-        }
-        $(".panel-bodyy").append('<div class="'+className+'"><img src="'+data.avatar+'" alt=""/><span>'+data.text+'</span><div class="clearFix"></div></div>');
-        var messages = $(".panel-bodyy");
-        messages.scrollTop(messages[0].scrollHeight);
-    }
-
-    // Creates an activity element from the template
-    /*function createMessageEl() {
-        var text = $('#chat_message_template').text();
-        var el = $(text);
-        return el;
-    }*/
-
-    $(init);
-
-    /***********************************************/
-
-    var pusher = new Pusher('397f69f15f677e2fd465', {
-              cluster: 'ap2',
-              encrypted: true
-    });
-
-    var channel = pusher.subscribe('{{$chatChannel}}');
-    channel.bind('new-message', addMessage);
-
-    channel.bind("type-message", function(data) {
-        var current_user_id = "{{Auth::guard('crypto')->user()->id}}";
-        if(current_user_id != data.user_id) {
-            $('#isTyping').html(data.username + ' is typing...');
-        }
-      
-    });
-
-</script>
 </body>
 
 </html>

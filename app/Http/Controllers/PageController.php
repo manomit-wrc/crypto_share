@@ -297,7 +297,31 @@ class PageController extends Controller
         ->get()
         ->toArray();
 
-        return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group);
+        foreach($fetch_all_group as $key=>$value){
+
+            $new_fetch_group[$key]['groups'] = $value;
+            $new_fetch_group[$key]['groups']['group_admin_name'] = Auth::guard('crypto')->user()->first_name.' '.Auth::guard('crypto')->user()->last_name;
+
+        }
+
+        $fetch_my_join_group_list = Invitation::with('groups')->where([['status','=','1'],['user_id',Auth::guard('crypto')->user()->id]])
+            ->orderby('id','desc')
+            ->get()
+            ->toArray();
+
+        foreach ($fetch_my_join_group_list as $key => $value) {
+
+            $user_id_of_group_admin = $value['groups']['user_id'];
+
+            $find_user = User::find($user_id_of_group_admin);
+            $user_id_of_group_admin_name = $find_user['first_name'].' '.$find_user['last_name'];
+
+            $fetch_my_join_group_list[$key]['groups']['group_admin_name'] = $user_id_of_group_admin_name;
+        }
+
+        $fetch_all_group1 = array_merge($new_fetch_group,$fetch_my_join_group_list);
+        
+        return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group1);
     }
 
     public function create_group(){
