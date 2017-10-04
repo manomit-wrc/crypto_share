@@ -38,7 +38,7 @@
     color:#FFF;
     float:right;
 }
-.panel.panel-chat .panel-bodyy
+.panel.panel-chat .panel-body
 {
     display: block;
     padding: 0;
@@ -50,20 +50,20 @@
     background: #EDEFF4;
     overflow: auto;
 }
-.panel.panel-chat .panel-bodyy::-webkit-scrollbar {
+.panel.panel-chat .panel-body::-webkit-scrollbar {
      display: none;
  }
-.panel.panel-chat .panel-bodyy .messageMe
+.panel.panel-chat .panel-body .messageMe
 {
     border-bottom:1px dotted #b2b2b2;
 }
-.panel.panel-chat .panel-bodyy .messageMe img
+.panel.panel-chat .panel-body .messageMe img
  {
      float:left;
      max-width: 50px;
      max-height: 50px;
  }
-.panel.panel-chat .panel-bodyy .messageMe span
+.panel.panel-chat .panel-body .messageMe span
 {
     display: block;
     float:left;
@@ -75,17 +75,17 @@
     width: 280px;
     word-break: break-all;
 }
-.panel.panel-chat .panel-bodyy .messageHer
+.panel.panel-chat .panel-body .messageHer
 {
     border-bottom:1px dotted #b2b2b2;
 }
-.panel.panel-chat .panel-bodyy .messageHer img
+.panel.panel-chat .panel-body .messageHer img
 {
     float:right;
     max-width: 50px;
     max-height: 50px;
 }
-.panel.panel-chat .panel-bodyy .messageHer span
+.panel.panel-chat .panel-body .messageHer span
 {
     display: block;
     float:right;
