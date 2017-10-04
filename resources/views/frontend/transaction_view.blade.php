@@ -35,6 +35,7 @@
                         <table id="data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Coin Image</th>
                                     <th>Coin Name</th>
                                     <th>Transaction Type</th>
                                     <th style="text-align: right;">Trade Price</th>
@@ -48,6 +49,7 @@
                             <tbody><!--  class="even" -->
                             	@foreach ($user_coin_data_list AS $user_coin_data)
                                 <tr class="odd">
+                                    <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"></td>
                                     <td>{{$user_coin_data->coinlists->full_name}}</td>
                                     <td>@if($user_coin_data->transaction_type == 1) Use 100 Chips @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
                                     <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>

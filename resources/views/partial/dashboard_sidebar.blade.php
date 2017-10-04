@@ -35,7 +35,6 @@
 						<span>Organization</span>
 					</a>
 				</li>
-
 				<li class="has-sub {{(Request::segment(1) === 'testimonial' ? 'active' : '' )}}">
 					<a href="/testimonial">
 						<span>Testimonial</span>
@@ -72,7 +71,12 @@
 					</a>
 				</li>
 				
-			
+				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '')}}">
+					<a href="/transaction">
+						<span>Transaction</span>
+					</a>
+				</li>
+				
 			@endif
 
 	        <!-- begin sidebar minify button -->

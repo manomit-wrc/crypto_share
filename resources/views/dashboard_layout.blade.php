@@ -30,6 +30,7 @@
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	{!! Html::style('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css') !!}
+    {!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/gritter/css/jquery.gritter.css') !!}
     {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
     {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
@@ -109,7 +110,7 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-
+    {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/gritter/js/jquery.gritter.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
 
@@ -122,7 +123,6 @@
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js') !!}
 
-	{!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/dashboard.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
@@ -139,7 +139,6 @@
 			App.init();
 			Dashboard.init();
             TableManageDefault.init();
-
 
             $('.open_join_group_modal').on('click', function(){
                 var group_id = $(this).attr('value');

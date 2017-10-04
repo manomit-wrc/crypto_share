@@ -63,7 +63,7 @@ class TransactionController extends Controller
             $user_coin->trade_date = date('Y-m-d');
             $user_coin->notes = $request->tab1_notes;
             $user_coin->chip_value = $request->tab1_chip_qty;
-            $user_coin->trade_type = $request->chip_type;
+            $user_coin->trade_type = 'long_term';
         } else if ($request->tran_type == 2) {
             $user_coin->current_price = $request->tab2_current_price;
             $user_coin->trade_price = $request->tab2_trade_price;
@@ -71,6 +71,7 @@ class TransactionController extends Controller
             $user_coin->total_value = $request->tab2_total_val;
             $user_coin->trade_date = date('Y-m-d');
             $user_coin->notes = $request->tab2_notes;
+            $user_coin->trade_type = 'trade';
             $user_coin->target_1 = $request->tab2_target1;
             $user_coin->target_2 = $request->tab2_target2;
             $user_coin->target_3 = $request->tab2_target3;

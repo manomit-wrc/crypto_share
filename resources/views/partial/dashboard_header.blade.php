@@ -56,9 +56,6 @@
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
 					<li><a href="/edit_profile">Profile</a></li>
-					@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
-						<li><a href="/transaction">Transaction</a></li>
-					@endif
 					<li><a href="/change_pass">Change Password</a></li>
 					<li class="divider"></li>
 					<li><a href="/logout">Log Out</a></li>

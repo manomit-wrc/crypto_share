@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Search for Coins</label>
                         <div class="col-md-10">
-                            <input class="form-control" name="coin_full_name" id="coin_full_name" placeholder="Search for Coins" type="text" value="{{old('coin_full_name')}}">
+                            <input class="form-control" name="coin_full_name" id="coin_full_name" placeholder="Search for Coins" type="text">
                             <input type="hidden" name="coin_name" id="coin_name">
                             <input type="hidden" name="coin_id" id="coin_id">
                         </div>
@@ -55,7 +55,7 @@
                         <ul class="nav nav-pills">
                             <li class="active">
                                 <a id="tab1" href="#use_100_chips" data-toggle="tab">
-                                    <span class="hidden-xs">Use 100 Chips</span>
+                                    <span class="hidden-xs">Long Term Hold</span>
                                 </a>
                             </li>
                             <li class="">
@@ -72,9 +72,9 @@
                         <div class="tab-content">
                             <div class="tab-pane fade active in" id="use_100_chips">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Current Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Current Price" type="text" value="" readonly="">
+                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Buy in Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -84,9 +84,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Enter Qty.</label>
+                                    <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_qty" id="tab1_qty" placeholder="Qty." type="number" value="{{old('tab1_qty')}}">
+                                        <input class="form-control" name="tab1_qty" id="tab1_qty" placeholder="Quantity" type="number" value="{{old('tab1_qty')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -98,7 +98,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
+                                        <input class="form-control" name="tab1_trade_date" id="datepicker-autoClose" placeholder="Trade Date" type="text" value="{{date('d M Y')}}" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -113,25 +113,12 @@
                                         <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">&nbsp;</label>
-                                    <div class="col-md-10">
-                                        <label class="radio-inline">
-                                            <input name="chip_type" value="long_term" checked="" type="radio">
-                                            100 Long Term Chips
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input name="chip_type" value="trade" type="radio">
-                                            100 Trade Chips
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
                             <div class="tab-pane fade" id="input_trade_targets">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Current Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Current Price" type="text" value="" readonly="">
+                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Buy in Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -141,9 +128,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Enter Qty.</label>
+                                    <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_qty" id="tab2_qty" placeholder="Qty." type="number" value="{{old('tab2_qty')}}">
+                                        <input class="form-control" name="tab2_qty" id="tab2_qty" placeholder="Quantity" type="number" value="{{old('tab2_qty')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -155,7 +142,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
+                                        <input class="form-control" name="tab2_trade_date" id="datepicker-autoClose" placeholder="Trade Date" type="text" value="{{date('d M Y')}}" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -185,9 +172,9 @@
                             </div>
                             <div class="tab-pane fade" id="watch">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Current Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Current Price" type="text" value="" readonly="">
+                                        <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Buy in Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -197,9 +184,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Enter Qty.</label>
+                                    <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Qty." type="number" value="{{old('tab3_qty')}}">
+                                        <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Quantity" type="number" value="{{old('tab3_qty')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -211,7 +198,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_trade_date" placeholder="Trade Date" type="text" value="{{date('jS M, Y')}}" readonly="">
+                                        <input class="form-control" name="tab3_trade_date" id="datepicker-autoClose" placeholder="Trade Date" type="text" value="{{date('d M Y')}}" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                     </div>
                                 </div>
                             </div>
