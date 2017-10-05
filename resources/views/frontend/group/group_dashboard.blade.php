@@ -363,6 +363,34 @@
 			
 		</div>
 		<!-- end col-4 -->
+		<div class="col-md-4">
+	        <!-- begin panel -->
+	        <div class="panel panel-inverse">
+	            <div class="panel-heading">
+	                <h4 class="panel-title">Group Members</h4>
+	            </div>
+                <ul class="registered-users-list clearfix">
+                    <li>
+                        <a href="javascript:;"><img src="assets/img/user-5.jpg" alt=""></a>
+                        <h4 class="username text-ellipsis">
+                            Sayan Sadhu
+                            <small>Group Admin</small>
+                        </h4>
+                    </li>
+                    <li>
+                        <a href="javascript:;"><img src="assets/img/user-5.jpg" alt=""></a>
+                        <h4 class="username text-ellipsis">
+                            Sobhan Das
+                            <small>Member</small>
+                        </h4>
+                    </li>
+                </ul>
+	            <div class="panel-footer text-center">
+	                <a href="javascript:;" class="text-inverse">View All</a>
+	            </div>
+	        </div>
+	        <!-- end panel -->
+	    </div>
 	</div>
 			<!-- end row -->
 </div>
