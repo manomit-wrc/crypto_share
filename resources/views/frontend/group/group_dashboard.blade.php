@@ -370,24 +370,33 @@
 	                <h4 class="panel-title">Group Members</h4>
 	            </div>
                 <ul class="registered-users-list clearfix">
-                    <li>
-                        <a href="javascript:;"><img src="assets/img/user-5.jpg" alt=""></a>
-                        <h4 class="username text-ellipsis">
-                            Sayan Sadhu
-                            <small>Group Admin</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="assets/img/user-5.jpg" alt=""></a>
-                        <h4 class="username text-ellipsis">
-                            Sobhan Das
-                            <small>Member</small>
-                        </h4>
-                    </li>
+                	@if(count($fetch_user_details))
+	                	@foreach ($fetch_user_details as $key => $value)
+		                    <li>
+		                    	@if(!empty($value['image']))
+
+									<a href="javascript:;"><img src="{{url('upload/profile_image/resize/'.$value['image'])}}" style="height: 50px;" alt="User profile picture" /></a>
+		                    		
+	                    		@else
+
+	                    			<a href="javascript:;"><img src="{{ url('/upload/profile_image/default.png')}}" style="height: 50px;" alt="User profile picture"></a>
+
+		                    	@endif
+		                        
+		                        <h4 class="username text-ellipsis">
+		                            {{$value['first_name'].' '.$value['last_name']}}
+		                        </h4>
+		                    </li>
+	                    @endforeach
+
+                    @else
+                    	No members as off now.
+
+                	@endif
                 </ul>
-	            <div class="panel-footer text-center">
+	            {{-- <div class="panel-footer text-center">
 	                <a href="javascript:;" class="text-inverse">View All</a>
-	            </div>
+	            </div> --}}
 	        </div>
 	        <!-- end panel -->
 	    </div>

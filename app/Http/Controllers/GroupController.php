@@ -249,7 +249,7 @@ class GroupController extends Controller
     }
 
     public function group_dashboard($group_id){
-
+    	$fetch_user_details = array();
     	$id = base64_decode($group_id);
 
     	$fetch_group_details = Group::find($id)->toArray();
@@ -261,12 +261,13 @@ class GroupController extends Controller
     	foreach($fetch_member_of_group as $key => $value){
     		$user_id = $value['user_id'];
 
-    		$fetch_user_details = User::find($user_id)->toArray();
+    		$fetch_user_details[] = User::find($user_id)->toArray();
     	}
+    	$fetch_all_user_of_group = $fetch_user_details;
 
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group)
-													->with('fetch_user_details', $fetch_user_details);
+													->with('fetch_user_details', $fetch_all_user_of_group);
 
     }
 }
