@@ -1,14 +1,9 @@
 @extends('dashboard_layout')
 @section('content')
 <div id="content" class="content">
-			<!-- begin breadcrumb -->
-	<ol class="breadcrumb pull-right">
-		<li><a href="javascript:;">Home</a></li>
-		<li class="active">Dashboard</li>
-	</ol>
-	<!-- end breadcrumb -->
+
 	<!-- begin page-header -->
-	<h1 class="page-header">Dashboard <small>header small text goes here...</small></h1>
+	<h1 class="page-header text-center">Group Name <br><small>Total Member of Group</small> <br> <span style="font-size: 15px;">Join this group</span></h1>
 			<!-- end page-header -->
 			
 			<!-- begin row -->
@@ -442,93 +437,6 @@
 				</div>
 			</div>
 			
-			<div class="panel panel-inverse" data-sortable-id="index-8">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title">Todo List</h4>
-				</div>
-				<div class="panel-body p-0">
-					<ul class="todolist">
-						<li class="active">
-							<a href="javascript:;" class="todolist-container active" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Duis a ullamcorper massa.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Phasellus bibendum, odio nec vestibulum ullamcorper.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Duis pharetra mi sit amet dictum congue.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Duis pharetra mi sit amet dictum congue.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Phasellus bibendum, odio nec vestibulum ullamcorper.</div>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;" class="todolist-container active" data-click="todolist">
-								<div class="todolist-input"><i class="fa fa-square-o"></i></div>
-								<div class="todolist-title">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</div>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-			<div class="panel panel-inverse" data-sortable-id="index-9">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title">World Visitors</h4>
-				</div>
-				<div class="panel-body p-0">
-					<div id="world-map" class="height-sm width-full"></div>
-				</div>
-			</div>
-			
-			<div class="panel panel-inverse" data-sortable-id="index-10">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title">Calendar</h4>
-				</div>
-				<div class="panel-body">
-					<div id="datepicker-inline" class="datepicker-full-width"><div></div></div>
-				</div>
-			</div>
 		</div>
 		<!-- end col-4 -->
 	</div>
