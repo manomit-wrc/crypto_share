@@ -34,7 +34,11 @@
 	<h1 class="page-header text-center">{{$group_name}} <br><small>Members: {{$total_member_of_group}}</small> <br> <span style="font-size: 15px;">Join this group</span></h1>
 			<!-- end page-header -->
 
+	@if(Session::has('submit-status'))
+      	<p class="login-box-msg" style="color: green;">{{ Session::get('submit-status') }}</p>
+    @endif
 			<!-- begin row -->
+
 	<div class="row">
 		<!-- begin col-8 -->
 		<div class="col-md-8">
@@ -213,15 +217,19 @@
 					<div class="tab-pane fade active in" id="latest-post">
 						<div class="height-sm" data-scrollbar="true">
 							<ul class="media-list media-list-with-divider">
+							@foreach($fetch_latest_post as $key => $value)
+
 								<li class="media media-lg">
 									<a href="javascript:;" class="pull-left">
 										<img class="media-object" src="storage/dashboard/assets/img/gallery/gallery-1.jpg" alt="" />
 									</a>
 									<div class="media-body">
-										<h4 class="media-heading">Aenean viverra arcu nec pellentesque ultrices. In erat purus, adipiscing nec lacinia at, ornare ac eros.</h4>
-										Nullam at risus metus. Quisque nisl purus, pulvinar ut mauris vel, elementum suscipit eros. Praesent ornare ante massa, egestas pellentesque orci convallis ut. Curabitur consequat convallis est, id luctus mauris lacinia vel. Nullam tristique lobortis mauris, ultricies fermentum lacus bibendum id. Proin non ante tortor. Suspendisse pulvinar ornare tellus nec pulvinar. Nam pellentesque accumsan mi, non pellentesque sem convallis sed. Quisque rutrum erat id auctor gravida.
+										{{$value['post']}}
+										<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}  </span><span style="color:#07afee;"> {{ $value['created_at']}}</span>
 									</div>
 								</li>
+
+							@endforeach
 							</ul>
 						</div>
 					</div>
@@ -275,27 +283,34 @@
 				</div>
 				
 				<div class="panel panel-inverse" data-sortable-id="index-4">
-	                <div class="panel-heading">
-	                    <h4 class="panel-title">Quick Post</h4>
-	                </div>
-	                <div class="panel-toolbar">
-	                    <div class="btn-group m-r-5">
-							<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
-							<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
-							<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
-						</div>
-	                    <div class="btn-group">
-							<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
-							<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
-							<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
-							<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
-						</div>
-	                </div>
-	                <textarea class="form-control no-rounded-corner bg-silver" rows="14">Enter some comment.</textarea>
-	                <div class="panel-footer text-right">
-	                    <a href="javascript:;" class="btn btn-white btn-sm">Cancel</a>
-	                    <a href="javascript:;" class="btn btn-primary btn-sm m-l-5">Action</a>
-	                </div>
+					<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{base64_encode($group_id)}}" enctype="multipart/form-data">
+					{{ csrf_field() }}
+
+		                <div class="panel-heading">
+		                    <h4 class="panel-title">Quick Post</h4>
+		                </div>
+		                <div class="panel-toolbar">
+		                    <div class="btn-group m-r-5">
+								<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
+								<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
+								<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
+							</div>
+		                    <div class="btn-group">
+								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
+								<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
+								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
+								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
+							</div>
+		                </div>
+		                
+		                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+		                <div class="panel-footer text-right">
+
+		                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
+		                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
+		                   
+		                </div>
+	                </form>
 	            </div>
 	        </div>
 		</div>

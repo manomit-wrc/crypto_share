@@ -14,7 +14,7 @@ use App\Group;
 use App\Invitation;
 use App\CoinList;
 use App\UserCoin;
-
+use App\QuickPost;
 use Illuminate\Support\Facades\App;
 
 class GroupController extends Controller
@@ -270,9 +270,29 @@ class GroupController extends Controller
         $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
 
 
+        $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
+
+
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group)
-													->with('fetch_user_details', $fetch_all_user_of_group);
+													->with('fetch_user_details', $fetch_all_user_of_group)
+													->with('group_id',$id)
+													->with('fetch_latest_post',$fetch_latest_post);
 
+    }
+
+    public function quick_post_submit (Request $request, $group_id) {
+    	$group_id = base64_decode($group_id);
+    	$text = $request->quick_post;
+
+    	$add = new QuickPost;
+    	$add->group_id = $group_id;
+    	$add->user_id = Auth::guard('crypto')->user()->id;
+    	$add->post = $text;
+
+    	if($add->save()){
+    		$request->session()->flash("submit-status", "Post submited successfully.");
+            return redirect('/group/dashboard/'. base64_encode($group_id));
+    	}
     }
 }

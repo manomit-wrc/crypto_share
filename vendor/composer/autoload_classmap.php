@@ -21,6 +21,7 @@ return array(
     'CreateOrganizationsTable' => $baseDir . '/database/migrations/2017_09_18_114135_create_organizations_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePricingsTable' => $baseDir . '/database/migrations/2017_09_19_084314_create_pricings_table.php',
+    'CreateQuickPostsTable' => $baseDir . '/database/migrations/2017_10_05_120353_create_quick_posts_table.php',
     'CreateTeamsTable' => $baseDir . '/database/migrations/2017_09_20_090515_create_teams_table.php',
     'CreateTestimonialsTable' => $baseDir . '/database/migrations/2017_09_18_130925_create_testimonials_table.php',
     'CreateUserCoinsTable' => $baseDir . '/database/migrations/2017_10_03_083114_create_user_coins_table.php',

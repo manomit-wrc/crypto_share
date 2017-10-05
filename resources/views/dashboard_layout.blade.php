@@ -184,6 +184,27 @@
                 });
             }
         });
+
+
+        $('#quick_post_form').validate({
+          rules:{
+            quick_post:{
+              required: true
+            }
+          },
+          messages:{
+            quick_post:{
+              required: "<font color='red'>Quick Post Can't be left blank.</font>"
+            }
+          }
+        });
+
+        $('#quick_post_form_submit').on('click', function(){
+          var valid = $('#quick_post_form').valid();
+          if(valid){
+            $('#quick_post_form').submit();
+          }
+        });
             
 		});
 	</script>
