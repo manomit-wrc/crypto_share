@@ -251,7 +251,7 @@ class GroupController extends Controller
     }
 
     public function group_dashboard($group_id){
-
+    	$fetch_user_details = array();
     	$id = base64_decode($group_id);
 
     	$fetch_group_details = Group::find($id)->toArray();
@@ -260,9 +260,15 @@ class GroupController extends Controller
     	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
+    	foreach($fetch_member_of_group as $key => $value){
+    		$user_id = $value['user_id'];
+
+    		$fetch_user_details[] = User::find($user_id)->toArray();
+    	}
+    	$fetch_all_user_of_group = $fetch_user_details;
+
         $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
-        //echo "<pre>";
-        //print_r($user_coin_group_list); exit;
+        
         $coin_lists_main = array();
         $new_coin_list_id = '';
         $i = -1;
@@ -284,12 +290,11 @@ class GroupController extends Controller
             }
             $k++;
         }
-        //echo "<pre>";
-        //print_r($coin_lists_main);
-        //exit;
 
-    	return view('frontend.group.group_dashboard')->with('coin_user_info', $coin_lists_main)->with('group_id', $id)->with('group_name',$group_name)
-													->with('total_member_of_group',$total_member_of_group);
-
+    	return view('frontend.group.group_dashboard')->with('coin_user_info', $coin_lists_main)
+                                                    ->with('group_id', $id)
+                                                    ->with('group_name',$group_name)
+													->with('total_member_of_group',$total_member_of_group)
+													->with('fetch_user_details', $fetch_all_user_of_group);
     }
 }
