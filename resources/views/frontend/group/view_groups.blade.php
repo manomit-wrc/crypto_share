@@ -62,9 +62,16 @@
     												
                                                     <a href="/group/edit/{{base64_encode($value['groups']['id'])}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
 
-    												<a href="/add_group_delete/{{base64_encode($value['groups']['id'])}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+    												<a href="/add_group_delete/{{base64_encode($value['groups']['id'])}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5"><i class="fa fa-trash"></i></a>
+
+                                                    <a href="/group/dashboard/{{base64_encode($value['groups']['id'])}}" class="btn btn-inverse btn-sm m-r-5"><i class="fa fa-tachometer"></i></a>
+
+                                                @else
+
+                                                    <a href="/group/dashboard/{{base64_encode($value['groups']['id'])}}" class="btn btn-inverse btn-sm m-r-5"><i class="fa fa-tachometer"></i></a>
 
                                                 @endif
+                                                
 	                                        </td>
 	                                    </tr>
                                 	@endforeach

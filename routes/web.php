@@ -46,17 +46,20 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/users/revoke_access/{id}', 'UserController@revoke_access');
 	Route::get('/view-settings', 'PageController@view_settings');
 	Route::post('/edit_settings', 'PageController@edit_settings');
-	Route::get('/group', 'PageController@add_group_by_user');
-	Route::get('/group/add', 'PageController@create_group');
-	Route::post('/add-create-groups', 'PageController@add_create_groups');
-	Route::get('/group/edit/{group_id}', 'PageController@add_group_edit');
-	Route::post('/edit-create-groups/{group_id}', 'PageController@edit_create_groups');
-	Route::get('/add_group_delete/{group_id}', 'PageController@add_group_delete');
-	Route::get('/group/join-groups-list', 'PageController@join_group_list');
-	Route::post('/join_group_request_sent', 'PageController@join_group_request_sent');
-	Route::get('/group/pending-request', 'PageController@group_pending_request');
-	Route::get('/group/pending_request_accept/{group_id}', 'PageController@pending_request_accept');
-	Route::get('/group/pending_request_decline/{group_id}', 'PageController@pending_request_decline');
+
+	Route::get('/group', 'GroupController@add_group_by_user');
+	Route::get('/group/add', 'GroupController@create_group');
+	Route::post('/add-create-groups', 'GroupController@add_create_groups');
+	Route::get('/group/edit/{group_id}', 'GroupController@add_group_edit');
+	Route::post('/edit-create-groups/{group_id}', 'GroupController@edit_create_groups');
+	Route::get('/add_group_delete/{group_id}', 'GroupController@add_group_delete');
+	Route::get('/group/join-groups-list', 'GroupController@join_group_list');
+	Route::post('/join_group_request_sent', 'GroupController@join_group_request_sent');
+	Route::get('/group/pending-request', 'GroupController@group_pending_request');
+	Route::get('/group/pending_request_accept/{group_id}', 'GroupController@pending_request_accept');
+	Route::get('/group/pending_request_decline/{group_id}', 'GroupController@pending_request_decline');
+	Route::get('/group/dashboard/{group_id}', 'GroupController@group_dashboard');
+
 	Route::get('/transaction', 'TransactionController@index');
 	Route::get('/transaction/add', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');
