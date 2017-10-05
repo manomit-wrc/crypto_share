@@ -53,7 +53,7 @@
                                 		
                                 		<tr class="odd gradeX">
 	                                        <td><?php echo ++$i; ?></td>
-	                                        <td>{{$value['groups']['group_name']}}</td>
+	                                        <td><a href="/group_dashboard/{{base64_encode($value['groups']['id'])}}">{{$value['groups']['group_name']}}</a></td>
 	                                        <td>{{$value['groups']['group_type'] == 'cg' ? 'Close Group' : 'Open Group'}}</td>
                                             <td>{{$value['groups']['group_admin_name']}}</td>
 	                                        <td>{{$value['groups']['status'] == 1 ? 'Active' : 'Inactive'}}</td>
