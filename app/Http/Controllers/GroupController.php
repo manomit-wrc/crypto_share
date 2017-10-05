@@ -263,8 +263,32 @@ class GroupController extends Controller
         $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
         //echo "<pre>";
         //print_r($user_coin_group_list); exit;
+        $coin_lists_main = array();
+        $new_coin_list_id = '';
+        $i = -1;
+        $k = 0;
+        foreach ($user_coin_group_list as $list) {
+            if($list['coin_list_id'] != $new_coin_list_id) {
+                $i++;
+                $k = 0;
+                $coin_lists_main[$i] = $list['coinlists'];
+                $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
+                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
+                $new_coin_list_id = $list['coin_list_id'];
+            }
+            else {
+                $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
+                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
+            }
+            $k++;
+        }
+        //echo "<pre>";
+        //print_r($coin_lists_main);
+        //exit;
 
-    	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
+    	return view('frontend.group.group_dashboard')->with('coin_user_info', $coin_lists_main)->with('group_id', $id)->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group);
 
     }
