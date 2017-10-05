@@ -12,6 +12,8 @@ use Image;
 use Hash;
 use App\Group;
 use App\Invitation;
+use App\CoinList;
+use App\UserCoin;
 
 use Illuminate\Support\Facades\App;
 
@@ -257,6 +259,10 @@ class GroupController extends Controller
 
     	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
+
+        $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
+        //echo "<pre>";
+        //print_r($user_coin_group_list); exit;
 
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group);
