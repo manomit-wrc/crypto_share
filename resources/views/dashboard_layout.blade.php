@@ -39,6 +39,7 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
@@ -93,7 +94,7 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
+    
 	{!! Html::script('storage/dashboard/assets/plugins/gritter/js/jquery.gritter.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
 
@@ -115,10 +116,17 @@
 
     {!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
+    {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
+
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	
 	<script>
 		$(document).ready(function() {
+      $('.date-picker').datepicker({
+          // rtl: App.isRTL(),
+          autoclose: true
+      });
+      
 			App.init();
 			Dashboard.init();
             TableManageDefault.init();

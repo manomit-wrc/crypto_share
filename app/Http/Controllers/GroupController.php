@@ -252,7 +252,14 @@ class GroupController extends Controller
 
     	$id = base64_decode($group_id);
 
-    	return view('frontend.group.group_dashboard');
+    	$fetch_group_details = Group::find($id)->toArray();
+    	$group_name = $fetch_group_details['group_name'];
+
+    	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
+    	$total_member_of_group = count($fetch_member_of_group);
+
+    	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
+													->with('total_member_of_group',$total_member_of_group);
 
     }
 }
