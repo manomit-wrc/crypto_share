@@ -107,6 +107,7 @@
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js') !!}
 
 	{!! Html::script('storage/dashboard/assets/js/dashboard.min.js') !!}
+    {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -181,9 +182,6 @@
                     });
                 }
             });
-
-
-        
             
 		});
 	</script>
@@ -244,8 +242,6 @@
 //end
 
 </script>
-
-
 
 </body>
 
