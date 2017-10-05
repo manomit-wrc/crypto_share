@@ -268,7 +268,28 @@ class GroupController extends Controller
     	$fetch_all_user_of_group = $fetch_user_details;
 
         $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
-
+        
+        $coin_lists_main = array();
+        $new_coin_list_id = '';
+        $i = -1;
+        $k = 0;
+        foreach ($user_coin_group_list as $list) {
+            if($list['coin_list_id'] != $new_coin_list_id) {
+                $i++;
+                $k = 0;
+                $coin_lists_main[$i] = $list['coinlists'];
+                $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
+                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
+                $new_coin_list_id = $list['coin_list_id'];
+            }
+            else {
+                $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
+                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
+            }
+            $k++;
+        }
 
         $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
 
@@ -277,7 +298,8 @@ class GroupController extends Controller
 													->with('total_member_of_group',$total_member_of_group)
 													->with('fetch_user_details', $fetch_all_user_of_group)
 													->with('group_id',$id)
-													->with('fetch_latest_post',$fetch_latest_post);
+													->with('fetch_latest_post',$fetch_latest_post)
+													->with('coin_user_info', $coin_lists_main);
 
     }
 
@@ -294,5 +316,6 @@ class GroupController extends Controller
     		$request->session()->flash("submit-status", "Post submited successfully.");
             return redirect('/group/dashboard/'. base64_encode($group_id));
     	}
+
     }
 }

@@ -129,7 +129,7 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-			<a href="transaction/add/"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+			<a href="/transaction/add/{{base64_encode($group_id)}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 		</div>
 		<!-- begin col-8 -->
 		<div class="col-md-8">
@@ -142,66 +142,36 @@
 				</div> -->
 				<div class="panel-body">
                     <div class="panel-group" id="accordion">
+                    	<?php $i = 0; ?>
+                    	@foreach ($coin_user_info as $coin_user)
 						<div class="panel panel-info panel-inverse overflow-hidden">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
+									<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#{{$coin_user['coin_id']}}" aria-expanded="true">
 									    <i class="fa fa-plus-circle pull-right"></i> 
-										Coin Name1
+										{{$coin_user['full_name']}}
 									</a>
 								</h3>
 							</div>
-							<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="border: 1px solid #ccc;">
+							<div id="{{$coin_user['coin_id']}}" class="panel-collapse collapse @if($i == 0) in @endif" @if($i == 0) aria-expanded="true" @endif style="border: 1px solid #ccc;">
 								<div class="panel-body">
-									<img class="" width="50" height="50" src="https://www.cryptocompare.com//media/1383362/sub.png" alt="Coin Name">
+									<div class="col-md-1 m-r-5">
+										<img class="" width="50" height="50" src="https://www.cryptocompare.com{{$coin_user['image_url']}}" alt="{{$coin_user['full_name']}}">
+									</div>
+									<div class="col-md-10">
+									@foreach ($coin_user['user_info'] as $user_list)
+										<div class="m-r-5" style="float: left; width: 15%;">
+											{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
+											<i class="fa fa-anchor fa-3x"></i><br />
+											{{$user_list['qty']}}
+										</div>
+									@endforeach
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="panel panel-info panel-inverse overflow-hidden">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-									    <i class="fa fa-plus-circle pull-right"></i> 
-										Coin Name2
-									</a>
-								</h3>
-							</div>
-							<div id="collapseTwo" class="panel-collapse collapse" style="border: 1px solid #ccc;">
-								<div class="panel-body">
-									<img class="" width="50" height="50" src="https://www.cryptocompare.com//media/1383362/sub.png" alt="Coin Name">
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-info panel-inverse overflow-hidden">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-									    <i class="fa fa-plus-circle pull-right"></i> 
-										Coin Name3
-									</a>
-								</h3>
-							</div>
-							<div id="collapseThree" class="panel-collapse collapse" style="border: 1px solid #ccc;">
-								<div class="panel-body">
-									<img class="" width="50" height="50" src="https://www.cryptocompare.com//media/1383362/sub.png" alt="Coin Name">
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-info panel-inverse overflow-hidden">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-									    <i class="fa fa-plus-circle pull-right"></i> 
-										Coin Name4
-									</a>
-								</h3>
-							</div>
-							<div id="collapseFour" class="panel-collapse collapse" style="border: 1px solid #ccc;">
-								<div class="panel-body">
-									<img class="" width="50" height="50" src="https://www.cryptocompare.com//media/1383362/sub.png" alt="Coin Name">
-								</div>
-							</div>
-						</div>
+						<?php $i++; ?>
+						@endforeach
 					</div>
 				</div>
 			</div>
