@@ -236,7 +236,7 @@ class GroupController extends Controller
         }
     }
 
-    public function pending_request_decline (Request $request,$group_id) {
+    public function pending_request_decline(Request $request,$group_id) {
         $id = base64_decode($group_id);
 
         $edit = Invitation::find($id);
@@ -248,7 +248,7 @@ class GroupController extends Controller
         }
     }
 
-    public function group_dashboard ($group_id){
+    public function group_dashboard($group_id){
 
     	$id = base64_decode($group_id);
 
