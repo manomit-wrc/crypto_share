@@ -53,18 +53,18 @@
                                 		
                                 		<tr class="odd gradeX">
 	                                        <td><?php echo ++$i; ?></td>
-	                                        <td><a href="/group_dashboard/{{base64_encode($value['groups']['id'])}}">{{$value['groups']['group_name']}}</a></td>
+	                                        <td>{{$value['groups']['group_name']}}</td>
 	                                        <td>{{$value['groups']['group_type'] == 'cg' ? 'Close Group' : 'Open Group'}}</td>
                                             <td>{{$value['groups']['group_admin_name']}}</td>
 	                                        <td>{{$value['groups']['status'] == 1 ? 'Active' : 'Inactive'}}</td>
 	                                        <td>
                                                 @if($value['groups']['user_id'] == Auth::guard('crypto')->user()->id)
     												
+                                                    <a href="/group/dashboard/{{base64_encode($value['groups']['id'])}}" class="btn btn-inverse btn-sm m-r-5"><i class="fa fa-tachometer"></i></a>
+                                                    
                                                     <a href="/group/edit/{{base64_encode($value['groups']['id'])}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
 
     												<a href="/add_group_delete/{{base64_encode($value['groups']['id'])}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5"><i class="fa fa-trash"></i></a>
-
-                                                    <a href="/group/dashboard/{{base64_encode($value['groups']['id'])}}" class="btn btn-inverse btn-sm m-r-5"><i class="fa fa-tachometer"></i></a>
 
                                                 @else
 
