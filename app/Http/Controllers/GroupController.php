@@ -258,8 +258,15 @@ class GroupController extends Controller
     	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
+    	foreach($fetch_member_of_group as $key => $value){
+    		$user_id = $value['user_id'];
+
+    		$fetch_user_details = User::find($user_id)->toArray();
+    	}
+
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
-													->with('total_member_of_group',$total_member_of_group);
+													->with('total_member_of_group',$total_member_of_group)
+													->with('fetch_user_details', $fetch_user_details);
 
     }
 }
