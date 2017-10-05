@@ -98,7 +98,10 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_date" id="datepicker-autoClose" placeholder="Trade Date" type="text" value="{{date('d M Y')}}" data-date-format="dd M yyyy" data-date-end-date="Date.default">
+                                        <div class="input-group date" id="datepicker-disabled-past" data-date-format="dd-mm-yyyy" data-date-end-date="Date.default">
+                                            <input type="text" class="form-control" placeholder="Trade Date" value="{{date('d M Y')}}">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
