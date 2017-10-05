@@ -31,7 +31,7 @@
 <div id="content" class="content">
 
 	<!-- begin page-header -->
-	<h1 class="page-header text-center">Group Name <br><small>Total Member of Group</small> <br> <span style="font-size: 15px;">Join this group</span></h1>
+	<h1 class="page-header text-center">{{$group_name}} <br><small>Members: {{$total_member_of_group}}</small> <br> <span style="font-size: 15px;">Join this group</span></h1>
 			<!-- end page-header -->
 
 			<!-- begin row -->
