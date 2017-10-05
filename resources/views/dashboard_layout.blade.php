@@ -107,6 +107,7 @@
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js') !!}
 
 	{!! Html::script('storage/dashboard/assets/js/dashboard.min.js') !!}
+    {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -119,71 +120,70 @@
 	
 	<script>
 		$(document).ready(function() {
-			App.init();
-			Dashboard.init();
-            TableManageDefault.init();
-
-            $('.open_join_group_modal').on('click', function(){
-                var group_id = $(this).attr('value');
-                var group_type = $(this).attr('group_type');
-                
-                $('#append_group_id').val(group_id);
-                $('#append_group_id').attr('group_type',group_type);
-            });
-
-            $('#join_group_form').validate({
-                rules:{
-                    notes:{
-                        required: true
-                    }
-                },
-                messages:{
-                    notes: {
-                        required: "<font color='red'>Please Enter Notes</font>"
-                    }
-                }
-            });
-
-            $('#join_group_submit').on('click', function(){
-                var valid = $('#join_group_form').valid();
-                if(valid){
-                    $('#join_group_submit').prop('disabled', false);
-
-                    var group_id = $("#append_group_id").val();
-                    var group_type = $("#append_group_id").attr('group_type');
-                    var notes = $('#notes').val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: '/join_group_request_sent',
-                        data:{
-                            group_id: group_id,
-                            group_type: group_type,
-                            notes: notes,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(data){
-                            if(data == 1){
-                              $('#join_group_submit').prop('disabled', true);
-
-                              $.confirm({
-                                  title: 'Confirmation!',
-                                  content: 'Applied successfully',
-                                  buttons: {
-                                      OK: function () {
-                                        window.location.reload();
-                                      }
-                                  }
-                              });
-                            }
-                        }
-
-                    });
-                }
-            });
-
-
+        $('.date').datepicker();
         
+  			App.init();
+  			Dashboard.init();
+        TableManageDefault.init();
+
+        $('.open_join_group_modal').on('click', function(){
+            var group_id = $(this).attr('value');
+            var group_type = $(this).attr('group_type');
+            
+            $('#append_group_id').val(group_id);
+            $('#append_group_id').attr('group_type',group_type);
+        });
+
+        $('#join_group_form').validate({
+            rules:{
+                notes:{
+                    required: true
+                }
+            },
+            messages:{
+                notes: {
+                    required: "<font color='red'>Please Enter Notes</font>"
+                }
+            }
+        });
+
+        $('#join_group_submit').on('click', function(){
+            var valid = $('#join_group_form').valid();
+            if(valid){
+                $('#join_group_submit').prop('disabled', false);
+
+                var group_id = $("#append_group_id").val();
+                var group_type = $("#append_group_id").attr('group_type');
+                var notes = $('#notes').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '/join_group_request_sent',
+                    data:{
+                        group_id: group_id,
+                        group_type: group_type,
+                        notes: notes,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data){
+                        if(data == 1){
+                          $('#join_group_submit').prop('disabled', true);
+
+                          $.confirm({
+                              title: 'Confirmation!',
+                              content: 'Applied successfully',
+                              buttons: {
+                                  OK: function () {
+                                    window.location.reload();
+                                  }
+                              }
+                          });
+                        }
+                    }
+
+                });
+            }
+        });
             
 		});
 	</script>
@@ -244,8 +244,6 @@
 //end
 
 </script>
-
-
 
 </body>
 
