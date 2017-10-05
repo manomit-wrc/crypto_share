@@ -125,9 +125,8 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-		<button type="button" class="btn btn-primary m-r-5 m-b-5">Add New Transaction</button>
+			<a href="transaction/add/"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 		</div>
-		<div style="clear: both;"></div>
 		<!-- begin col-8 -->
 		<div class="col-md-8">
 			<div class="panel panel-inverse" data-sortable-id="index-1">
@@ -397,6 +396,9 @@
 	            {{-- <div class="panel-footer text-center">
 	                <a href="javascript:;" class="text-inverse">View All</a>
 	            </div> --}}
+	            <div class="panel-footer text-center">
+	                
+	            </div>
 	        </div>
 	        <!-- end panel -->
 	    </div>

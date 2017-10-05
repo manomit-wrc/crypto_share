@@ -13,4 +13,8 @@ class UserCoin extends Model
     public function coinlists() {
         return $this->belongsTo('\App\CoinList', 'coin_list_id');
     }
+
+    public function userInfo() {
+        return $this->belongsTo('\App\User', 'user_id');
+    }
 }
