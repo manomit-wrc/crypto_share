@@ -39,7 +39,6 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
-  {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
@@ -94,7 +93,7 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    
+    {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/gritter/js/jquery.gritter.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
 
@@ -117,79 +116,74 @@
 
     {!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
-    {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
-
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	
 	<script>
 		$(document).ready(function() {
-      $('.date-picker').datepicker({
-          // rtl: App.isRTL(),
-          autoclose: true
-      });
-      
-			App.init();
-			Dashboard.init();
-            TableManageDefault.init();
+        $('.date').datepicker();
+        
+  			App.init();
+  			Dashboard.init();
+        TableManageDefault.init();
 
-            $('.open_join_group_modal').on('click', function(){
-                var group_id = $(this).attr('value');
-                var group_type = $(this).attr('group_type');
-                
-                $('#append_group_id').val(group_id);
-                $('#append_group_id').attr('group_type',group_type);
-            });
+        $('.open_join_group_modal').on('click', function(){
+            var group_id = $(this).attr('value');
+            var group_type = $(this).attr('group_type');
+            
+            $('#append_group_id').val(group_id);
+            $('#append_group_id').attr('group_type',group_type);
+        });
 
-            $('#join_group_form').validate({
-                rules:{
-                    notes:{
-                        required: true
-                    }
-                },
-                messages:{
-                    notes: {
-                        required: "<font color='red'>Please Enter Notes</font>"
-                    }
+        $('#join_group_form').validate({
+            rules:{
+                notes:{
+                    required: true
                 }
-            });
+            },
+            messages:{
+                notes: {
+                    required: "<font color='red'>Please Enter Notes</font>"
+                }
+            }
+        });
 
-            $('#join_group_submit').on('click', function(){
-                var valid = $('#join_group_form').valid();
-                if(valid){
-                    $('#join_group_submit').prop('disabled', false);
+        $('#join_group_submit').on('click', function(){
+            var valid = $('#join_group_form').valid();
+            if(valid){
+                $('#join_group_submit').prop('disabled', false);
 
-                    var group_id = $("#append_group_id").val();
-                    var group_type = $("#append_group_id").attr('group_type');
-                    var notes = $('#notes').val();
+                var group_id = $("#append_group_id").val();
+                var group_type = $("#append_group_id").attr('group_type');
+                var notes = $('#notes').val();
 
-                    $.ajax({
-                        type: "POST",
-                        url: '/join_group_request_sent',
-                        data:{
-                            group_id: group_id,
-                            group_type: group_type,
-                            notes: notes,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(data){
-                            if(data == 1){
-                              $('#join_group_submit').prop('disabled', true);
+                $.ajax({
+                    type: "POST",
+                    url: '/join_group_request_sent',
+                    data:{
+                        group_id: group_id,
+                        group_type: group_type,
+                        notes: notes,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data){
+                        if(data == 1){
+                          $('#join_group_submit').prop('disabled', true);
 
-                              $.confirm({
-                                  title: 'Confirmation!',
-                                  content: 'Applied successfully',
-                                  buttons: {
-                                      OK: function () {
-                                        window.location.reload();
-                                      }
+                          $.confirm({
+                              title: 'Confirmation!',
+                              content: 'Applied successfully',
+                              buttons: {
+                                  OK: function () {
+                                    window.location.reload();
                                   }
-                              });
-                            }
+                              }
+                          });
                         }
+                    }
 
-                    });
-                }
-            });
+                });
+            }
+        });
             
 		});
 	</script>
