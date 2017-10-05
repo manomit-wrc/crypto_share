@@ -38,6 +38,8 @@ class GroupController extends Controller
 
 
     public function add_group_by_user () {
+    	$new_fetch_group = array();
+    	
         $fetch_all_group = Group::where('user_id', Auth::guard('crypto')->user()->id)
         ->where('current_status',1)
         ->orderby('id','desc')
