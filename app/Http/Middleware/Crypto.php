@@ -19,7 +19,7 @@ class Crypto
     {
         if(!Auth::guard('crypto')->check())
         {
-            return redirect("/");
+            return redirect("/login");
         }
         return $next($request);
     }
