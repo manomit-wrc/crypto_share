@@ -30,9 +30,10 @@ class TransactionController extends Controller
     	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
     }
 
-    public function add_transaction() {
+    public function add_transaction($group_id) {
+        $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();
-        return view('frontend.transaction_add')->with('coin_list', $coin_list);
+        return view('frontend.transaction_add')->with('coin_list', $coin_list)->with('group_id', $group_id);
     }
 
     public function get_price($coin_name) {
@@ -53,6 +54,7 @@ class TransactionController extends Controller
 
         $user_coin = new UserCoin();
         $user_coin->coin_list_id = $request->coin_id;
+        $user_coin->group_id = base64_decode($request->group_id);
         $user_coin->user_id = $user_id;
         $user_coin->transaction_type = $request->tran_type;
         if ($request->tran_type == 1) {
