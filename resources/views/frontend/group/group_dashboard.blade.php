@@ -50,8 +50,11 @@
                             <div class="carousel-inner onebyone-carosel">
                                 <div class="item active">
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/200x150" class="img-responsive center-block"></a>
-                                        <div class="text-center">1</div>
+                                    	@foreach($fetch_latest_post_image as $key=>$value)
+
+                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
