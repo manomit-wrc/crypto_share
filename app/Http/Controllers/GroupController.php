@@ -269,7 +269,7 @@ class GroupController extends Controller
     	}
     	$fetch_all_user_of_group = $fetch_user_details;
 
-        $user_coin_group_list = UserCoin::with('coinlists')->where('group_id',$id)->with('userInfo')->get()->toArray();
+        $user_coin_group_list = UserCoin::with('coinlists')->where([['group_id','=',$id],['transaction_type','=', 1]])->with('userInfo')->get()->toArray();
         
         $coin_lists_main = array();
         $new_coin_list_id = '';
