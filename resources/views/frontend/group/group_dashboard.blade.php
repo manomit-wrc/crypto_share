@@ -154,35 +154,39 @@
 				<div class="panel-body">
                     <div class="panel-group" id="accordion">
                     	<?php $i = 0; ?>
-                    	@foreach ($coin_user_info as $coin_user)
-						<div class="panel panel-info panel-inverse overflow-hidden">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#{{$coin_user['coin_id']}}" aria-expanded="true">
-									    <i class="fa fa-plus-circle pull-right"></i> 
-										{{$coin_user['full_name']}}
-									</a>
-								</h3>
-							</div>
-							<div id="{{$coin_user['coin_id']}}" class="panel-collapse collapse @if($i == 0) in @endif" @if($i == 0) aria-expanded="true" @endif style="border: 1px solid #ccc;">
-								<div class="panel-body">
-									<div class="col-md-1 m-r-5">
-										<img class="" width="50" height="50" src="https://www.cryptocompare.com{{$coin_user['image_url']}}" alt="{{$coin_user['full_name']}}">
-									</div>
-									<div class="col-md-10">
-									@foreach ($coin_user['user_info'] as $user_list)
-										<div class="m-r-5" style="float: left; width: 15%;">
-											{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
-											<i class="fa fa-anchor fa-3x"></i><br />
-											{{$user_list['qty']}}
+                    	@if (count($coin_user_info) > 0)
+	                    	@foreach ($coin_user_info as $coin_user)
+							<div class="panel panel-info panel-inverse overflow-hidden">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#{{$coin_user['coin_id']}}" aria-expanded="true">
+										    <i class="fa fa-plus-circle pull-right"></i> 
+											{{$coin_user['full_name']}}
+										</a>
+									</h3>
+								</div>
+								<div id="{{$coin_user['coin_id']}}" class="panel-collapse collapse @if($i == 0) in @endif" @if($i == 0) aria-expanded="true" @endif style="border: 1px solid #ccc;">
+									<div class="panel-body">
+										<div class="col-md-1">
+											<img class="" width="50" height="50" src="https://www.cryptocompare.com{{$coin_user['image_url']}}" alt="{{$coin_user['full_name']}}">
 										</div>
-									@endforeach
+										<div class="col-md-11">
+										@foreach ($coin_user['user_info'] as $user_list)
+											<div class="m-r-5 text-center" style="float: left; width: 15%;">
+												{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
+												<i class="fa fa-anchor fa-3x"></i><br />
+												{{$user_list['qty']}}
+											</div>
+										@endforeach
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<?php $i++; ?>
-						@endforeach
+							<?php $i++; ?>
+							@endforeach
+						@else
+							There is no user coin available for this group.
+						@endif
 					</div>
 				</div>
 			</div>
