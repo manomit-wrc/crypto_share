@@ -54,11 +54,11 @@
 	                                        <td>{{$value['group_created_by'] }}</td>
 	                                        <td>{{$value['status'] == 1 ? 'Active' : 'Inactive'}}</td>
 	                                        <td>
+                                                <a title="View Dashboard" href="/group/dashboard/{{base64_encode($value['id'])}}" class="btn btn-inverse m-r-5 m-b-5"><i class="fa fa-tachometer"></i></a>
 	                                        	@if($value['invitation_status'] == 1)
-	                                        		<div><i class="fa fa-2x fa-check"></i></div>
+	                                        		<span><i class="fa fa-2x fa-check"></i></span>
                                         		@elseif($value['invitation_status'] == 2)
-                                        			<button type="button" class="btn btn-info m-r-5 m-b-5" disabled="">Pending</button>
-
+                                                    <button type="button" class="btn btn-info m-r-5 m-b-5" disabled="">Pending</button>
                                                 @elseif($value['invitation_status'] == 5)
                                                     <button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$value['id']}}" group_type="{{$value['group_type']}}">Join Group</button>
 	                                        	@elseif($value['invitation_status'] == 0)
