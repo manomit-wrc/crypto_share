@@ -71,12 +71,6 @@
 					</a>
 				</li>
 				
-				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '')}}">
-					<a href="/transaction">
-						<span>Transaction</span>
-					</a>
-				</li>
-				
 			@endif
 
 	        <!-- begin sidebar minify button -->
