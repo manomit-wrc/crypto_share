@@ -64,6 +64,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/pending_request_decline/{group_id}', 'GroupController@pending_request_decline');
 	Route::get('/group/dashboard/{group_id}', 'GroupController@group_dashboard');
 	Route::post('/group/quick_post_submit/{group_id}', 'GroupController@quick_post_submit');
+	Route::post('/group/pinned-post', 'GroupController@pinned_post');
 
 	Route::get('/transaction', 'TransactionController@index');
 	Route::get('/transaction/add/{group_id}', 'TransactionController@add_transaction');

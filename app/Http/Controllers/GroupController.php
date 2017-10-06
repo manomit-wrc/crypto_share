@@ -297,6 +297,8 @@ class GroupController extends Controller
 
         $fetch_latest_post_image = QuickPost::where('group_id', $id )->orderby('id','desc')->get()->toArray();
 
+        $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1']] )->orderby('id','desc')->get()->toArray();
+
 
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group)
@@ -304,7 +306,8 @@ class GroupController extends Controller
 													->with('group_id',$id)
 													->with('fetch_latest_post',$fetch_latest_post)
 													->with('coin_user_info', $coin_lists_main)
-													->with('fetch_latest_post_image', $fetch_latest_post_image);
+													->with('fetch_latest_post_image', $fetch_latest_post_image)
+													->with('fetch_pinned_post', $fetch_pinned_post);
 
     }
 
@@ -336,6 +339,19 @@ class GroupController extends Controller
     	if($add->save()){
     		$request->session()->flash("submit-status", "Post submited successfully.");
             return redirect('/group/dashboard/'. base64_encode($group_id));
+    	}
+
+    }
+
+    public function pinned_post(Request $request){
+    	$user_id = $request->user_id;
+
+    	$edit = QuickPost::find($user_id);
+    	$edit->status = 1;
+
+    	if($edit->save()){
+    		echo 1;
+    		exit;
     	}
 
     }

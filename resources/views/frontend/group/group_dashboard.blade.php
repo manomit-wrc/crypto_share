@@ -48,18 +48,26 @@
                      <!-- Carousel items -->
                         <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
                             <div class="carousel-inner onebyone-carosel">
-                                <div class="item active">
-                                    <div class="col-md-4">
-                                    	@foreach($fetch_latest_post_image as $key=>$value)
+                            	@if(count($fetch_latest_post_image) > 0)
+                            		<?php $i=0; ?>
+	                            	@foreach($fetch_latest_post_image as $key=>$value)
 
-                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
-
-                                        @endforeach
-                                    </div>
-                                </div>
+		                                <div class="item @if($i==0) active @endif">
+		                                    <div class="col-md-4">
+		                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+		                                    </div>
+		                                </div>
+		                            <?php $i++; ?>
+                                	@endforeach
+                            	@else
+                            		No post image as off now.
+                            	@endif
+                            	
                             </div>
-                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
-                            <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>
+                            @if(count($fetch_latest_post_image) > 0)
+	                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
+	                            <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>
+                            @endif
                         </div>
                         <!--/carousel-inner-->
                     </div><!--/myCarousel-->
@@ -192,25 +200,58 @@
 					<div class="tab-pane fade active in" id="latest-post">
 						<div class="height-sm" data-scrollbar="true">
 							<ul class="media-list media-list-with-divider">
-							@foreach($fetch_latest_post as $key => $value)
+							@if(count($fetch_latest_post) > 0)
+								@foreach($fetch_latest_post as $key => $value)
 
-								<li class="media media-lg">
-									<a href="javascript:;" class="pull-left">
+									<li class="media media-lg">
+										<a href="javascript:;" class="pull-left">
 
-										<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
-									</a>
-									<div class="media-body">
-										{{$value['post']}}
-										<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}  </span><span style="color:#07afee;"> {{ $value['created_at']}}</span> <span class="pull-right m-r-15" title="Pinned Post"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									</div>
-								</li>
+											<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+										</a>
+										<div class="media-body">
+											{{$value['post']}}
+											<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
+											<span style="color:#07afee;"> {{ $value['created_at']}}</span> 
+											@if($value['status']!=1)
+											<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
+											@endif
+										</div>
+									</li>
 
-							@endforeach
+								@endforeach
+							@else
+								No post as off now.
+							@endif
+							
 							</ul>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="pinned_post">
 						<div class="height-sm" data-scrollbar="true">
+
+							<ul class="media-list media-list-with-divider">
+							@if(count($fetch_pinned_post) > 0)
+								@foreach($fetch_pinned_post as $key => $value)
+
+									<li class="media media-lg">
+										<a href="javascript:;" class="pull-left">
+
+											<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+										</a>
+										<div class="media-body">
+											{{$value['post']}}
+											<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
+											<span style="color:#07afee;"> {{ $value['created_at']}}</span> 
+
+										</div>
+									</li>
+
+								@endforeach
+							@else
+								No pinned post as off now.
+							@endif
+							
+							</ul>
 
 						</div>
 					</div>
