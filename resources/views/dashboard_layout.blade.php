@@ -239,6 +239,18 @@
             }
           });
         });
+
+        //for auto refresh Transaction Lists div
+        // $('#data-table').DataTable( {
+        //     stateSave: true
+        // } );
+        var URL = '<?php echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>';
+        setInterval(function()
+        {
+            $('#data-table').load(document.URL +  ' #data-table');
+
+        }, 3000);
+        //end
             
 		});
 	</script>
@@ -295,8 +307,6 @@
           }
           return true;
      });
-
-//end
 
 </script>
 

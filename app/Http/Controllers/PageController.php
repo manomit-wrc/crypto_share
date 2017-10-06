@@ -17,6 +17,8 @@ use App\Group;
 use App\Invitation;
 use App\Team;
 use App\ContactUs;
+use App\CoinList;
+use App\UserCoin;
 use Mail;
 use App\Mail\contact_us_email;
 use App\Mail\RegistrationEmail;
@@ -336,5 +338,35 @@ class PageController extends Controller
     public function logout() {
         Auth::guard('crypto')->logout();
         return redirect('/');
+    }
+
+    public function coin_property_update(Request $request){
+        $fetch_user_coin_list = UserCoin::with('coinlists')->get()->toArray();
+
+        foreach ($fetch_user_coin_list as $key => $value) {
+            $user_coin_list_id = $value['id'];
+            $coin_name = $value['coinlists']['name'];
+
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, "https://min-api.cryptocompare.com/data/histominute?fsym=".$coin_name."&tsym=USD&limit=1"); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+            $json = curl_exec($ch); 
+            $json_data = json_decode($json,true);
+
+            $edit = UserCoin::find($user_coin_list_id);
+            $edit->close = $json_data['Data'][0]['close'];
+            $edit->high = $json_data['Data'][0]['high'];
+            $edit->low = $json_data['Data'][0]['low'];
+            $edit->open = $json_data['Data'][0]['open'];
+            $edit->volumefrom = $json_data['Data'][0]['volumefrom'];
+            $edit->volumeto = $json_data['Data'][0]['volumeto'];
+
+            $save = $edit->save();
+
+            curl_close ($ch);           
+        }
+        if($save){
+            echo "update successfully";
+        }
     }
 }
