@@ -38,6 +38,14 @@
                 </tr>
                 
                 @endforeach
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </table>
             <div class="text-center"> {!! $all_groups->links('') !!} </div>
         </div>
