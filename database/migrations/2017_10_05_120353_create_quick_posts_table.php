@@ -17,7 +17,7 @@ class CreateQuickPostsTable extends Migration
             $table->increments('id');
             $table->integer('group_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('post')->nullable();
+            $table->text('post')->nullable();
             $table->string('post_image')->nullable();
             $table->timestamps();
         });

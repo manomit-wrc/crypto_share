@@ -211,6 +211,34 @@
             $('#quick_post_form').submit();
           }
         });
+
+        $('.pinned_post').on('click',function(){
+          
+          var user_id = $(this).attr('user_id');
+
+          $.ajax({
+            type: "POST",
+            url: '/group/pinned-post',
+            data:{
+              user_id:user_id,
+              _token: '{{csrf_token()}}'
+            },
+            success: function(data){
+              if(data == 1){
+
+                $.confirm({
+                    title: 'Confirmation!',
+                    content: 'Pinned post successfully',
+                    buttons: {
+                        OK: function () {
+                          window.location.reload();
+                        }
+                    }
+                });
+              }
+            }
+          });
+        });
             
 		});
 	</script>

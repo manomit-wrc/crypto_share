@@ -9,6 +9,7 @@ return array(
     'AddFieldNameToUsersTabel' => $baseDir . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
     'AddFieldToGroup' => $baseDir . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
     'AddFieldToInvitations' => $baseDir . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',
+    'AddFieldToQuickPost' => $baseDir . '/database/migrations/2017_10_06_060906_add_field_to_quick_post.php',
     'AddImageToTeams' => $baseDir . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
     'AddToTableUserCoins' => $baseDir . '/database/migrations/2017_10_05_084404_add_to_table_user_coins.php',
     'AddUserIdInGroupTabls' => $baseDir . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',
