@@ -66,6 +66,10 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/group/quick_post_submit/{group_id}', 'GroupController@quick_post_submit');
 	Route::post('/group/pinned-post', 'GroupController@pinned_post');
 
+	//coin property update
+	Route::get('/coin/property-update', 'PageController@coin_property_update');
+	//end
+
 	Route::get('/transaction', 'TransactionController@index');
 	Route::get('/transaction/add/{group_id}', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');

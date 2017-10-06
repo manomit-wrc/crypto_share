@@ -318,6 +318,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'AddFieldToGroup' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
         'AddFieldToInvitations' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',
         'AddFieldToQuickPost' => __DIR__ . '/../..' . '/database/migrations/2017_10_06_060906_add_field_to_quick_post.php',
+        'AddFieldToUserCoins' => __DIR__ . '/../..' . '/database/migrations/2017_10_06_085414_add_field_to_user_coins.php',
         'AddImageToTeams' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
         'AddToTableUserCoins' => __DIR__ . '/../..' . '/database/migrations/2017_10_05_084404_add_to_table_user_coins.php',
         'AddUserIdInGroupTabls' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_051130_add_user_id_in_group_tabls.php',

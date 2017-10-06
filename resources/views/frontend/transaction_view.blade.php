@@ -39,7 +39,8 @@
                                     <th>Coin Name</th>
                                     <th>Transaction Type</th>
                                     <th style="text-align: right;">Trade Price</th>
-                                    <th style="text-align: right;">Current Price</th>
+                                    <th style="text-align: right;">High</th>
+                                    <th style="text-align: right;">Low</th>
                                     <th style="text-align: right;">Qty.</th>
                                     <th style="text-align: right;">Total Value</th>
                                     <th style="width: 10%;">Date</th>
@@ -53,7 +54,8 @@
                                     <td>{{$user_coin_data->coinlists->full_name}}</td>
                                     <td>@if($user_coin_data->transaction_type == 1) Use 100 Chips @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
                                     <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>
-                                    <td style="text-align: right;">{{$user_coin_data->current_price}}</td>
+                                    <td style="text-align: right;">{{$user_coin_data->high}}</td>
+                                    <td style="text-align: right;">{{$user_coin_data->low}}</td>
                                     <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
                                     <td style="text-align: right;">{{$user_coin_data->total_value}}</td>
                                     <td>{{date('jS M, Y', strtotime($user_coin_data->trade_date))}}</td>
