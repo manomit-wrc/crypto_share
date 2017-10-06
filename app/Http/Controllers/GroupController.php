@@ -295,13 +295,16 @@ class GroupController extends Controller
 
         $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
 
+        $fetch_latest_post_image = QuickPost::where('group_id', $id )->orderby('id','desc')->get()->toArray();
+
 
     	return view('frontend.group.group_dashboard')->with('group_name',$group_name)
 													->with('total_member_of_group',$total_member_of_group)
 													->with('fetch_user_details', $fetch_all_user_of_group)
 													->with('group_id',$id)
 													->with('fetch_latest_post',$fetch_latest_post)
-													->with('coin_user_info', $coin_lists_main);
+													->with('coin_user_info', $coin_lists_main)
+													->with('fetch_latest_post_image', $fetch_latest_post_image);
 
     }
 
