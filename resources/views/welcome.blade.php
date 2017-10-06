@@ -40,7 +40,9 @@
         @yield('content')
         
         <!-- begin #footer -->
+        @if(Request::segment(1) != "explore")
         @include('partial/footer')
+        @endif
         <!-- end #footer -->
         
         <!-- begin theme-panel -->

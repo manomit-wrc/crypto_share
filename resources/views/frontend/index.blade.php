@@ -15,7 +15,7 @@
             We have created a multi-purpose theme that take the form of One-Page or Multi-Page Version.<br />
             Use our <a href="#">theme panel</a> to select your favorite theme color.
         </p>
-        <a href="#" class="btn btn-theme">Explore More</a> <a href="#" class="btn btn-outline">Purchase Now</a><br />
+        <a href="/explore" class="btn btn-theme">Explore Group</a> <a href="#" class="btn btn-outline">Join Group</a><br />
         <br />
         or <a href="#">subscribe</a> newsletter
     </div>

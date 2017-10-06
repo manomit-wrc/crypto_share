@@ -44,13 +44,26 @@ class PageController extends Controller
     }
     
     public function index() {
-
         $testimonial = Testimonial::all();
         $pricing = Pricing::where('status','1')->get();
         $work = Work::where('status','1')->get();
         $contact_details = Organization::with('countries')->get()->toArray();
         $team = Team::where('status','1')->get();
     	return view('frontend.index')->with(['all_testimonial'=>$testimonial, 'all_pricing'=>$pricing, 'contact_details'=>$contact_details, 'work'=>$work, 'team' => $team]);
+    }
+
+    public function explore_group() {
+        //$all_groups = Group::with('user_info')->where('status','1')->get()->toArray();
+        $all_groups = Group::with('user_info')->where('status','1')->paginate(5);
+        foreach($all_groups as $key => $value){
+            $group_id = $value['id'];
+            $fetch_member_of_group = Invitation::where([['group_id','=',$group_id],['status','=',1]])->get()->toArray();
+            $total_member_of_group = count($fetch_member_of_group);
+            $all_groups[$key]['total_member_of_group'] = $total_member_of_group;
+        }
+        //echo "<pre>";
+        //print_r($all_groups); exit;
+        return view('frontend.explore_group')->with('all_groups', $all_groups);
     }
 
     public function contact_us_submit(Request $request) {

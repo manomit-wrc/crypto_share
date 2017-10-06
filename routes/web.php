@@ -13,6 +13,7 @@
 
 
 Route::get('/', 'PageController@index');
+Route::get('/explore', 'PageController@explore_group');
 Route::get('/login', 'PageController@login');
 Route::get('/register', 'PageController@register');
 Route::post('/register/submit', 'PageController@submit_registration');

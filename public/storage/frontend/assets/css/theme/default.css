@@ -57,3 +57,28 @@ a:focus {
 .footer .footer-brand-logo {
     border-color: #4DCACA #31A3A3 #1D8888;
 }
+
+.explore-content {
+    margin-top: 10%;
+}
+
+.vertical-middle {
+    vertical-align: middle !important;
+}
+
+.explore-content th {
+    font-size: 20px;
+}
+
+.explore-content tr:hover {
+    color: #3a3b3d;
+}
+
+.explore-content td a {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.explore-content td a:hover {
+    text-decoration: none;
+}

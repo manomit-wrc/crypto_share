@@ -30,10 +30,10 @@
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	{!! Html::style('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css') !!}
-    {!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css') !!}
+  {!! Html::style('storage/dashboard/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css') !!}
 	{!! Html::style('storage/dashboard/assets/plugins/gritter/css/jquery.gritter.css') !!}
-    {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
-    {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
+  {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
+  {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	
 	<!-- ================== BEGIN BASE JS ================== -->

@@ -41,7 +41,7 @@
                                     <tr>
                                         <th>Sr. No</th>
                                         <th>Group Name</th>
-                                        <th>Group Type(s)</th>
+                                        <th>Group Type</th>
                                         <th>Group Owner</th>
                                         <th>Status</th>
                                         <th>Action</th>
