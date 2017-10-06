@@ -248,7 +248,8 @@
 
 								@endforeach
 							@else
-								No pinned post as off now.
+								No pinned post as off now. 
+								
 							@endif
 							
 							</ul>
