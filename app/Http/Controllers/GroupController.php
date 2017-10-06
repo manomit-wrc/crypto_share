@@ -308,11 +308,27 @@ class GroupController extends Controller
     public function quick_post_submit (Request $request, $group_id) {
     	$group_id = base64_decode($group_id);
     	$text = $request->quick_post;
+    	$image = $request->quick_post_image;
+
+    	if ($request->hasFile('quick_post_image')) {
+            $file = $request->file('quick_post_image');
+            $fileName = time().'_'.$file->getClientOriginalName();
+            //thumb destination path
+            $destinationPath_2 = public_path().'/upload/quick_post/resize/';
+            $img = Image::make($file->getRealPath());
+            $img->resize(200, 150, function ($constraint) {
+              $constraint->aspectRatio();
+            })->save($destinationPath_2.'/'.$fileName);
+            //original destination path
+            $destinationPath = public_path().'/upload/quick_post/original/';
+            $file->move($destinationPath,$fileName);
+        }
 
     	$add = new QuickPost;
     	$add->group_id = $group_id;
     	$add->user_id = Auth::guard('crypto')->user()->id;
     	$add->post = $text;
+    	$add->post_image = $fileName;
 
     	if($add->save()){
     		$request->session()->flash("submit-status", "Post submited successfully.");

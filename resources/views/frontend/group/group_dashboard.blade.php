@@ -178,9 +178,11 @@
 			
 			<div class="">
 				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
-					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-picture-o m-r-5"></i> <span class="hidden-xs">Latest Post</span></a></li>
-					<li class=""><a href="#purchase" data-toggle="tab"><i class="fa fa-shopping-cart m-r-5"></i> <span class="hidden-xs">Purchase</span></a></li>
-					<li class=""><a href="#email" data-toggle="tab"><i class="fa fa-envelope m-r-5"></i> <span class="hidden-xs">Email</span></a></li>
+					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
+
+					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
+
+					<li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li>
 				</ul>
 
 				<div class="tab-content" data-sortable-id="index-3">
@@ -191,11 +193,12 @@
 
 								<li class="media media-lg">
 									<a href="javascript:;" class="pull-left">
-										<img class="media-object" src="storage/dashboard/assets/img/gallery/gallery-1.jpg" alt="" />
+
+										<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
 									</a>
 									<div class="media-body">
 										{{$value['post']}}
-										<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}  </span><span style="color:#07afee;"> {{ $value['created_at']}}</span>
+										<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}  </span><span style="color:#07afee;"> {{ $value['created_at']}}</span> <span class="pull-right m-r-15" title="Pinned Post"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
 									</div>
 								</li>
 
@@ -203,51 +206,13 @@
 							</ul>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="purchase">
+					<div class="tab-pane fade" id="pinned_post">
 						<div class="height-sm" data-scrollbar="true">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Date</th>
-										<th class="hidden-sm">Product</th>
-										<th>Amount</th>
-										<th>User</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>13/02/2013</td>
-										<td class="hidden-sm">
-											<a href="javascript:;">
-												<img src="storage/dashboard/assets/img/product/product-1.png" alt=""  />
-											</a>
-										</td>
-										<td>
-											<h6><a href="javascript:;">Nunc eleifend lorem eu velit eleifend, eget faucibus nibh placerat.</a></h6>
-										</td>
-										<td>$349.00</td>
-										<td><a href="javascript:;">Derick Wong</a></td>
-									</tr>
-								</tbody>
-							</table>
+
 						</div>
 					</div>
-					<div class="tab-pane fade" id="email">
+					<div class="tab-pane fade" id="chat">
 						<div class="height-sm" data-scrollbar="true">
-							<ul class="media-list media-list-with-divider">
-								<li class="media media-sm">
-									<a href="javascript:;" class="pull-left">
-										<img src="storage/dashboard/assets/img/user-1.jpg" alt="" class="media-object rounded-corner" />
-									</a>
-									<div class="media-body">
-										<a href="javascript:;"><h4 class="media-heading">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h4></a>
-										<p class="m-b-5">
-											Aenean mollis arcu sed turpis accumsan dignissim. Etiam vel tortor at risus tristique convallis. Donec adipiscing euismod arcu id euismod. Suspendisse potenti. Aliquam lacinia sapien ac urna placerat, eu interdum mauris viverra.
-										</p>
-										<i class="text-muted">Received on 04/16/2013, 12.39pm</i>
-									</div>
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>
@@ -274,6 +239,9 @@
 		                </div>
 		                
 		                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+
+		                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+
 		                <div class="panel-footer text-right">
 
 		                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">

@@ -190,11 +190,17 @@
           rules:{
             quick_post:{
               required: true
+            },
+            quick_post_image:{
+              required: true
             }
           },
           messages:{
             quick_post:{
-              required: "<font color='red'>Quick Post Can't be left blank.</font>"
+              required: "<font color='red'>Quick post can't be left blank.</font>"
+            },
+            quick_post_image:{
+              required: "<font color='red'>Quick post image can't be left blank.</font>"
             }
           }
         });
