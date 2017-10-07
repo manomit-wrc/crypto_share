@@ -29,6 +29,7 @@ class ChatController extends Controller
         $message = new \App\Message();
         $message->user_id = Auth::guard('crypto')->user()->id;
         $message->chat_text = e($request->input('chat_text'));
+        $message->group_id = base64_decode($request->input('group_id'));
         $message->save();
 
         if(!empty(Auth::guard('crypto')->user()->image) && file_exists(public_path()."/upload/profile_image/resize/".Auth::guard('crypto')->user()->image))
