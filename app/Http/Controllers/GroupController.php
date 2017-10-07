@@ -322,9 +322,9 @@ class GroupController extends Controller
         }
         
 
-        $group_status = \App\Invitation::where('user_id',Auth::guard('crypto')->user()->id)->get()->toArray();
+        $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id]])->get()->toArray();
 
-
+        
 
     	return view('frontend.group.group_dashboard')->with('fetch_group_details',$fetch_group_details)
 													->with('total_member_of_group',$total_member_of_group)
