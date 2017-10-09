@@ -199,6 +199,37 @@
 					</div>
 				</div>
 			</div>
+
+			{{-- //coin list view --}}
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+	                <h4 class="panel-title">Coin List</h4>
+	            </div>
+				<div class="panel-body">
+	                <table id="data-table_coin_list" class="table table-striped table-bordered data-table">
+	                    <thead>
+	                        <tr>
+	                            <th>Coin Image</th>
+	                            <th>Coin Name</th>
+	                            <th style="text-align: right;">High</th>
+	                            <th style="text-align: right;">Low</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                    	@foreach ($fetch_coin_all_details as $key => $value)
+	                        <tr class="odd">
+	                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"></td>
+	                            <td>{{$value['coinlists']['coin_name']}}</td>
+	                            <td style="text-align: right;">{{$value['high']}}</td>
+	                            <td style="text-align: right;">{{$value['low']}}</td>
+	                        </tr>
+	                        @endforeach
+	                    </tbody>
+	                </table>
+	            </div>
+            </div>
+
+			{{-- //end --}}
 			
 			<div class="">
 				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">

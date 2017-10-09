@@ -187,8 +187,10 @@ class GroupController extends Controller
         $group_type = $request->group_type;
         if ($group_type == 'og') {
             $status = 1;
+            $read_status = 0;
         } else {
             $status = 2;
+            $read_status = 1;
         }
 
         $notes = $request->notes;
@@ -197,35 +199,36 @@ class GroupController extends Controller
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->status = $status;
         $add->notes = $notes;
-        $add->read_status = 1;
+        $add->read_status = $read_status;
         if ($add->save()) {
             echo 1;
             exit();
         }
     }
 
-    public function group_pending_request () {
-        $details = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
+    public function group_pending_request ($group_id) {
+        $details = \App\Invitation::with('groups')->where([['id',$group_id],['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])
         ->orderby('id','desc')
         ->get()
         ->toArray();
 
-        foreach ($details as $key=>$value) {
-            $id = $value['id'];
-            $edit = Invitation::find($id);
-            $edit->read_status = 0;
-            
-            if($edit->save()){
-                $sent_invitation_user_id = $value['user_id'];
+        $id = $details[0]['id'];
+        $edit = Invitation::find($id);
+        $edit->read_status = 0;
+        
+        if($edit->save()){
+            $sent_invitation_user_id = $details[0]['user_id'];
 
-                $find_user = User::find($sent_invitation_user_id);
-                $sent_invitation_user_name = $find_user['first_name'].' '.$find_user['last_name'];
+            $find_user = User::find($sent_invitation_user_id);
+            $sent_invitation_user_name = $find_user['first_name'].' '.$find_user['last_name'];
 
-                $details[$key]['sent_invitation_user_name'] = $sent_invitation_user_name;
-            }
+            $details['sent_invitation_user_name'] = $sent_invitation_user_name;
+
+
         }
 
-        return view('frontend.group.pending_request')->with('details', $details);
+
+        return view('frontend.group.pending_request')->with('details_array', $details);
     }
 
     public function pending_request_accept(Request $request,$group_id) {
@@ -324,7 +327,7 @@ class GroupController extends Controller
 
         $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id]])->get()->toArray();
 
-        
+        $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->get()->toArray();
 
     	return view('frontend.group.group_dashboard')->with('fetch_group_details',$fetch_group_details)
 													->with('total_member_of_group',$total_member_of_group)
@@ -336,7 +339,8 @@ class GroupController extends Controller
 													->with('fetch_pinned_post', $fetch_pinned_post)
                                                     ->with('group_id', $group_id)
                                                     ->with('chatArray', $chatArray)
-                                                    ->with('group_status',$group_status);
+                                                    ->with('group_status',$group_status)
+                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details);
 
     }
 

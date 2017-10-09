@@ -249,6 +249,7 @@
         setInterval(function()
         {
             $('.data-table').load(document.URL +  ' .data-table');
+            $('#data-table_coin_list').load(document.URL +  ' .data-table');
 
         }, 3000);
         //end

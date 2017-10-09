@@ -60,7 +60,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/add_group_delete/{group_id}', 'GroupController@add_group_delete');
 	Route::get('/group/join-groups-list', 'GroupController@join_group_list');
 	Route::post('/join_group_request_sent', 'GroupController@join_group_request_sent');
-	Route::get('/group/pending-request', 'GroupController@group_pending_request');
+	Route::get('/group/pending-request/{group_id}', 'GroupController@group_pending_request');
 	Route::get('/group/pending_request_accept/{group_id}', 'GroupController@pending_request_accept');
 	Route::get('/group/pending_request_decline/{group_id}', 'GroupController@pending_request_decline');
 	Route::get('/group/dashboard/{group_id}', 'GroupController@group_dashboard');
