@@ -152,6 +152,10 @@
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
 				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
+
+			@if($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
+				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+			@endif
 		</div>
 		<!-- begin col-8 -->
 		<div class="col-md-8">
@@ -325,7 +329,7 @@
 								</ul>
 
 							</div>
-							@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
+							@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
 							<div class="input-group">
 	                            <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
 	                            <span class="input-group-btn">
@@ -335,9 +339,9 @@
                             @endif
 					</div>
 				</div>
-				@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
+				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
 				<div class="panel panel-inverse" data-sortable-id="index-4">
-					<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{base64_encode($group_id)}}" enctype="multipart/form-data">
+					<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 
 		                <div class="panel-heading">
