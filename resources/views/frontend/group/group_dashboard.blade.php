@@ -35,7 +35,9 @@
 	@if($group_status && $group_status[0]['read_status'] == "1")
 		<span style="font-size: 15px;">Invitation is pending</span></h1>
 	@elseif($group_status && $group_status[0]['read_status'] == "0")
-		<span style="font-size: 15px;">You are in this group</span></h1>
+		<span style="font-size: 15px;">You are member of this group</span></h1>
+	@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
+		<span style="font-size: 15px;">You are admin of this group</span></h1>
 	@else
 		<span style="font-size: 15px;"><button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">Join Group</button></span></h1>
 	@endif
@@ -148,7 +150,7 @@
 		</div>
 		<div class="col-md-12">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
-				<a href="/transaction/add/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
 		<!-- begin col-8 -->
