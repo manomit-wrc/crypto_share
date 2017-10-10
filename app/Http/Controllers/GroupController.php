@@ -321,7 +321,6 @@ class GroupController extends Controller
                 'timestamp' => $value['created_at']
             );
         }
-        
 
         $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id]])->get()->toArray();
 

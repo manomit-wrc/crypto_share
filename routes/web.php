@@ -75,6 +75,8 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/transaction/add/{group_id}', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');
 	Route::post('/insert_transaction', 'TransactionController@insert_transaction');
+	Route::get('/group_transaction/edit/{group_id}/{tran_id}', 'TransactionController@edit_transaction');
+	Route::post('/update_transaction', 'TransactionController@update_transaction');
 	Route::get('/transaction/delete/{id}', 'TransactionController@delete_transaction');
 	
 	Route::get('/work', 'WorkController@index');
