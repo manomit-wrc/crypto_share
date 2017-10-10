@@ -32,7 +32,7 @@
                         <h4 class="panel-title">&nbsp;</h4>
                     </div>
                     <div class="panel-body">
-                        <table id="data-table" class="table table-striped table-bordered">
+                        <table id="data-table_myTransaction" class="table table-striped table-bordered data-table">
                             <thead>
                                 <tr>
                                     <th>Coin Image</th>

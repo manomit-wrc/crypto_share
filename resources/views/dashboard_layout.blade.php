@@ -39,9 +39,17 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
+  
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
+{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.time.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.resize.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.pie.min.js') !!}
+  
 	<!-- ================== END BASE JS ================== -->
 </head>
 <body>
@@ -73,8 +81,7 @@
 
 	
 	<!-- ================== BEGIN BASE JS ================== -->
-	{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
-	{!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
+
 	{!! Html::script('storage/dashboard/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
 
     {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/jquery.dataTables.js') !!}
@@ -95,12 +102,6 @@
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
     {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/gritter/js/jquery.gritter.js') !!}
-	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
-
-	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.time.min.js') !!}
-	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.resize.min.js') !!}
-
-	{!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.pie.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/sparkline/jquery.sparkline.js') !!}
 
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap.min.js') !!}
@@ -247,7 +248,8 @@
         var URL = '<?php echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>';
         setInterval(function()
         {
-            $('#data-table').load(document.URL +  ' #data-table');
+            $('#data-table_myTransaction').load(document.URL +  ' #data-table_myTransaction');
+            $('#data-table_coin_list').load(document.URL +  ' #data-table_coin_list');
 
         }, 3000);
         //end
