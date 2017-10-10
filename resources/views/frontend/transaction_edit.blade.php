@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_price" id="tab1_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab1_trade_price" id="tab1_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -120,7 +120,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_price" id="tab2_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab2_trade_price" id="tab2_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -179,7 +179,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">

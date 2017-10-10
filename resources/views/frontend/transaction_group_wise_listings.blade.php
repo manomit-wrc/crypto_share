@@ -9,11 +9,12 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
+            <li><a href="/group/dashboard/{{base64_encode($group_id)}}">Group Dashboard</a></li>
             <li class="active">Group Wise Transaction</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header">Group Wise Transaction Lists</h1>
+        <h1 class="page-header">Group Wise Transaction Lists ({{$group_info['group_name']}})</h1>
 
         <!-- end page-header -->
         <div class="row">
@@ -45,7 +46,7 @@
                                     <th style="text-align: right;">Qty.</th>
                                     <th style="text-align: right;">Total Value</th>
                                     <th style="width: 10%;">Date</th>
-                                    <th style="text-align: right; width: 8%;">Action</th>
+                                    <th style="text-align: right; width: 10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
@@ -63,7 +64,7 @@
                                     <td>{{date('jS M, Y', strtotime($value['trade_date']))}}</td>
                                     <td style="text-align: right;">
                                     @if($value['user_info']['id'] == Auth::guard('crypto')->user()->id)
-                                        <a title="Edit" href="#" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
+                                        <a title="Edit" href="/group_transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
                                     @endif
                                     <a href="/transaction/delete/{{$value['id']}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5"><i class="fa fa-trash"></i></a>
                                     </td>
