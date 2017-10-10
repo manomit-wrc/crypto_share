@@ -262,7 +262,7 @@ class GroupController extends Controller
     	$fetch_group_details = Group::with('user_info')->where('id',$id)->get()->toArray();
     	$group_name = $fetch_group_details[0]['group_name'];
 
-    	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
+    	$fetch_member_of_group = Invitation::where([['group_id',$id],['status','1']])->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
     	foreach($fetch_member_of_group as $key => $value){
