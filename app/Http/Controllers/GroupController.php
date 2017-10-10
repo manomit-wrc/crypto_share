@@ -321,7 +321,6 @@ class GroupController extends Controller
                 'timestamp' => $value['created_at']
             );
         }
-        
 
         $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id]])->get()->toArray();
 
@@ -389,9 +388,9 @@ class GroupController extends Controller
 
     public function group_wise_transaction($group_id) {
         $group_id = base64_decode($group_id);
+        $group_info = Group::find($group_id)->toArray();
         $fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where('group_id',$group_id)->get()->toArray();
-
-        return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list);
+        return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
     }
 
 

@@ -88,10 +88,58 @@ class TransactionController extends Controller
 
         if ($user_coin->save()) {
             $request->session()->flash("submit-status", "Transaction added successfully.");
-            return redirect('/transaction');
+            return redirect('/group/dashboard/'.$request->group_id);
         } else {
             $request->session()->flash("submit-status", "Transaction added failed.");
-            return redirect('/transaction');
+            return redirect('/group_transaction/add/'.$request->group_id);
+        }
+    }
+
+    public function edit_transaction($group_id, $tran_id) {
+        $group_id = base64_decode($group_id);
+        $tran_details = UserCoin::with('coinlists')->where([['id','=',$tran_id],['group_id','=',$group_id]])->get()->toArray();
+        if (!empty($tran_details)) {
+            return view('frontend.transaction_edit')->with(['group_id' => $group_id, 'tran_id' => $tran_id, 'tran_details' => $tran_details]);
+        } else {
+            return redirect('/group_transaction/'.base64_encode($group_id));
+        }
+    }
+
+    public function update_transaction(Request $request) {
+        $user_id = base64_decode($request->user_id);
+        $user_coin = UserCoin::find($request->tran_id);
+        $user_coin->transaction_type = $request->tran_type;
+        if ($request->tran_type == 1) {
+            $user_coin->quantity = $request->tab1_qty;
+            $user_coin->total_value = $request->tab1_total_val;
+            $user_coin->notes = $request->tab1_notes;
+            $user_coin->chip_value = $request->tab1_chip_qty;
+            $user_coin->trade_type = 'long_term';
+        } else if ($request->tran_type == 2) {
+            $user_coin->quantity = $request->tab2_qty;
+            $user_coin->total_value = $request->tab2_total_val;
+            $user_coin->notes = $request->tab2_notes;
+            $user_coin->trade_type = 'trade';
+            $user_coin->target_1 = $request->tab2_target1;
+            $user_coin->target_2 = $request->tab2_target2;
+            $user_coin->target_3 = $request->tab2_target3;
+        } else {
+            $user_coin->quantity = $request->tab3_qty;
+            $user_coin->total_value = $request->tab3_total_val;
+            $user_coin->trade_type = '';
+            $user_coin->notes = '';
+            $user_coin->chip_value = '';
+            $user_coin->target_1 = '';
+            $user_coin->target_2 = '';
+            $user_coin->target_3 = '';
+        }
+
+        if ($user_coin->save()) {
+            $request->session()->flash("submit-status", "Transaction updated successfully.");
+            return redirect('/group/dashboard/'.$request->group_id);
+        } else {
+            $request->session()->flash("submit-status", "Transaction updation failed.");
+            return redirect('/group_transaction/edit/'.$request->group_id.'/'.$tran_id);
         }
     }
 
