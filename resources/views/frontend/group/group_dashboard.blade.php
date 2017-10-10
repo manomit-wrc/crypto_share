@@ -54,16 +54,15 @@
 			<div class="span12">
                 <div class="well">
                     <div id="myCarousel" class="carousel fdi-Carousel slide">
-                     <!-- Carousel items -->
+						<!-- Carousel items -->
                         <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
                             <div class="carousel-inner onebyone-carosel">
                             	@if(count($fetch_latest_post_image) > 0)
                             		<?php $i=0; ?>
 	                            	@foreach($fetch_latest_post_image as $key=>$value)
-
 		                                <div class="item @if($i==0) active @endif">
 		                                    <div class="col-md-4">
-		                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+	                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
 		                                    </div>
 		                                </div>
 		                            <?php $i++; ?>
@@ -71,7 +70,6 @@
                             	@else
                             		No post image as off now.
                             	@endif
-                            	
                             </div>
                             @if(count($fetch_latest_post_image) > 0)
 	                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
@@ -84,6 +82,7 @@
             </div>
 		</div>
 		<!-- end col-8 -->
+		<!-- begin col-4 -->
 		<div class="col-md-4">
 			<div class="row">
 				<div class="col-sm-6">
@@ -148,6 +147,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- end col-4 -->
+	</div>
+
+	<div class="row">
 		<div class="col-md-12">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
 				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
@@ -157,11 +160,14 @@
 				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
+	</div>
+
+	<div class="row">
 		<!-- begin col-8 -->
 		<div class="col-md-8">
-			<div class="panel panel-inverse" data-sortable-id="index-1">
+			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
-					<h4 class="panel-title">Coin Lists & User Activities</h4>
+					<h4 class="panel-title">Coin Wise User Activities</h4>
 				</div>
 				<!-- <div class="panel-body">
 					There is no user coin available for this group.
@@ -207,7 +213,7 @@
 			</div>
 
 			{{-- //coin list view --}}
-			<div class="panel panel-inverse">
+			<div class="panel panel-inverse" data-sortable-id="index-1">
 				<div class="panel-heading">
 	                <h4 class="panel-title">Coin List</h4>
 	            </div>
@@ -222,159 +228,25 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                    	@foreach ($fetch_coin_all_details as $key => $value)
-	                        <tr class="odd">
-	                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"></td>
-	                            <td>{{$value['coinlists']['coin_name']}}</td>
-	                            <td style="text-align: right;">{{$value['high']}}</td>
-	                            <td style="text-align: right;">{{$value['low']}}</td>
-	                        </tr>
-	                        @endforeach
+	                    	@if (count($fetch_coin_all_details) > 0)
+		                    	@foreach ($fetch_coin_all_details as $key => $value)
+		                        <tr class="odd">
+		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"></td>
+		                            <td>{{$value['coinlists']['coin_name']}}</td>
+		                            <td style="text-align: right;">{{$value['high']}}</td>
+		                            <td style="text-align: right;">{{$value['low']}}</td>
+		                        </tr>
+		                        @endforeach
+		                    @else
+		                    	<tr class="odd">
+		                    		<td colspan="4">There is no user coin available for this group.</td>
+		                    	</tr>
+		                    @endif
 	                    </tbody>
 	                </table>
 	            </div>
             </div>
-
 			{{-- //end --}}
-			
-			<div class="">
-				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
-					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
-
-					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
-
-					<li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li>
-				</ul>
-
-				<div class="tab-content" data-sortable-id="index-3">
-					<div class="tab-pane fade active in" id="latest-post">
-						<div class="height-sm" data-scrollbar="true">
-							<ul class="media-list media-list-with-divider">
-							@if(count($fetch_latest_post) > 0)
-								@foreach($fetch_latest_post as $key => $value)
-
-									<li class="media media-lg">
-										<a href="javascript:;" class="pull-left">
-
-											<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
-										</a>
-										<div class="media-body">
-											{{$value['post']}}
-											<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
-											<span style="color:#07afee;"> {{ $value['created_at']}}</span>
-											@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") 
-											@if($value['status']!=1)
-											<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
-											@endif
-											@endif
-										</div>
-									</li>
-
-								@endforeach
-							@else
-								No post as off now.
-							@endif
-							
-							</ul>
-						</div>
-					</div>
-					<div class="tab-pane fade" id="pinned_post">
-						<div class="height-sm" data-scrollbar="true">
-
-							<ul class="media-list media-list-with-divider">
-							@if(count($fetch_pinned_post) > 0)
-								@foreach($fetch_pinned_post as $key => $value)
-
-									<li class="media media-lg">
-										<a href="javascript:;" class="pull-left">
-
-											<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
-										</a>
-										<div class="media-body">
-											{{$value['post']}}
-											<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
-											<span style="color:#07afee;"> {{ $value['created_at']}}</span> 
-
-										</div>
-									</li>
-
-								@endforeach
-							@else
-								No pinned post as off now. 
-								
-							@endif
-							
-							</ul>
-
-						</div>
-					</div>
-					<div class="tab-pane fade" id="chat">
-						<div class="height-sm" data-scrollbar="true">
-								<ul class="media-list media-list-with-divider" id="message_list">
-									@foreach($chatArray as $value)
-									<li class="media media-sm">
-										<a href="javascript:;" class="pull-left">
-											<img src="{{$value['avatar']}}" alt="" class="media-object rounded-corner" />
-										</a>
-										<div class="media-body">
-											<a href="javascript:;"><h4 class="media-heading">{{$value['username']}}</h4></a>
-											<p class="m-b-5">
-												{{$value['text']}}
-											</p>
-											<i class="text-muted">Posted on {{ Carbon\Carbon::parse($value['timestamp'])->format('d-m-Y h:i:s A') }}</i>
-										</div>
-									</li>
-									@endforeach
-									
-								</ul>
-
-							</div>
-							@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
-							<div class="input-group">
-	                            <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
-	                            <span class="input-group-btn">
-	                                <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
-	                            </span>
-                            </div>
-                            @endif
-					</div>
-				</div>
-				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
-				<div class="panel panel-inverse" data-sortable-id="index-4">
-					<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
-					{{ csrf_field() }}
-
-		                <div class="panel-heading">
-		                    <h4 class="panel-title">Quick Post</h4>
-		                </div>
-		                <div class="panel-toolbar">
-		                    <div class="btn-group m-r-5">
-								<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
-								<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
-								<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
-							</div>
-		                    <div class="btn-group">
-								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
-								<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
-								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
-								<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
-							</div>
-		                </div>
-		                
-		                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
-
-		                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
-
-		                <div class="panel-footer text-right">
-
-		                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
-		                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
-		                   
-		                </div>
-	                </form>
-	            </div>
-	            @endif
-	        </div>
 		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
@@ -427,7 +299,102 @@
 					</table>
 				</div>
 			</div>
+		</div>
+	</div>
 			
+	<div class="row">
+		<!-- begin col-8 -->
+		<div class="col-md-8">
+			<div class="latest">
+				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
+					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
+
+					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
+
+					<li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li>
+				</ul>
+				<div class="tab-content" data-sortable-id="index-3">
+					<div class="tab-pane fade active in" id="latest-post">
+						<div class="height-sm" data-scrollbar="true">
+							<ul class="media-list media-list-with-divider">
+								@if(count($fetch_latest_post) > 0)
+									@foreach($fetch_latest_post as $key => $value)
+										<li class="media media-lg">
+											<a href="javascript:;" class="pull-left">
+												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+											</a>
+											<div class="media-body">
+												{{$value['post']}}
+												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
+												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
+												@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") 
+												@if($value['status']!=1)
+												<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
+												@endif
+												@endif
+											</div>
+										</li>
+									@endforeach
+								@else
+									No post as off now.
+								@endif
+							</ul>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="pinned_post">
+						<div class="height-sm" data-scrollbar="true">
+							<ul class="media-list media-list-with-divider">
+								@if(count($fetch_pinned_post) > 0)
+									@foreach($fetch_pinned_post as $key => $value)
+										<li class="media media-lg">
+											<a href="javascript:;" class="pull-left">
+												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+											</a>
+											<div class="media-body">
+												{{$value['post']}}
+												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
+												<span style="color:#07afee;"> {{ $value['created_at']}}</span> 
+											</div>
+										</li>
+									@endforeach
+								@else
+									No pinned post as off now. 
+								@endif
+							</ul>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="chat">
+						<div class="height-sm" data-scrollbar="true">
+							<ul class="media-list media-list-with-divider" id="message_list">
+								@foreach($chatArray as $value)
+								<li class="media media-sm">
+									<a href="javascript:;" class="pull-left">
+										<img src="{{$value['avatar']}}" alt="" class="media-object rounded-corner" />
+									</a>
+									<div class="media-body">
+										<a href="javascript:;"><h4 class="media-heading">{{$value['username']}}</h4></a>
+										<p class="m-b-5">
+											{{$value['text']}}
+										</p>
+										<i class="text-muted">Posted on {{ Carbon\Carbon::parse($value['timestamp'])->format('d-m-Y h:i:s A') }}</i>
+									</div>
+								</li>
+								@endforeach
+							</ul>
+						</div>
+						@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+						<div class="input-group">
+                            <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
+                            </span>
+                        </div>
+                        @endif
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
 			<div class="panel panel-inverse" data-sortable-id="index-7">
 				<div class="panel-heading">
 					<h4 class="panel-title">Visitors User Agent</h4>
@@ -436,12 +403,8 @@
 					<div id="donut-chart" class="height-sm"></div>
 				</div>
 			</div>
-			
-		</div>
-		<!-- end col-4 -->
-		<div class="col-md-4">
 	        <!-- begin panel -->
-	        <div class="panel panel-inverse">
+	        <div class="panel panel-inverse" data-sortable-id="index-6">
 	            <div class="panel-heading">
 	                <h4 class="panel-title">Group Members</h4>
 	            </div>
@@ -450,29 +413,19 @@
 	                	@foreach ($fetch_user_details as $key => $value)
 		                    <li>
 		                    	@if(!empty($value['image']))
-
 									<a href="javascript:;"><img src="{{url('upload/profile_image/resize/'.$value['image'])}}" style="height: 50px;" alt="User profile picture" /></a>
-		                    		
 	                    		@else
-
 	                    			<a href="javascript:;"><img src="{{ url('/upload/profile_image/default.png')}}" style="height: 50px;" alt="User profile picture"></a>
-
 		                    	@endif
-		                        
 		                        <h4 class="username text-ellipsis">
 		                            {{$value['first_name'].' '.$value['last_name']}}
 		                        </h4>
 		                    </li>
 	                    @endforeach
-
                     @else
                     	No members as off now.
-
                 	@endif
                 </ul>
-	            {{-- <div class="panel-footer text-center">
-	                <a href="javascript:;" class="text-inverse">View All</a>
-	            </div> --}}
 	            <div class="panel-footer text-center">
 	                
 	            </div>
@@ -480,44 +433,73 @@
 	        <!-- end panel -->
 	    </div>
 	</div>
-			<!-- end row -->
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="post"> 
+				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+					<div class="panel panel-inverse" data-sortable-id="index-8">
+						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
+							{{ csrf_field() }}
+			                <div class="panel-heading">
+			                    <h4 class="panel-title">Quick Post</h4>
+			                </div>
+			                <div class="panel-toolbar">
+			                    <div class="btn-group m-r-5">
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
+									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
+								</div>
+			                    <div class="btn-group">
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
+									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
+								</div>
+			                </div>
+			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+			                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+			                <div class="panel-footer text-right">
+			                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
+			                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
+			                </div>
+		                </form>
+		            </div>
+	            @endif
+	        </div>
+		</div>
+	</div>
+	<!-- end row -->
 </div>
 
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Join Group</h4>
-      </div>
-      <div class="modal-body">
-        <div class="panel-body">
-            <form action="javascript:void(0)" id="join_group_form" name="join_group_form">
-            <input type="hidden" name="user_id" id="append_group_id" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Notes</label>
-                        <textarea style="height: 150px;" cols="" rows="" class="form-control" id="notes" name="notes"></textarea>
-                    </div>
-                </fieldset>
-
-                <div class="">
-			      	<button type="submit" class="btn btn-success m-r-5 m-b-5" id="join_group_submit">Join</button>
-
-			        <button type="button" class="btn btn-success m-r-5 m-b-5" data-dismiss="modal">Close</button>
-
-		      	</div>
-            </form>
-        </div>
-      </div>
-      
-    </div>
-
-  </div>
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Join Group</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel-body">
+					<form action="javascript:void(0)" id="join_group_form" name="join_group_form">
+						<input type="hidden" name="user_id" id="append_group_id" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">
+						<fieldset>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Notes</label>
+								<textarea style="height: 150px;" cols="" rows="" class="form-control" id="notes" name="notes"></textarea>
+							</div>
+						</fieldset>
+						<div class="">
+							<button type="submit" class="btn btn-success m-r-5 m-b-5" id="join_group_submit">Join</button>
+							<button type="button" class="btn btn-success m-r-5 m-b-5" data-dismiss="modal">Close</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
 
 <script src="https://cdn.rawgit.com/samsonjs/strftime/master/strftime-min.js"></script>
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>

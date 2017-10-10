@@ -36,7 +36,6 @@ class GroupController extends Controller
         });
     }
 
-
     public function add_group_by_user () {
     	$new_fetch_group = array();
     	
@@ -112,7 +111,6 @@ class GroupController extends Controller
 
     public function edit_create_groups (Request $request, $group_id) {
         $id = base64_decode($group_id);
-
         Validator::make($request->all(),[
             'group_name' => 'required | unique:groups,group_name,'.$id,
             'group_type' => 'required',
@@ -139,7 +137,6 @@ class GroupController extends Controller
 
     public function add_group_delete(Request $request, $group_id){
         $id = base64_decode($group_id);
-
         $delete = Group::find($id);
         $delete->current_status = 5;
         if ($delete->save()) {
@@ -177,13 +174,11 @@ class GroupController extends Controller
             $fetch_group_list[$key]['group_created_by'] = $group_created_by;
             $fetch_group_list[$key]['invitation_status'] = $invitation_status;
         }
-
         return view('frontend.group.join_group')->with('fetch_group_list', $fetch_group_list);
     }
 
     public function join_group_request_sent(Request $request) {
         $group_id = $request->group_id;
-        
         $group_type = $request->group_type;
         if ($group_type == 'og') {
             $status = 1;
@@ -216,27 +211,21 @@ class GroupController extends Controller
         $edit = Invitation::find($id);
         $edit->read_status = 0;
         
-        if($edit->save()){
+        if ($edit->save()) {
             $sent_invitation_user_id = $details[0]['user_id'];
 
             $find_user = User::find($sent_invitation_user_id);
             $sent_invitation_user_name = $find_user['first_name'].' '.$find_user['last_name'];
 
             $details['sent_invitation_user_name'] = $sent_invitation_user_name;
-
-
         }
-
-
         return view('frontend.group.pending_request')->with('details_array', $details);
     }
 
     public function pending_request_accept(Request $request,$group_id) {
         $id = base64_decode($group_id);
-
         $edit = Invitation::find($id);
         $edit->status = 1;
-
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Request accepted successfully.");
             return redirect('/group');
@@ -245,17 +234,15 @@ class GroupController extends Controller
 
     public function pending_request_decline(Request $request,$group_id) {
         $id = base64_decode($group_id);
-
         $edit = Invitation::find($id);
         $edit->status = 5;
-
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Request declined successfully.");
             return redirect('/group');
         }
     }
 
-    public function group_dashboard($group_id){
+    public function group_dashboard($group_id) {
     	$fetch_user_details = array();
     	$id = base64_decode($group_id);
 
@@ -338,7 +325,6 @@ class GroupController extends Controller
                                                     ->with('chatArray', $chatArray)
                                                     ->with('group_status',$group_status)
                                                     ->with('fetch_coin_all_details', $fetch_coin_all_details);
-
     }
 
     public function quick_post_submit (Request $request, $group_id) {
@@ -370,20 +356,16 @@ class GroupController extends Controller
     		$request->session()->flash("submit-status", "Post submited successfully.");
             return redirect('/group/dashboard/'. base64_encode($group_id));
     	}
-
     }
 
-    public function pinned_post(Request $request){
+    public function pinned_post(Request $request) {
     	$user_id = $request->user_id;
-
     	$edit = QuickPost::find($user_id);
     	$edit->status = 1;
-
-    	if($edit->save()){
+    	if ($edit->save()) {
     		echo 1;
     		exit;
     	}
-
     }
 
     public function group_wise_transaction($group_id) {
@@ -392,6 +374,4 @@ class GroupController extends Controller
         $fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where('group_id',$group_id)->get()->toArray();
         return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
     }
-
-
 }
