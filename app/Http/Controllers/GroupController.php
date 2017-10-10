@@ -284,13 +284,13 @@ class GroupController extends Controller
                 $k = 0;
                 $coin_lists_main[$i] = $list['coinlists'];
                 $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
-                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['chip_value'] = $list['chip_value'];
                 $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
                 $new_coin_list_id = $list['coin_list_id'];
             }
             else {
                 $coin_lists_main[$i]['user_info'][$k] = $list['user_info'];
-                $coin_lists_main[$i]['user_info'][$k]['qty'] = $list['quantity'];
+                $coin_lists_main[$i]['user_info'][$k]['chip_value'] = $list['chip_value'];
                 $coin_lists_main[$i]['user_info'][$k]['transaction_type'] = $list['transaction_type'];
             }
             $k++;
@@ -301,8 +301,6 @@ class GroupController extends Controller
         $fetch_latest_post_image = QuickPost::where('group_id', $id )->orderby('id','desc')->get()->toArray();
 
         $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1']] )->orderby('id','desc')->get()->toArray();
-
-
 
         $chatArray = array();
         $chats = \App\Message::with('users')->where('group_id', base64_decode($group_id))->get()->toArray();

@@ -52,7 +52,7 @@
                                 <tr class="odd">
                                     <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"></td>
                                     <td>{{$user_coin_data->coinlists->full_name}}</td>
-                                    <td>@if($user_coin_data->transaction_type == 1) Use 100 Chips @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
+                                    <td>@if($user_coin_data->transaction_type == 1) Long Term Hold @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
                                     <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>
                                     <td style="text-align: right;">{{$user_coin_data->high}}</td>
                                     <td style="text-align: right;">{{$user_coin_data->low}}</td>

@@ -148,7 +148,7 @@
 		</div>
 		<div class="col-md-12">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
-				<a href="/transaction/add/{{base64_encode($group_id)}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+				<a href="/transaction/add/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
 		<!-- begin col-8 -->
@@ -184,7 +184,7 @@
 											<div class="m-r-5 text-center" style="float: left; width: 15%;">
 												{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
 												<i class="fa fa-anchor fa-3x"></i><br />
-												{{$user_list['qty']}}
+												{{$user_list['chip_value']}}
 											</div>
 										@endforeach
 										</div>
