@@ -148,7 +148,7 @@
 		</div>
 		<div class="col-md-12">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
-				<a href="/transaction/add/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
 		<!-- begin col-8 -->
