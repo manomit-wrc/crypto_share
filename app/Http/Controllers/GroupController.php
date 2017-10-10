@@ -259,8 +259,8 @@ class GroupController extends Controller
     	$fetch_user_details = array();
     	$id = base64_decode($group_id);
 
-    	$fetch_group_details = Group::find($id)->toArray();
-    	$group_name = $fetch_group_details['group_name'];
+    	$fetch_group_details = Group::with('user_info')->where('id',$id)->get()->toArray();
+    	$group_name = $fetch_group_details[0]['group_name'];
 
     	$fetch_member_of_group = Invitation::where('group_id',$id)->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
@@ -327,7 +327,7 @@ class GroupController extends Controller
 
         $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->get()->toArray();
 
-    	return view('frontend.group.group_dashboard')->with('fetch_group_details',$fetch_group_details)
+    	return view('frontend.group.group_dashboard')->with('fetch_group_details',$fetch_group_details[0])
 													->with('total_member_of_group',$total_member_of_group)
 													->with('fetch_user_details', $fetch_all_user_of_group)
 													->with('group_id',$id)
