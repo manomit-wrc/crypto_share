@@ -24,7 +24,7 @@ class TransactionController extends Controller
     
 	public function index() {
         $user_id = Auth::user()->id;
-        $user_coin_data_list = UserCoin::with('coinlists')->where('user_id',$user_id)->get();
+        $user_coin_data_list = UserCoin::with('coinlists','groupInfo')->where('user_id',$user_id)->get();
         //echo "<pre>";
         //print_r($user_coin_data_list); exit;
     	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
