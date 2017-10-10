@@ -43,6 +43,7 @@
 		                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
 
 		                                        <div class="text-muted f-s-11">sent you a group request.</div>
+		                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
 		                                    </div>
 		                                </a>
 		                            </li>
