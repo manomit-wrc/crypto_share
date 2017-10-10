@@ -23,9 +23,9 @@
             @endif
             <!-- begin col-12 -->
 		    <div class="col-md-12">
-                <!-- <div class="pull-right">
-                    <a href="/transaction/add"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
-                </div> -->
+                <div class="pull-right">
+                    <a href="/transaction/add/{{base64_encode($group_id)}}"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
+                </div>
                 <div style="clear: both;"></div>
 		        <!-- begin panel -->
                 <div class="panel panel-inverse">
