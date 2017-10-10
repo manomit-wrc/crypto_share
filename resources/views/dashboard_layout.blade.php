@@ -248,8 +248,8 @@
         var URL = '<?php echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>';
         setInterval(function()
         {
-            $('.data-table').load(document.URL +  ' .data-table');
-            $('#data-table_coin_list').load(document.URL +  ' .data-table');
+            $('#data-table_myTransaction').load(document.URL +  ' #data-table_myTransaction');
+            $('#data-table_coin_list').load(document.URL +  ' #data-table_coin_list');
 
         }, 3000);
         //end

@@ -239,7 +239,7 @@ class GroupController extends Controller
 
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Request accepted successfully.");
-            return redirect('/group/pending-request');
+            return redirect('/group');
         }
     }
 
@@ -251,7 +251,7 @@ class GroupController extends Controller
 
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Request declined successfully.");
-            return redirect('/group/pending-request');
+            return redirect('/group');
         }
     }
 
