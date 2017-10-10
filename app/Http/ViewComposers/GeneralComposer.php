@@ -12,7 +12,7 @@ Class GeneralComposer {
  	  {
  	  	$details_for_count = \App\Invitation::with('groups')->where([['read_status','=','1'],['user_id','<>',Auth::guard('crypto')->user()->id]])->get()->toArray();
                 
-                $details_for_list = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])->get()->toArray();
+                $details_for_list = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])->orderby('id','desc')->get()->toArray();
 
                 $i = 0;
                 $tempArray = array();
