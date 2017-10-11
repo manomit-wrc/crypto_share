@@ -17,4 +17,8 @@ class UserCoin extends Model
     public function userInfo() {
         return $this->belongsTo('\App\User', 'user_id');
     }
+
+    public function groupInfo() {
+        return $this->belongsTo('\App\Group', 'group_id');
+    }
 }

@@ -61,12 +61,13 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/add_group_delete/{group_id}', 'GroupController@add_group_delete');
 	Route::get('/group/join-groups-list', 'GroupController@join_group_list');
 	Route::post('/join_group_request_sent', 'GroupController@join_group_request_sent');
-	Route::get('/group/pending-request', 'GroupController@group_pending_request');
+	Route::get('/group/pending-request/{group_id}', 'GroupController@group_pending_request');
 	Route::get('/group/pending_request_accept/{group_id}', 'GroupController@pending_request_accept');
 	Route::get('/group/pending_request_decline/{group_id}', 'GroupController@pending_request_decline');
 	Route::get('/group/dashboard/{group_id}', 'GroupController@group_dashboard');
 	Route::post('/group/quick_post_submit/{group_id}', 'GroupController@quick_post_submit');
 	Route::post('/group/pinned-post', 'GroupController@pinned_post');
+	Route::get('/group_transaction/{group_id}', 'GroupController@group_wise_transaction');
 
 	//coin property update
 	Route::get('/coin/property-update', 'PageController@coin_property_update');
@@ -76,6 +77,8 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/transaction/add/{group_id}', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');
 	Route::post('/insert_transaction', 'TransactionController@insert_transaction');
+	Route::get('/group_transaction/edit/{group_id}/{tran_id}', 'TransactionController@edit_transaction');
+	Route::post('/update_transaction', 'TransactionController@update_transaction');
 	Route::get('/transaction/delete/{id}', 'TransactionController@delete_transaction');
 	
 	Route::get('/work', 'WorkController@index');

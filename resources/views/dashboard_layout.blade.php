@@ -248,10 +248,18 @@
         var URL = '<?php echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>';
         setInterval(function()
         {
-            $('.data-table').load(document.URL +  ' .data-table');
+            $('#data-table_myTransaction').load(document.URL +  ' #data-table_myTransaction');
 
         }, 3000);
         //end
+
+        $('.chip_qty_validation').on('change',function(){
+          var value = $(this).val();
+          if(value > 100){
+            alert ('No. of Chips not more than 100');
+            return false;
+          }
+        });
             
 		});
 	</script>
