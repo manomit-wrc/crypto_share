@@ -64,9 +64,9 @@
                                     <td>{{date('jS M, Y', strtotime($value['trade_date']))}}</td>
                                     <td style="text-align: right;">
                                     @if($value['user_info']['id'] == Auth::guard('crypto')->user()->id)
-                                        <a title="Edit" href="/transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a href="/transaction/delete/{{$value['id']}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                        <a title="Edit" href="/group_transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
                                     @endif
+                                    <a href="/transaction/delete/{{$value['id']}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
