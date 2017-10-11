@@ -203,6 +203,7 @@
 												@if($user_list['transaction_type'] == 2)
 													{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
 													<i class="fa fa-handshake-o" aria-hidden="true"></i><br />
+													{{$user_list['chip_value']}}
 												@endif
 
 												@if($user_list['transaction_type'] == 3)

@@ -249,7 +249,6 @@
         setInterval(function()
         {
             $('#data-table_myTransaction').load(document.URL +  ' #data-table_myTransaction');
-            $('#data-table_coin_list').load(document.URL +  ' #data-table_coin_list');
 
         }, 3000);
         //end
