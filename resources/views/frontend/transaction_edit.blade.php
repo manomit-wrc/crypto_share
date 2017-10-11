@@ -79,13 +79,13 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_qty" id="tab1_qty" placeholder="Quantity" type="number" @if ($tran_details[0]['transaction_type'] == 1) value="{{$tran_details[0]['quantity']}}" @endif>
+                                        <input class="form-control" name="tab1_qty" id="tab1_qty" placeholder="Quantity" type="number" value="@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['quantity']}}@endif">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_total_val" id="tab1_total_val" placeholder="Total Value" type="text" @if ($tran_details[0]['transaction_type'] == 1) value="{{$tran_details[0]['total_value']}}" @endif readonly>
+                                        <input class="form-control" name="tab1_total_val" id="tab1_total_val" placeholder="Total Value" type="text" value="@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['total_value']}}@endif" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -100,13 +100,13 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Notes</label>
                                     <div class="col-md-10">
-                                        <textarea name="tab1_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if ($tran_details[0]['transaction_type'] == 1) {{$tran_details[0]['notes']}} @endif</textarea>
+                                        <textarea name="tab1_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['notes']}}@endif</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{$tran_details[0]['chip_value']}}" min="0" max="100">
+                                        <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="@if ($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['chip_value']}}@endif" min="0" max="100">
                                     </div>
                                 </div>
                             </div>
@@ -126,13 +126,13 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_qty" id="tab2_qty" placeholder="Quantity" type="number" @if ($tran_details[0]['transaction_type'] == 2) value="{{$tran_details[0]['quantity']}}" @endif>
+                                        <input class="form-control" name="tab2_qty" id="tab2_qty" placeholder="Quantity" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['quantity']}}@endif">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_total_val" id="tab2_total_val" placeholder="Total Value" type="text" @if ($tran_details[0]['transaction_type'] == 2) value="{{$tran_details[0]['total_value']}}" @endif readonly>
+                                        <input class="form-control" name="tab2_total_val" id="tab2_total_val" placeholder="Total Value" type="text" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['total_value']}}@endif" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -147,7 +147,20 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Notes</label>
                                     <div class="col-md-10">
-                                        <textarea name="tab2_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if ($tran_details[0]['transaction_type'] == 2) {{$tran_details[0]['notes']}} @endif</textarea>
+                                        <textarea name="tab2_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['notes']}}@endif</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Trade Type</label>
+                                    <div class="col-md-10">
+                                        <label><input type="radio" name="trade_type" value="long_term" @if($tran_details[0]['transaction_type'] == 2) @if($tran_details[0]['trade_type'] == 'long_term') checked="checked" @endif @endif><span style="font-weight: normal;"> 100 chips for long term</span></label>&nbsp;
+                                        <label><input type="radio" name="trade_type" value="trade" @if($tran_details[0]['transaction_type'] == 2) @if($tran_details[0]['trade_type'] == 'trade') checked="checked" @endif @endif><span style="font-weight: normal;"> 100 chips for trade</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">No. of Chips</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control chip_qty_validation" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['chip_value']}}@endif" min="0" max="100">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -169,38 +182,44 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade @if ($tran_details[0]['transaction_type'] == 3)active in @endif" id="watch">
-                                <div class="form-group">
+                            <div class="tab-pane fade @if($tran_details[0]['transaction_type'] == 3)active in @endif" id="watch">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Buy in Price</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Buy in Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Quantity" type="number" @if ($tran_details[0]['transaction_type'] == 3) value="{{$tran_details[0]['quantity']}}" @endif>
+                                        <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Quantity" type="number" value="@if($tran_details[0]['transaction_type'] == 3){{$tran_details[0]['quantity']}}@endif">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_total_val" id="tab3_total_val" placeholder="Total Value" type="text" @if ($tran_details[0]['transaction_type'] == 3) value="{{$tran_details[0]['total_value']}}" @endif readonly>
+                                        <input class="form-control" name="tab3_total_val" id="tab3_total_val" placeholder="Total Value" type="text" value="@if($tran_details[0]['transaction_type'] == 3){{$tran_details[0]['total_value']}}@endif" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
                                         <div class="input-group date" id="datepicker-disabled-past" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                             <input type="text" class="form-control" placeholder="Trade Date" value="{{date('d M Y', strtotime($tran_details[0]['trade_date']))}}" name="tab3_trade_date" disabled>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Notes</label>
+                                    <div class="col-md-10">
+                                        <textarea name="tab3_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if($tran_details[0]['transaction_type'] == 3){{$tran_details[0]['notes']}}@endif</textarea>
                                     </div>
                                 </div>
                             </div>
