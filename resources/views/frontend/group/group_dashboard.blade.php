@@ -340,7 +340,7 @@
 												{{$value['post']}}
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
 												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
-												@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") 
+												@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)) 
 												@if($value['status']!=1)
 												<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
 												@endif
