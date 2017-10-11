@@ -253,6 +253,14 @@
 
         }, 3000);
         //end
+
+        $('.chip_qty_validation').on('change',function(){
+          var value = $(this).val();
+          if(value > 100){
+            alert ('No. of Chips not more than 100');
+            return false;
+          }
+        });
             
 		});
 	</script>

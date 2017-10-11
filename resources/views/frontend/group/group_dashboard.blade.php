@@ -194,9 +194,21 @@
 										<div class="col-md-11">
 										@foreach ($coin_user['user_info'] as $user_list)
 											<div class="m-r-5 text-center" style="float: left; width: 15%;">
-												{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
-												<i class="fa fa-anchor fa-3x"></i><br />
-												{{$user_list['chip_value']}}
+												@if($user_list['transaction_type'] == 1)
+													{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
+													<i class="fa fa-anchor" aria-hidden="true"></i><br />
+													{{$user_list['chip_value']}}
+												@endif
+
+												@if($user_list['transaction_type'] == 2)
+													{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
+													<i class="fa fa-handshake-o" aria-hidden="true"></i><br />
+												@endif
+
+												@if($user_list['transaction_type'] == 3)
+													{{$user_list['first_name']}} {{$user_list['last_name']}}<br />
+													<i class="fa fa-eye" aria-hidden="true"></i><br />
+												@endif
 											</div>
 										@endforeach
 										</div>
