@@ -120,15 +120,16 @@ class TransactionController extends Controller
             $user_coin->quantity = $request->tab2_qty;
             $user_coin->total_value = $request->tab2_total_val;
             $user_coin->notes = $request->tab2_notes;
-            $user_coin->trade_type = 'trade';
+            $user_coin->trade_type = $request->trade_type;
+            $user_coin->chip_value = $request->tab2_chip_qty;
             $user_coin->target_1 = $request->tab2_target1;
             $user_coin->target_2 = $request->tab2_target2;
             $user_coin->target_3 = $request->tab2_target3;
         } else {
-            $user_coin->quantity = $request->tab3_qty;
-            $user_coin->total_value = $request->tab3_total_val;
+            $user_coin->quantity = 1;
+            $user_coin->total_value = $user_coin->trade_price;
+            $user_coin->notes = $request->tab3_notes;
             $user_coin->trade_type = '';
-            $user_coin->notes = '';
             $user_coin->chip_value = '';
             $user_coin->target_1 = '';
             $user_coin->target_2 = '';
