@@ -32,9 +32,9 @@
 
 	<!-- begin page-header -->
 	<h1 class="page-header text-center">{{$fetch_group_details['group_name']}} <br><small>Members: {{$total_member_of_group}}</small> <br> 
-	@if($group_status && $group_status[0]['read_status'] == "1")
+	@if($group_status && $group_status[0]['status'] == "2")
 		<span style="font-size: 15px;">Invitation is pending</span></h1>
-	@elseif($group_status && $group_status[0]['read_status'] == "0")
+	@elseif($group_status && $group_status[0]['status'] == "1")
 		<span style="font-size: 15px;">You are member of this group</span></h1>
 	@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
 		<span style="font-size: 15px;">You are admin of this group</span></h1>

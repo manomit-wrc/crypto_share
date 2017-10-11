@@ -309,7 +309,7 @@ class GroupController extends Controller
             );
         }
 
-        $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id]])->get()->toArray();
+        $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id],['status','!=','5']])->get()->toArray();
 
         $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->get()->toArray();
 
@@ -336,7 +336,7 @@ class GroupController extends Controller
             $file = $request->file('quick_post_image');
             $fileName = time().'_'.$file->getClientOriginalName();
             //thumb destination path
-            $destinationPath_2 = public_path().'/upload/quick_post/resize/';
+            $destinationPath_2 = public_path().'/upload/quick_post/resize';
             $img = Image::make($file->getRealPath());
             $img->resize(200, 150, function ($constraint) {
               $constraint->aspectRatio();
