@@ -20,6 +20,7 @@ Route::post('/register/submit', 'PageController@submit_registration');
 Route::post('/login/submit', 'PageController@submit_login');
 Route::get('/activate/{token}/{time}', 'PageController@activate_reg');
 Route::post('/contact-us-form', 'PageController@contact_us_submit');
+Route::get('/test-email', 'PageController@test_email');
 
 Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/dashboard','DashboardController@index');

@@ -97,16 +97,16 @@ class PageController extends Controller
     }
 
     public function login(Request $request) {
-        if (Auth::guard('crypto')->check() && $request->segment(1) == 'login') {
+        /*if (Auth::guard('crypto')->check() && Auth::guard('crypto')->user()->status === "2" && $request->segment(1) == 'login') {
             return redirect('/dashboard');
-        }
+        }*/
     	return view('frontend.login');
     }
 
     public function register(Request $request) {
-        if (Auth::guard('crypto')->check() && $request->segment(1) == 'register') {
+        /*if (Auth::guard('crypto')->check() && Auth::guard('crypto')->user()->status === "2" && $request->segment(1) == 'register') {
             return redirect('/dashboard');
-        }
+        }*/
     	return view('frontend.register');
     }
 
@@ -138,7 +138,7 @@ class PageController extends Controller
     	$user->first_name = $request->first_name;
     	$user->last_name = $request->last_name;
     	$user->email = $request->email;
-    	$user->passssword = bcrypt($request->password);
+    	$user->password = bcrypt($request->password);
         $user->role_code = "SITEUSR";
         $user->status = "2";
 
@@ -157,13 +157,24 @@ class PageController extends Controller
 
     public function activate_reg($token, $activate_time, Request $request) {
         $user = User::where('active_token', '=', $token);
-        if ($user->update(['status' => '1'])) {
-            $request->session()->flash("message", "You are now active and can log in with your credentials.");
-            return redirect('/register');
-        } else {
-            $request->session()->flash("error_message", "User activation failed.");
-            return redirect('/register');
+        $user_details = $user->get()->toArray();
+        /*echo "<pre>";
+        print_r($user_details);
+        die();*/
+        if($user_details[0]['status'] === "1") {
+            $request->session()->flash("login-status", "Already activated");
+            return redirect('/login');
         }
+        else {
+            if ($user->update(['status' => '1'])) {
+            $request->session()->flash("login-status", "You are now active and can log in with your credentials.");
+                return redirect('/login');
+            } else {
+                $request->session()->flash("error_message", "User activation failed.");
+                return redirect('/register');
+            }
+        }
+        
     }
 
     public function submit_login(Request $request) {
@@ -175,13 +186,20 @@ class PageController extends Controller
             'password.required' => 'Enter password'
         ])->validate();
 
-        if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password, 'status'=>'1'], $request->remember)) {
-            return redirect('/dashboard');
+        if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->remember)) {
+
+            if(Auth::guard('crypto')->user()->status === "2") {
+                
+                $request->session()->flash("login-status", "User is not active. Please activate your account to log in!");
+                return redirect('/login');
+            }
+            else {
+                
+                return redirect('/dashboard');
+            }
+            
         }
-        else if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password, 'status'=>'2'], $request->remember)) {
-            $request->session()->flash("login-status", "User is not active. Please activate your account to log in!");
-            return redirect('/login');
-        }
+        
         else {
             $request->session()->flash("login-status", "Email Address or Password didn't matched!");
             return redirect('/login');
@@ -372,5 +390,13 @@ class PageController extends Controller
         if($save){
             echo "update successfully";
         }
+    }
+
+    public function test_email() {
+        Mail::send('emails.send', ['title' => "Test Email", 'message' => "Testing email"], function ($message)
+         {
+            $message->from('wrctecpl@gmail.com', 'Manomit Mitra');
+            $message->to('manomit@wrctpl.com');
+        });
     }
 }
