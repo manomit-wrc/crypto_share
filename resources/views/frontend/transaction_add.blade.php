@@ -116,7 +116,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
+                                        <input class="form-control chip_qty_validation" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
                                     </div>
                                 </div>
                             </div>
