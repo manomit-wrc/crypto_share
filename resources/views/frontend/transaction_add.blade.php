@@ -99,12 +99,10 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-
                                         <div class="input-group date" id="datepicker-disabled-past" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                             <input type="text" class="form-control" placeholder="Trade Date" value="{{date('d M Y')}}" name="tab1_trade_date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -116,7 +114,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
+                                        <input class="form-control chip_qty_validation" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
                                     </div>
                                 </div>
                             </div>
@@ -161,6 +159,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-2 control-label">Trade Type</label>
+                                    <div class="col-md-10">
+                                        <label><input type="radio" name="trade_type" value="long_term" checked="checked"><span style="font-weight: normal;"> 100 chips for long term</span></label>&nbsp;
+                                        <label><input type="radio" name="trade_type" value="trade"><span style="font-weight: normal;"> 100 chips for trade</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">No. of Chips</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control chip_qty_validation" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab2_chip_qty')}}" min="0" max="100">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">Target 1</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab2_target1" placeholder="Target 1" type="number" value="{{old('tab2_target1')}}">
@@ -180,38 +191,43 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="watch">
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Buy in Price</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Buy in Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Trade Price</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="" readonly="">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Actual Quantity</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_qty" id="tab3_qty" placeholder="Quantity" type="number" value="{{old('tab3_qty')}}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Total Value</label>
                                     <div class="col-md-10">
                                         <input class="form-control" name="tab3_total_val" id="tab3_total_val" placeholder="Total Value" type="text" value="" readonly="">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-md-2 control-label">Trade Date</label>
                                     <div class="col-md-10">
-
                                         <div class="input-group date" id="datepicker-disabled-past" data-date-format="dd M yyyy" data-date-end-date="Date.default">
                                             <input type="text" class="form-control" placeholder="Trade Date" value="{{date('d M Y')}}" name="tab3_trade_date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Notes</label>
+                                    <div class="col-md-10">
+                                        <textarea name="tab3_notes" class="form-control" rows="3" cols="" placeholder="Notes">{{old('tab3_notes')}}</textarea>
                                     </div>
                                 </div>
                             </div>

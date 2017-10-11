@@ -49,21 +49,25 @@
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
-                            	@foreach ($user_coin_data_list AS $user_coin_data)
-                                <tr class="odd">
-                                    <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"></td>
-                                    <td>{{$user_coin_data->coinlists->full_name}}</td>
-                                    <td><a href="group/dashboard/{{base64_encode($user_coin_data->groupInfo->id)}}">{{$user_coin_data->groupInfo->group_name}}</td>
-                                    <td>@if($user_coin_data->transaction_type == 1) Long Term Hold @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
-                                    <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>
-                                    <td style="text-align: right;">{{$user_coin_data->high}}</td>
-                                    <td style="text-align: right;">{{$user_coin_data->low}}</td>
-                                    <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
-                                    <td style="text-align: right;">{{$user_coin_data->total_value}}</td>
-                                    <td>{{date('jS M, Y', strtotime($user_coin_data->trade_date))}}</td>
-                                    <td style="text-align: right;"><a href="/transaction/delete/{{$user_coin_data->id}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
-                                </tr>
-                                @endforeach
+                                @if (count($user_coin_data_list) > 0)
+                                	@foreach ($user_coin_data_list AS $user_coin_data)
+                                    <tr class="odd">
+                                        <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"></td>
+                                        <td>{{$user_coin_data->coinlists->full_name}}</td>
+                                        <td><a href="group/dashboard/{{base64_encode($user_coin_data->groupInfo->id)}}">{{$user_coin_data->groupInfo->group_name}}</td>
+                                        <td>@if($user_coin_data->transaction_type == 1) Long Term Hold @elseif($user_coin_data->transaction_type == 2) Input Trade with Targets @else Watch @endif</td>
+                                        <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->high}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->low}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->total_value}}</td>
+                                        <td>{{date('jS M, Y', strtotime($user_coin_data->trade_date))}}</td>
+                                        <td style="text-align: right;"><a href="/transaction/delete/{{$user_coin_data->id}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr class="odd"><td colspan="11">There is no transaction till now.</td></tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

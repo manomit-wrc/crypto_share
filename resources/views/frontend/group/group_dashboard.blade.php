@@ -215,31 +215,37 @@
 			{{-- //coin list view --}}
 			<div class="panel panel-inverse" data-sortable-id="index-1">
 				<div class="panel-heading">
-	                <h4 class="panel-title">Coin List</h4>
+	                <h4 class="panel-title">Recent Transactions</h4>
 	            </div>
 				<div class="panel-body">
 	                <table id="data-table_coin_list" class="table table-striped table-bordered data-table">
 	                    <thead>
 	                        <tr>
-	                            <th>Coin Image</th>
-	                            <th>Coin Name</th>
-	                            <th style="text-align: right;">High</th>
-	                            <th style="text-align: right;">Low</th>
+	                            <th>Coin Image/Name</th>
+	                            <th>Transaction Type</th>
+	                            <th style="text-align: right;">Amount</th>
+	                            <th style="text-align: right;">Buy In</th>
+	                            <th>Target 1</th>
+	                            <th>Target 2</th>
+	                            <th>Target 3</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                    	@if (count($fetch_coin_all_details) > 0)
 		                    	@foreach ($fetch_coin_all_details as $key => $value)
 		                        <tr class="odd">
-		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"></td>
-		                            <td>{{$value['coinlists']['coin_name']}}</td>
-		                            <td style="text-align: right;">{{$value['high']}}</td>
-		                            <td style="text-align: right;">{{$value['low']}}</td>
+		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
+		                            <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Input Trade with Targets @else Watch @endif</td>
+		                            <td style="text-align: right;">{{$value['trade_price']}}</td>
+		                            <td style="text-align: right;">{{$value['current_price']}}</td>
+		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
+		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
+		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
 		                        </tr>
 		                        @endforeach
 		                    @else
 		                    	<tr class="odd">
-		                    		<td colspan="4">There is no user coin available for this group.</td>
+		                    		<td colspan="7">There is no user coin available for this group.</td>
 		                    	</tr>
 		                    @endif
 	                    </tbody>
