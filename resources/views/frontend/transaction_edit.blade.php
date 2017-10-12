@@ -53,7 +53,7 @@
                             </li>
                             <li @if ($tran_details[0]['transaction_type'] == 2)class="active" @endif>
                                 <a id="tab2" href="#input_trade_targets" data-toggle="tab">
-                                    <span class="hidden-xs">Input Trade with Targets</span>
+                                    <span class="hidden-xs">Trade</span>
                                 </a>
                             </li>
                             <li @if ($tran_details[0]['transaction_type'] == 3)class="active" @endif>

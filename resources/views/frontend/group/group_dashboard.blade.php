@@ -388,7 +388,7 @@
 								@foreach($chatArray as $value)
 								<li class="media media-sm">
 									<a href="javascript:;" class="pull-left">
-										<img src="{{$value['avatar']}}" alt="" class="media-object rounded-corner" />
+										<img src="{{$value['avatar']}}" alt="" class="media-object img-responsive img-circle" style="width: 40px; height: 40px;" />
 									</a>
 									<div class="media-body">
 										<a href="javascript:;"><h4 class="media-heading">{{$value['username']}}</h4></a>
