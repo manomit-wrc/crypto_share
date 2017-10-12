@@ -23,6 +23,7 @@
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/group/dashboard/{{base64_encode($group_id)}}">Group Dashboard</a></li>
+            <li><a href="/group_transaction/{{base64_encode($group_id)}}">Group Transaction</a></li>
             <li class="active">Add Transaction</li>
         </ol>
         <!-- end breadcrumb -->
@@ -114,7 +115,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control chip_qty_validation" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="100">
+                                        <input class="form-control chip_qty_validation_longterm" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab1_chip_qty')}}" min="0" max="{{$remain_longterm_chip}}">
                                     </div>
                                 </div>
                             </div>
@@ -158,17 +159,17 @@
                                         <textarea name="tab2_notes" class="form-control" rows="3" cols="" placeholder="Notes">{{old('tab2_notes')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Type</label>
                                     <div class="col-md-10">
                                         <label><input type="radio" name="trade_type" value="long_term" checked="checked"><span style="font-weight: normal;"> 100 chips for long term</span></label>&nbsp;
                                         <label><input type="radio" name="trade_type" value="trade"><span style="font-weight: normal;"> 100 chips for trade</span></label>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control chip_qty_validation" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab2_chip_qty')}}" min="0" max="100">
+                                        <input class="form-control chip_qty_validation_trade" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="{{old('tab2_chip_qty')}}" min="0" max="{{$remain_trade_chip}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -336,6 +337,22 @@
                 var qty = parseFloat($("#tab3_qty").val());
                 var tot_val = (cur_price * qty);
                 $('#tab3_total_val').val(tot_val);
+            }
+        });
+
+        $('.chip_qty_validation_longterm').on('change',function() {
+            var value = $(this).val();
+            if (value > {{$remain_longterm_chip}}) {
+                alert ('You have consumed {{$tot_longterm_chip}} chips. Your remaining chip is {{$remain_longterm_chip}}');
+                return false;
+            }
+        });
+
+        $('.chip_qty_validation_trade').on('change',function() {
+            var value = $(this).val();
+            if (value > {{$remain_trade_chip}}) {
+                alert ('You have consumed {{$tot_trade_chip}} chips. Your remaining chip is {{$remain_trade_chip}}');
+                return false;
             }
         });
     </script>

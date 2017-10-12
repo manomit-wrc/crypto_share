@@ -106,7 +106,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="@if ($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['chip_value']}}@endif" min="0" max="100">
+                                        <input class="form-control chip_qty_validation_longterm" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="@if ($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['chip_value']}}@endif" min="0" max="{{$remain_longterm_chip}}">
                                     </div>
                                 </div>
                             </div>
@@ -150,17 +150,17 @@
                                         <textarea name="tab2_notes" class="form-control" rows="3" cols="" placeholder="Notes">@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['notes']}}@endif</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Type</label>
                                     <div class="col-md-10">
                                         <label><input type="radio" name="trade_type" value="long_term" @if($tran_details[0]['transaction_type'] == 2) @if($tran_details[0]['trade_type'] == 'long_term') checked="checked" @endif @endif><span style="font-weight: normal;"> 100 chips for long term</span></label>&nbsp;
                                         <label><input type="radio" name="trade_type" value="trade" @if($tran_details[0]['transaction_type'] == 2) @if($tran_details[0]['trade_type'] == 'trade') checked="checked" @endif @endif><span style="font-weight: normal;"> 100 chips for trade</span></label>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control chip_qty_validation" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['chip_value']}}@endif" min="0" max="100">
+                                        <input class="form-control chip_qty_validation_trade" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['chip_value']}}@endif" min="0" max="{{$remain_trade_chip}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -281,6 +281,22 @@
                 var qty = parseFloat($("#tab3_qty").val());
                 var tot_val = (cur_price * qty);
                 $('#tab3_total_val').val(tot_val);
+            }
+        });
+
+        $('.chip_qty_validation_longterm').on('change',function() {
+            var value = $(this).val();
+            if (value > {{$remain_longterm_chip}}) {
+                alert ('You have consumed {{$tot_longterm_chip}} chips. Your remaining chip is {{$remain_longterm_chip}}');
+                return false;
+            }
+        });
+
+        $('.chip_qty_validation_trade').on('change',function() {
+            var value = $(this).val();
+            if (value > {{$remain_trade_chip}}) {
+                alert ('You have consumed {{$tot_trade_chip}} chips. Your remaining chip is {{$remain_trade_chip}}');
+                return false;
             }
         });
     </script>

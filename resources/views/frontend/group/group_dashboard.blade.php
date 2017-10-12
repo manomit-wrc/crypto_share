@@ -6,6 +6,8 @@
 	.onebyone-carosel .active.right { left: 33.33%; }
 	.onebyone-carosel .next { left: 33.33%; }
 	.onebyone-carosel .prev { left: -33.33%; }
+	.widget-stats .stats-info p { font-size: 20px; }
+	.error { text-align: left; }
 </style>
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -30,23 +32,9 @@
 </script>
 <div id="content" class="content">
 
-	<!-- begin page-header -->
-	<h1 class="page-header text-center">{{$fetch_group_details['group_name']}} <br><small>Members: {{$total_member_of_group}}</small> <br> 
-	@if($group_status && $group_status[0]['status'] == "2")
-		<span style="font-size: 15px;">Invitation is pending</span></h1>
-	@elseif($group_status && $group_status[0]['status'] == "1")
-		<span style="font-size: 15px;">You are member of this group</span></h1>
-	@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
-		<span style="font-size: 15px;">You are admin of this group</span></h1>
-	@else
-		<span style="font-size: 15px;"><button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">Join Group</button></span></h1>
-	@endif
-		<!-- end page-header -->
-
 	@if(Session::has('submit-status'))
       	<p class="login-box-msg" style="color: green;">{{ Session::get('submit-status') }}</p>
     @endif
-			<!-- begin row -->
 
 	<div class="row">
 		<!-- begin col-8 -->
@@ -89,10 +77,10 @@
 					<!-- begin col-3 -->
 					<div class="">
 						<div class="widget widget-stats bg-green">
-							<div class="stats-icon"><i class="fa fa-desktop"></i></div>
+							<div class="stats-icon"><i class="fa fa-object-group"></i></div>
 							<div class="stats-info">
-								<h4>TOTAL VISITORS</h4>
-								<p>3,291,922</p>	
+								<h4>GROUP NAME</h4>
+								<p>{{$fetch_group_details['group_name']}}</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -103,10 +91,10 @@
 					<!-- begin col-3 -->
 					<div class="">
 						<div class="widget widget-stats bg-blue">
-							<div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
+							<div class="stats-icon"><i class="fa fa-user-secret"></i></div>
 							<div class="stats-info">
-								<h4>BOUNCE RATE</h4>
-								<p>20.44%</p>	
+								<h4>GROUP OWNER</h4>
+								<p>{{$fetch_group_details['user_info']['first_name']}} {{$fetch_group_details['user_info']['last_name']}}</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -121,8 +109,8 @@
 						<div class="widget widget-stats bg-purple">
 							<div class="stats-icon"><i class="fa fa-users"></i></div>
 							<div class="stats-info">
-								<h4>UNIQUE VISITORS</h4>
-								<p>1,291,922</p>	
+								<h4>MEMBER(S)</h4>
+								<p>{{$total_member_of_group}}</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -133,10 +121,10 @@
 					<!-- begin col-3 -->
 					<div class="">
 						<div class="widget widget-stats bg-red">
-							<div class="stats-icon"><i class="fa fa-clock-o"></i></div>
+							<div class="stats-icon"><i class="fa fa-thumbs-up"></i></div>
 							<div class="stats-info">
-								<h4>AVG TIME ON SITE</h4>
-								<p>00:12:23</p>	
+								<h4>NO. OF VISITOR(S)</h4>
+								<p>1,22,666</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -151,13 +139,24 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
 				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 
 			@if($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
 				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+			@endif
+		</div>
+		<div class="col-md-4">
+			@if($group_status && $group_status[0]['status'] == "2")
+				<span style="font-size: 15px;">Invitation is pending</span></h1>
+			@elseif($group_status && $group_status[0]['status'] == "1")
+				<span style="font-size: 15px;">You are member of this group</span></h1>
+			@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
+				<span style="font-size: 15px;">You are admin of this group</span></h1>
+			@else
+				<span style="font-size: 15px;"><button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">Join Group</button></span></h1>
 			@endif
 		</div>
 	</div>
@@ -167,7 +166,7 @@
 		<div class="col-md-8">
 			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
-					<h4 class="panel-title">Coin Wise User Activities</h4>
+					<h4 class="panel-title">Group Activities</h4>
 				</div>
 				<!-- <div class="panel-body">
 					There is no user coin available for this group.
@@ -186,7 +185,7 @@
 										</a>
 									</h3>
 								</div>
-								<div id="{{$coin_user['coin_id']}}" class="panel-collapse collapse @if($i == 0) in @endif" @if($i == 0) aria-expanded="true" @endif style="border: 1px solid #ccc;">
+								<div id="{{$coin_user['coin_id']}}" class="panel-collapse collapse in" aria-expanded="true" style="border: 1px solid #ccc;">
 									<div class="panel-body">
 										<div class="col-md-1">
 											<img class="" width="50" height="50" src="https://www.cryptocompare.com{{$coin_user['image_url']}}" alt="{{$coin_user['full_name']}}">
@@ -235,12 +234,14 @@
 	                    <thead>
 	                        <tr>
 	                            <th>Coin Image/Name</th>
-	                            <th>Transaction Type</th>
+	                            <th>Tran Type</th>
+	                            <th>User Name</th>
 	                            <th style="text-align: right;">Amount</th>
 	                            <th style="text-align: right;">Buy In</th>
 	                            <th>Target 1</th>
 	                            <th>Target 2</th>
 	                            <th>Target 3</th>
+	                            <th>Notes</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
@@ -248,13 +249,33 @@
 		                    	@foreach ($fetch_coin_all_details as $key => $value)
 		                        <tr class="odd">
 		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
-		                            <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Input Trade with Targets @else Watch @endif</td>
+		                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <i class="fa fa-anchor fa-2x"></i> @elseif($value['transaction_type'] == 2) <i class="fa fa-handshake-o fa-2x"></i> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
+		                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
 		                            <td style="text-align: right;">{{$value['trade_price']}}</td>
 		                            <td style="text-align: right;">{{$value['current_price']}}</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
+		                            <td><a href="#modal-dialog{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a></td>
 		                        </tr>
+		                        <!-- #modal-dialog -->
+								<div class="modal fade" id="modal-dialog{{$value['id']}}">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h4 class="modal-title">{{$value['coinlists']['coin_name']}}</h4>
+											</div>
+											<div class="modal-body">
+												{{$value['notes']}}
+											</div>
+											<div class="modal-footer">
+												{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}
+												<!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
+											</div>
+										</div>
+									</div>
+								</div>
 		                        @endforeach
 		                    @else
 		                    	<tr class="odd">
@@ -266,64 +287,7 @@
 	            </div>
             </div>
 			{{-- //end --}}
-		</div>
-		<!-- end col-8 -->
-		<!-- begin col-4 -->
-		<div class="col-md-4">
-			<div class="panel panel-inverse" data-sortable-id="index-6">
-				<div class="panel-heading">
-					<h4 class="panel-title">Analytics Details</h4>
-				</div>
-				<div class="panel-body p-t-0">
-					<table class="table table-valign-middle m-b-0">
-						<thead>
-							<tr>	
-								<th>Source</th>
-								<th>Total</th>
-								<th>Trend</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><label class="label label-danger">Unique Visitor</label></td>
-								<td>13,203 <span class="text-success"><i class="fa fa-arrow-up"></i></span></td>
-								<td><div id="sparkline-unique-visitor"></div></td>
-							</tr>
-							<tr>
-								<td><label class="label label-warning">Bounce Rate</label></td>
-								<td>28.2%</td>
-								<td><div id="sparkline-bounce-rate"></div></td>
-							</tr>
-							<tr>
-								<td><label class="label label-success">Total Page Views</label></td>
-								<td>1,230,030</td>
-								<td><div id="sparkline-total-page-views"></div></td>
-							</tr>
-							<tr>
-								<td><label class="label label-primary">Avg Time On Site</label></td>
-								<td>00:03:45</td>
-								<td><div id="sparkline-avg-time-on-site"></div></td>
-							</tr>
-							<tr>
-								<td><label class="label label-default">% New Visits</label></td>
-								<td>40.5%</td>
-								<td><div id="sparkline-new-visits"></div></td>
-							</tr>
-							<tr>
-								<td><label class="label label-inverse">Return Visitors</label></td>
-								<td>73.4%</td>
-								<td><div id="sparkline-return-visitors"></div></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-			
-	<div class="row">
-		<!-- begin col-8 -->
-		<div class="col-md-8">
+
 			<div class="latest">
 				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
 					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
@@ -422,8 +386,59 @@
 				</div>
 			</div>
 		</div>
+		<!-- end col-8 -->
+		<!-- begin col-4 -->
 		<div class="col-md-4">
-			<div class="panel panel-inverse" data-sortable-id="index-7">
+			<div class="panel panel-inverse" data-sortable-id="index-4">
+				<div class="panel-heading">
+					<h4 class="panel-title">Analytics Details</h4>
+				</div>
+				<div class="panel-body p-t-0">
+					<table class="table table-valign-middle m-b-0">
+						<thead>
+							<tr>	
+								<th>Source</th>
+								<th>Total</th>
+								<th>Trend</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><label class="label label-danger">Unique Visitor</label></td>
+								<td>13,203 <span class="text-success"><i class="fa fa-arrow-up"></i></span></td>
+								<td><div id="sparkline-unique-visitor"></div></td>
+							</tr>
+							<tr>
+								<td><label class="label label-warning">Bounce Rate</label></td>
+								<td>28.2%</td>
+								<td><div id="sparkline-bounce-rate"></div></td>
+							</tr>
+							<tr>
+								<td><label class="label label-success">Total Page Views</label></td>
+								<td>1,230,030</td>
+								<td><div id="sparkline-total-page-views"></div></td>
+							</tr>
+							<tr>
+								<td><label class="label label-primary">Avg Time On Site</label></td>
+								<td>00:03:45</td>
+								<td><div id="sparkline-avg-time-on-site"></div></td>
+							</tr>
+							<tr>
+								<td><label class="label label-default">% New Visits</label></td>
+								<td>40.5%</td>
+								<td><div id="sparkline-new-visits"></div></td>
+							</tr>
+							<tr>
+								<td><label class="label label-inverse">Return Visitors</label></td>
+								<td>73.4%</td>
+								<td><div id="sparkline-return-visitors"></div></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="panel panel-inverse" data-sortable-id="index-10">
 				<div class="panel-heading">
 					<h4 class="panel-title">Visitors User Agent</h4>
 				</div>
@@ -431,8 +446,9 @@
 					<div id="donut-chart" class="height-sm"></div>
 				</div>
 			</div>
-	        <!-- begin panel -->
-	        <div class="panel panel-inverse" data-sortable-id="index-6">
+
+			<!-- begin panel -->
+	        <div class="panel panel-inverse" data-sortable-id="index-11">
 	            <div class="panel-heading">
 	                <h4 class="panel-title">Group Members</h4>
 	            </div>
@@ -459,7 +475,59 @@
 	            </div>
 	        </div>
 	        <!-- end panel -->
-	    </div>
+
+	        @if (($group_status && $group_status[0]['status'] == "1") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+		        <div class="panel panel-inverse" data-sortable-id="index-12">
+	                <div class="panel-heading">
+	                    <h4 class="panel-title">Feedback</h4>
+	                </div>
+	                @if ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
+	                	<div class="panel-body">
+		                	@if (count($fetch_feedback_list) > 0)
+		                		@foreach ($fetch_feedback_list as $fetch_feedback)
+									<div class="note note-success">
+										<h4>{{$fetch_feedback['user_info']['first_name']}} {{$fetch_feedback['user_info']['last_name']}}</h4>
+										<p>
+										    {{$fetch_feedback['message']}}
+				                        </p>
+									</div>
+								@endforeach
+							@else
+								There is no feedback for this group till now.
+							@endif
+						</div>
+	                @else
+		                <div class="panel-body">
+		                	@if (count($fetch_feedback) > 0)
+								<div class="note note-success">
+									<h4>{{$fetch_feedback[0]['user_info']['first_name']}} {{$fetch_feedback[0]['user_info']['last_name']}}</h4>
+									<p>
+									    {{$fetch_feedback[0]['message']}}
+			                        </p>
+								</div>
+							@else
+							<div id="no_feedback">
+								<span class="txt">Please give your valuable feedback</span><br /><br />
+								<a href="javascript:void(0);" onclick="show_feedback_form();" class="btn btn-info">Give Feedback</a>
+							</div>
+							<div id="feedback_form_div" style="display: none;">
+								<form name="feedback_form" id="feedback_form" method="post" action="/group/feedback_submit">
+									{{ csrf_field() }}
+									<input type="hidden" name="group_id" value="{{$group_id}}">
+									<textarea class="form-control" rows="3" name="feedback_msg" placeholder="Type your message here..."></textarea><br />
+									<div class="text-right">
+										<a href="javascript:void(0);" onclick="hide_form();" class="btn btn-sm btn-info" style="float: left;">Hide</a>
+					                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
+					                    <input class="btn btn-primary btn-sm m-l-5" id="feedback_form_submit" type="submit" name="submit" value="Submit">
+					                </div>
+					            </form>
+							</div>
+							@endif
+		                </div>
+		            @endif
+	            </div>
+	        @endif
+		</div>
 	</div>
 
 	<div class="row">
@@ -532,17 +600,13 @@
 <script src="https://cdn.rawgit.com/samsonjs/strftime/master/strftime-min.js"></script>
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 
-<script>
+<script type="text/javascript">
     // Ensure CSRF token is sent with AJAX requests
-    
 
     // Added Pusher logging
     Pusher.log = function(msg) {
         console.log(msg);
     };
-</script>
-<script>
-
 
     function init() {
         // send button click handling
@@ -552,50 +616,48 @@
         	}	
         });
         $('#btn_message').click(sendMessage);
-        
 
         if ($("#donut-chart").length !== 0) {
-        var e = [{
-            label: "DuxCoin",
-            data: 35,
-            color: purpleDark
-        }, {
-            label: "EquiTrader",
-            data: 50,
-            color: purple
-        }, {
-            label: "F16Coin",
-            data: 15,
-            color: purpleLight
-        }, {
-            label: "HamsterCoin",
-            data: 10,
-            color: blue
-        }, {
-            label: "QTUM",
-            data: 5,
-            color: blueDark
-        }];
-        $.plot("#donut-chart", e, {
-            series: {
-                pie: {
-                    innerRadius: .5,
-                    show: true,
-                    label: {
-                        show: true
-                    }
-                }
-            },
-            legend: {
-                show: true
-            }
-        })
-    }
+	        var e = [{
+	            label: "DuxCoin",
+	            data: 35,
+	            color: purpleDark
+	        }, {
+	            label: "EquiTrader",
+	            data: 50,
+	            color: purple
+	        }, {
+	            label: "F16Coin",
+	            data: 15,
+	            color: purpleLight
+	        }, {
+	            label: "HamsterCoin",
+	            data: 10,
+	            color: blue
+	        }, {
+	            label: "QTUM",
+	            data: 5,
+	            color: blueDark
+	        }];
+	        $.plot("#donut-chart", e, {
+	            series: {
+	                pie: {
+	                    innerRadius: .5,
+	                    show: true,
+	                    label: {
+	                        show: true
+	                    }
+	                }
+	            },
+	            legend: {
+	                show: true
+	            }
+	        })
+	    }
     }
 
     // Send on enter/return key
-    function checkSend(e) {
-        
+    function checkSend(e) {   
         
     }
 
@@ -637,8 +699,6 @@
 
     $(init);
 
-
-
     /***********************************************/
 
     var pusher = new Pusher('397f69f15f677e2fd465', {
@@ -649,7 +709,15 @@
     var channel = pusher.subscribe('{{$chatChannel}}');
     channel.bind('new-message', addMessage);
 
-    
+    function show_feedback_form() {
+    	$('#no_feedback').css('display', 'none');
+    	$('#feedback_form_div').css('display', 'block');
+    }
+
+    function hide_form() {
+    	$('#no_feedback').css('display', 'block');
+    	$('#feedback_form_div').css('display', 'none');
+    }
 
 </script>
 @stop

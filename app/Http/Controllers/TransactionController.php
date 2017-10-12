@@ -25,15 +25,18 @@ class TransactionController extends Controller
 	public function index() {
         $user_id = Auth::user()->id;
         $user_coin_data_list = UserCoin::with('coinlists','groupInfo')->where('user_id',$user_id)->get();
-        //echo "<pre>";
-        //print_r($user_coin_data_list); exit;
     	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
     }
 
     public function add_transaction($group_id) {
         $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();
-        return view('frontend.transaction_add')->with('coin_list', $coin_list)->with('group_id', $group_id);
+        $user_id = Auth::user()->id;
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $remain_longterm_chip = 100 - $tot_longterm_chip;
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $remain_trade_chip = 100 - $tot_trade_chip;
+        return view('frontend.transaction_add')->with('coin_list', $coin_list)->with(['group_id' => $group_id, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);
     }
 
     public function get_price($coin_name) {
@@ -73,7 +76,7 @@ class TransactionController extends Controller
             $user_coin->total_value = $request->tab2_total_val;
             $user_coin->trade_date = date('Y-m-d', strtotime($request->tab2_trade_date));
             $user_coin->notes = $request->tab2_notes;
-            $user_coin->trade_type = $request->trade_type;
+            $user_coin->trade_type = 'trade';
             $user_coin->chip_value = $request->tab2_chip_qty;
             $user_coin->target_1 = $request->tab2_target1;
             $user_coin->target_2 = $request->tab2_target2;
@@ -91,16 +94,21 @@ class TransactionController extends Controller
             $request->session()->flash("submit-status", "Transaction added successfully.");
             return redirect('/group/dashboard/'.$request->group_id);
         } else {
-            $request->session()->flash("submit-status", "Transaction added failed.");
+            $request->session()->flash("submit-status", "Transaction addition failed.");
             return redirect('/group_transaction/add/'.$request->group_id);
         }
     }
 
     public function edit_transaction($group_id, $tran_id) {
         $group_id = base64_decode($group_id);
+        $user_id = Auth::user()->id;
         $tran_details = UserCoin::with('coinlists')->where([['id','=',$tran_id],['group_id','=',$group_id]])->get()->toArray();
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['id', '<>', $tran_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $remain_longterm_chip = 100 - $tot_longterm_chip;
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['id', '<>', $tran_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $remain_trade_chip = 100 - $tot_trade_chip;
         if (!empty($tran_details)) {
-            return view('frontend.transaction_edit')->with(['group_id' => $group_id, 'tran_id' => $tran_id, 'tran_details' => $tran_details]);
+            return view('frontend.transaction_edit')->with(['group_id' => $group_id, 'tran_id' => $tran_id, 'tran_details' => $tran_details, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);
         } else {
             return redirect('/group_transaction/'.base64_encode($group_id));
         }
@@ -120,7 +128,7 @@ class TransactionController extends Controller
             $user_coin->quantity = $request->tab2_qty;
             $user_coin->total_value = $request->tab2_total_val;
             $user_coin->notes = $request->tab2_notes;
-            $user_coin->trade_type = $request->trade_type;
+            $user_coin->trade_type = 'trade';
             $user_coin->chip_value = $request->tab2_chip_qty;
             $user_coin->target_1 = $request->tab2_target1;
             $user_coin->target_2 = $request->tab2_target2;

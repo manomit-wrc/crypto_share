@@ -18,6 +18,7 @@ return array(
     'CreateCoinListsTable' => $baseDir . '/database/migrations/2017_10_03_071906_create_coin_lists_table.php',
     'CreateContactUsesTable' => $baseDir . '/database/migrations/2017_09_21_133707_create_contact_uses_table.php',
     'CreateCountriesTable' => $baseDir . '/database/migrations/2017_09_18_085659_create_countries_table.php',
+    'CreateFeedbackTable' => $baseDir . '/database/migrations/2017_10_12_124549_create_feedback_table.php',
     'CreateGroupsTable' => $baseDir . '/database/migrations/2017_09_19_111723_create_groups_table.php',
     'CreateInvitationsTable' => $baseDir . '/database/migrations/2017_09_20_051435_create_invitations_table.php',
     'CreateMessagesTable' => $baseDir . '/database/migrations/2017_09_26_214846_create_messages_table.php',

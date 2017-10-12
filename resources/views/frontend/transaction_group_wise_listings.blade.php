@@ -10,7 +10,7 @@
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/group/dashboard/{{base64_encode($group_id)}}">Group Dashboard</a></li>
-            <li class="active">Group Wise Transaction</li>
+            <li class="active">Group Transaction</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
@@ -54,7 +54,7 @@
                                 <tr class="odd">
                                     <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['full_name']}}"></td>
                                     <td>{{$value['coinlists']['full_name']}}</td>
-                                    <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Input Trade with Targets @else Watch @endif</td>
+                                    <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Trade @else Watch @endif</td>
                                     <td>{{$value['user_info']['first_name'].' '.$value['user_info']['last_name']}}</td>
                                     <td style="text-align: right;">{{$value['trade_price']}}</td>
                                     <td style="text-align: right;">{{$value['high']}}</td>
