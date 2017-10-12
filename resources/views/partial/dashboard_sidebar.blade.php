@@ -70,6 +70,12 @@
 						<span>Group</span>
 					</a>
 				</li>
+
+				<li class="has-sub {{ (Request::segment(1) === 'my-post' ? 'active' : '')}}">
+					<a href="/my-post">
+						<span>My Post</span>
+					</a>
+				</li>
 				
 			@endif
 

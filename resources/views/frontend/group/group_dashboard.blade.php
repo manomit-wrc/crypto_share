@@ -372,7 +372,16 @@
 											<div class="media-body">
 												{{$value['post']}}
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
-												<span style="color:#07afee;"> {{ $value['created_at']}}</span> 
+												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
+
+												@if($value['user_id'] == Auth::guard('crypto')->user()->id)
+													<span class="pull-right m-r-15" title="Unpinned Post">
+														<a href="javascript:void(0)">
+														<img src="{{url('/upload/unpin.png')}}" class="unpinned" style="width: 12px;height: 12px;color:#000000;" user_id={{$value['id']}}>
+														</a>
+													</span>
+													
+												@endif 
 											</div>
 										</li>
 									@endforeach

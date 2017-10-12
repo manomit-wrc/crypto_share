@@ -368,6 +368,16 @@ class GroupController extends Controller
     	}
     }
 
+    public function unpinned_post(Request $request) {
+        $user_id = $request->user_id;
+        $edit = QuickPost::find($user_id);
+        $edit->status = 0;
+        if ($edit->save()) {
+            echo 1;
+            exit;
+        }
+    }
+
     public function group_wise_transaction($group_id) {
         $group_id = base64_decode($group_id);
         $group_info = Group::find($group_id)->toArray();

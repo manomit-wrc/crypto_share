@@ -241,6 +241,34 @@
           });
         });
 
+        $('.unpinned').on('click',function (){
+          var user_id = $(this).attr('user_id');
+
+          $.ajax({
+            type: "POST",
+            url: '/group/unpinned-post',
+            data:{
+              user_id:user_id,
+              _token: '{{csrf_token()}}'
+            },
+            success: function(data){
+              if(data == 1){
+
+                $.confirm({
+                    title: 'Confirmation!',
+                    content: 'Post unpinned successfully',
+                    buttons: {
+                        OK: function () {
+                          window.location.reload();
+                        }
+                    }
+                });
+              }
+            }
+          });
+
+        });
+
         //for auto refresh Transaction Lists div
         // $('#data-table').DataTable( {
         //     stateSave: true
