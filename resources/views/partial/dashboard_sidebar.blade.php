@@ -23,9 +23,9 @@
 		<ul class="nav">
 			
 			<li class="has-sub {{ (Request::is('dashboard') ? 'active' : '') }}">
-				{{-- <a href="/dashboard">
-				    <span>Dashboard</span>
-			    </a> --}}
+				<a href="/dashboard">
+				    <span>Home</span>
+			    </a>
 			</li>
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEADM')

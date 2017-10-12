@@ -15,6 +15,7 @@ use App\Invitation;
 use App\CoinList;
 use App\UserCoin;
 use App\QuickPost;
+use App\Feedback;
 use Illuminate\Support\Facades\App;
 
 class GroupController extends Controller
@@ -252,11 +253,11 @@ class GroupController extends Controller
     	$fetch_member_of_group = Invitation::where([['group_id',$id],['status','1']])->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
-    	foreach($fetch_member_of_group as $key => $value){
+    	foreach($fetch_member_of_group as $key => $value) {
     		$user_id = $value['user_id'];
-
     		$fetch_user_details[] = User::find($user_id)->toArray();
     	}
+
     	$fetch_all_user_of_group = $fetch_user_details;
 
         $user_coin_group_list = UserCoin::with('coinlists')->where('group_id','=',$id)->with('userInfo')->orderby('coin_list_id','asc')->get()->toArray();
@@ -311,20 +312,26 @@ class GroupController extends Controller
 
         $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id],['status','!=','5']])->get()->toArray();
 
-        $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->get()->toArray();
+        $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->with('userInfo')->get()->toArray();
 
-    	return view('frontend.group.group_dashboard')->with('fetch_group_details',$fetch_group_details[0])
-													->with('total_member_of_group',$total_member_of_group)
+        $fetch_feedback = Feedback::with('user_info')->where([['group_id', '=', $id],['user_id', '=', Auth::guard('crypto')->user()->id]])->get()->toArray();
+
+        $fetch_feedback_list = Feedback::with('user_info')->where([['group_id', '=', $id]])->get()->toArray();
+
+    	return view('frontend.group.group_dashboard')->with('fetch_group_details', $fetch_group_details[0])
+													->with('total_member_of_group', $total_member_of_group)
 													->with('fetch_user_details', $fetch_all_user_of_group)
-													->with('group_id',$id)
-													->with('fetch_latest_post',$fetch_latest_post)
+													->with('group_id', $id)
+													->with('fetch_latest_post', $fetch_latest_post)
 													->with('coin_user_info', $coin_lists_main)
 													->with('fetch_latest_post_image', $fetch_latest_post_image)
 													->with('fetch_pinned_post', $fetch_pinned_post)
                                                     ->with('group_id', $group_id)
                                                     ->with('chatArray', $chatArray)
-                                                    ->with('group_status',$group_status)
-                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details);
+                                                    ->with('group_status', $group_status)
+                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details)
+                                                    ->with('fetch_feedback', $fetch_feedback)
+                                                    ->with('fetch_feedback_list', $fetch_feedback_list);
     }
 
     public function quick_post_submit (Request $request, $group_id) {
@@ -353,7 +360,7 @@ class GroupController extends Controller
     	$add->post_image = $fileName;
 
     	if($add->save()){
-    		$request->session()->flash("submit-status", "Post submited successfully.");
+    		$request->session()->flash("submit-status", "Post submitted successfully.");
             return redirect('/group/dashboard/'. base64_encode($group_id));
     	}
     }
@@ -373,5 +380,20 @@ class GroupController extends Controller
         $group_info = Group::find($group_id)->toArray();
         $fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where('group_id',$group_id)->get()->toArray();
         return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
+    }
+
+    public function feedback_submit (Request $request) {
+        $group_id = base64_decode($request->group_id);
+        $message = $request->feedback_msg;
+
+        $add = new Feedback;
+        $add->group_id = $group_id;
+        $add->user_id = Auth::guard('crypto')->user()->id;
+        $add->message = $message;
+
+        if ($add->save()) {
+            $request->session()->flash("submit-status", "Feedback submitted successfully.");
+            return redirect('/group/dashboard/'.base64_encode($group_id));
+        }
     }
 }

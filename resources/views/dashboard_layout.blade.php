@@ -213,6 +213,26 @@
           }
         });
 
+        $('#feedback_form').validate({
+          rules:{
+            feedback_msg:{
+              required: true
+            }
+          },
+          messages:{
+            feedback_msg:{
+              required: "<font color='red'>Message can't be left blank.<br /><br /></font>"
+            }
+          }
+        });
+
+        $('#feedback_form_submit').on('click', function(){
+          var valid = $('#feedback_form').valid();
+          if(valid){
+            $('#feedback_form').submit();
+          }
+        });
+
         $('.pinned_post').on('click',function(){
           
           var user_id = $(this).attr('user_id');
@@ -252,14 +272,6 @@
 
         }, 3000);
         //end
-
-        $('.chip_qty_validation').on('change',function(){
-          var value = $(this).val();
-          if(value > 100){
-            alert ('No. of Chips not more than 100');
-            return false;
-          }
-        });
             
 		});
 	</script>
