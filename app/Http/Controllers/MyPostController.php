@@ -27,7 +27,7 @@ class MyPostController extends Controller
     }
 
     public function index () {
-    	$fetch_post_from_all_groups = QuickPost::with('group_name')->where('user_id',Auth::guard('crypto')->user()->id)->orderby('id','desc')->get()->toArray();
+    	$fetch_post_from_all_groups = QuickPost::with('group_name')->where([['user_id',Auth::guard('crypto')->user()->id],['current_status','1']])->orderby('id','desc')->get()->toArray();
 
     	return view('frontend.my-post.my_all_post_view')->with('fetch_post_from_all_groups',$fetch_post_from_all_groups);
     }
