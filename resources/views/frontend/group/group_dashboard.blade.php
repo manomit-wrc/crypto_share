@@ -38,37 +38,39 @@
 
 	<div class="row">
 		<!-- begin col-8 -->
-		<div class="col-md-8">
-			<div class="span12">
-                <div class="well">
-                    <div id="myCarousel" class="carousel fdi-Carousel slide">
-						<!-- Carousel items -->
-                        <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
-                            <div class="carousel-inner onebyone-carosel">
-                            	@if(count($fetch_latest_post_image) > 0)
-                            		<?php $i=0; ?>
-	                            	@foreach($fetch_latest_post_image as $key=>$value)
-		                                <div class="item @if($i==0) active @endif">
-		                                    <div class="col-md-4">
-	                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
-		                                    </div>
-		                                </div>
-		                            <?php $i++; ?>
-                                	@endforeach
-                            	@else
-                            		No post image as off now.
-                            	@endif
-                            </div>
-                            @if(count($fetch_latest_post_image) > 0)
-	                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
-	                            <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>
-                            @endif
-                        </div>
-                        <!--/carousel-inner-->
-                    </div><!--/myCarousel-->
-                </div><!--/well-->
-            </div>
-		</div>
+		@if(count($fetch_latest_post_image) > 0)
+			<div class="col-md-8">
+				<div class="span12">
+	                <div class="well">
+	                    <div id="myCarousel" class="carousel fdi-Carousel slide">
+							<!-- Carousel items -->
+	                        <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
+	                            <div class="carousel-inner onebyone-carosel">
+	                            	@if(count($fetch_latest_post_image) > 0)
+	                            		<?php $i=0; ?>
+		                            	@foreach($fetch_latest_post_image as $key=>$value)
+			                                <div class="item @if($i==0) active @endif">
+			                                    <div class="col-md-4">
+		                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+			                                    </div>
+			                                </div>
+			                            <?php $i++; ?>
+	                                	@endforeach
+	                            	@else
+	                            		No post image as off now.
+	                            	@endif
+	                            </div>
+	                            @if(count($fetch_latest_post_image) > 0)
+		                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
+		                            <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>
+	                            @endif
+	                        </div>
+	                        <!--/carousel-inner-->
+	                    </div><!--/myCarousel-->
+	                </div><!--/well-->
+	            </div>
+			</div>
+		@endif
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
 		<div class="col-md-4">
@@ -304,7 +306,7 @@
 									@foreach($fetch_latest_post as $key => $value)
 										<li class="media media-lg">
 											<a href="javascript:;" class="pull-left">
-												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt=""  style="width: 200px;height: 150px;" />
 											</a>
 											<div class="media-body">
 												{{$value['post']}}
@@ -331,7 +333,7 @@
 									@foreach($fetch_pinned_post as $key => $value)
 										<li class="media media-lg">
 											<a href="javascript:;" class="pull-left">
-												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" style="width: 200px;height: 150px;"/>
 											</a>
 											<div class="media-body">
 												{{$value['post']}}
@@ -554,7 +556,20 @@
 								</div>
 			                </div>
 			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+
 			                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+
+			                <div class="form-control no-rounded-corner bg-silver">
+                                <div class="col-md-9 ui-sortable">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="sticky_to_top" value="1">
+                                        Sticky to Top
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div></div>
+
 			                <div class="panel-footer text-right">
 			                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
 			                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">

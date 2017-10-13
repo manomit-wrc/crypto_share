@@ -314,6 +314,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
     );
 
     public static $classMap = array (
+        'AddFieldInQuickPost' => __DIR__ . '/../..' . '/database/migrations/2017_10_13_130110_add_field_in_quick_post.php',
         'AddFieldNameToUsersTabel' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
         'AddFieldToGroup' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
         'AddFieldToInvitations' => __DIR__ . '/../..' . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',

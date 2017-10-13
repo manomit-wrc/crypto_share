@@ -286,7 +286,7 @@ class GroupController extends Controller
 
         $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
 
-        $fetch_latest_post_image = QuickPost::where('group_id', $id )->orderby('id','desc')->get()->toArray();
+        $fetch_latest_post_image = QuickPost::where([['group_id', $id],['sticky_to_top','1']] )->orderby('id','desc')->get()->toArray();
 
         $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1']] )->orderby('id','desc')->get()->toArray();
 
@@ -338,19 +338,24 @@ class GroupController extends Controller
     	$group_id = base64_decode($group_id);
     	$text = $request->quick_post;
     	$image = $request->quick_post_image;
+        $sticky_to_top = $request->sticky_to_top;
 
-    	if ($request->hasFile('quick_post_image')) {
-            $file = $request->file('quick_post_image');
-            $fileName = time().'_'.$file->getClientOriginalName();
-            //thumb destination path
-            $destinationPath_2 = public_path().'/upload/quick_post/resize';
-            $img = Image::make($file->getRealPath());
-            $img->resize(200, 150, function ($constraint) {
-              $constraint->aspectRatio();
-            })->save($destinationPath_2.'/'.$fileName);
-            //original destination path
-            $destinationPath = public_path().'/upload/quick_post/original/';
-            $file->move($destinationPath,$fileName);
+        if($image){
+            if ($request->hasFile('quick_post_image')) {
+                $file = $request->file('quick_post_image');
+                $fileName = time().'_'.$file->getClientOriginalName();
+                //thumb destination path
+                $destinationPath_2 = public_path().'/upload/quick_post/resize';
+                $img = Image::make($file->getRealPath());
+                $img->resize(200, 150, function ($constraint) {
+                  $constraint->aspectRatio();
+                })->save($destinationPath_2.'/'.$fileName);
+                //original destination path
+                $destinationPath = public_path().'/upload/quick_post/original/';
+                $file->move($destinationPath,$fileName);
+            }
+        }else{
+            $fileName = 'images.jpg';
         }
 
     	$add = new QuickPost;
@@ -358,6 +363,7 @@ class GroupController extends Controller
     	$add->user_id = Auth::guard('crypto')->user()->id;
     	$add->post = $text;
     	$add->post_image = $fileName;
+        $add->sticky_to_top = $sticky_to_top;
 
     	if($add->save()){
     		$request->session()->flash("submit-status", "Post submitted successfully.");
