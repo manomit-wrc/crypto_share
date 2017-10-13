@@ -32,9 +32,9 @@ class TransactionController extends Controller
         $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();
         $user_id = Auth::user()->id;
-        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '1']])->sum('chip_value');
         $remain_longterm_chip = 100 - $tot_longterm_chip;
-        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '2']])->sum('chip_value');
         $remain_trade_chip = 100 - $tot_trade_chip;
         return view('frontend.transaction_add')->with('coin_list', $coin_list)->with(['group_id' => $group_id, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);
     }
@@ -103,9 +103,9 @@ class TransactionController extends Controller
         $group_id = base64_decode($group_id);
         $user_id = Auth::user()->id;
         $tran_details = UserCoin::with('coinlists')->where([['id','=',$tran_id],['group_id','=',$group_id]])->get()->toArray();
-        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['id', '<>', $tran_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '1']])->sum('chip_value');
         $remain_longterm_chip = 100 - $tot_longterm_chip;
-        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['id', '<>', $tran_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '2']])->sum('chip_value');
         $remain_trade_chip = 100 - $tot_trade_chip;
         if (!empty($tran_details)) {
             return view('frontend.transaction_edit')->with(['group_id' => $group_id, 'tran_id' => $tran_id, 'tran_details' => $tran_details, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);

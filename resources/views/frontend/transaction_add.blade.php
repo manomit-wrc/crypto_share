@@ -175,19 +175,19 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 1</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target1" placeholder="Target 1" type="number" value="{{old('tab2_target1')}}">
+                                        <input class="form-control" name="tab2_target1" placeholder="Target 1" type="text" value="{{old('tab2_target1')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 2</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target2" placeholder="Target 2" type="number" value="{{old('tab2_target2')}}">
+                                        <input class="form-control" name="tab2_target2" placeholder="Target 2" type="text" value="{{old('tab2_target2')}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Target 3</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_target3" placeholder="Target 3" type="number" value="{{old('tab2_target3')}}">
+                                        <input class="form-control" name="tab2_target3" placeholder="Target 3" type="text" value="{{old('tab2_target3')}}">
                                     </div>
                                 </div>
                             </div>
