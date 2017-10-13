@@ -280,7 +280,33 @@
               }
             }
           });
+        });
 
+        $('.delete_post').on('click',function(){
+          var post_id = $(this).attr('post_id');
+          
+          $.ajax({
+            type: "POST",
+            url: '/group/delete-post',
+            data:{
+              post_id:post_id,
+              _token: '{{csrf_token()}}'
+            },
+            success: function(data){
+              if(data == 1){
+
+                $.confirm({
+                    title: 'Confirmation!',
+                    content: 'Post deleted successfully',
+                    buttons: {
+                        OK: function () {
+                          window.location.reload();
+                        }
+                    }
+                });
+              }
+            }
+          });
         });
 
         //for auto refresh Transaction Lists div

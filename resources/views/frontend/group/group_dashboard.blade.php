@@ -38,8 +38,8 @@
 
 	<div class="row">
 		<!-- begin col-8 -->
-		@if(count($fetch_latest_post_image) > 0)
-			<div class="col-md-8">
+		<div class="col-md-8">
+			@if(count($fetch_latest_post_image) > 0)
 				<div class="span12">
 	                <div class="well">
 	                    <div id="myCarousel" class="carousel fdi-Carousel slide">
@@ -69,8 +69,8 @@
 	                    </div><!--/myCarousel-->
 	                </div><!--/well-->
 	            </div>
-			</div>
-		@endif
+            @endif
+		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
 		<div class="col-md-4">
@@ -258,10 +258,11 @@
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
-		                            <td><a href="#modal-dialog{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a></td>
+		                            <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a>@endif</td>
 		                        </tr>
+		                        @if($value['notes'] > '')
 		                        <!-- #modal-dialog -->
-								<div class="modal fade" id="modal-dialog{{$value['id']}}">
+								<div class="modal fade" id="notes-{{$value['id']}}">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -278,6 +279,7 @@
 										</div>
 									</div>
 								</div>
+								@endif
 		                        @endforeach
 		                    @else
 		                    	<tr class="odd">
@@ -313,9 +315,20 @@
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
 												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
 												@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)) 
-												@if($value['status']!=1)
-												<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
-												@endif
+												
+												
+													@if($value['user_id'] == Auth::guard('crypto')->user()->id)
+														@if($value['status']!=1)
+															<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
+															<br>
+															<br>
+														@endif
+
+														<a title="Edit" href="javascript:void(0)" class="btn btn-primary btn-sm m-r-5 edit_post" post_id="{{$value['id']}}"><i class="fa fa-pencil"></i></a>
+
+    													<a title="Delete" href="javascript:void(0)" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5 delete_post" post_id="{{$value['id']}}"><i class="fa fa-trash"></i></a>
+														
+													@endif 
 												@endif
 											</div>
 										</li>
@@ -387,6 +400,51 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="post"> 
+				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+					<div class="panel panel-inverse" data-sortable-id="index-8">
+						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
+							{{ csrf_field() }}
+			                <div class="panel-heading">
+			                    <h4 class="panel-title">Quick Post</h4>
+			                </div>
+			                <div class="panel-toolbar">
+			                    <div class="btn-group m-r-5">
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
+									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
+								</div>
+			                    <div class="btn-group">
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
+									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
+									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
+								</div>
+			                </div>
+			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+
+			                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+
+			                <div class="form-control no-rounded-corner bg-silver">
+                                <div class="col-md-9 ui-sortable">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="sticky_to_top" value="1">
+                                        Sticky to Top
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div></div>
+
+			                <div class="panel-footer text-right">
+			                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
+			                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
+			                </div>
+		                </form>
+		            </div>
+	            @endif
+	        </div>
 		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
@@ -501,17 +559,23 @@
 	                @else
 		                <div class="panel-body">
 		                	@if (count($fetch_feedback) > 0)
-								<div class="note note-success">
-									<h4>{{$fetch_feedback[0]['user_info']['first_name']}} {{$fetch_feedback[0]['user_info']['last_name']}}</h4>
-									<p>
-									    {{$fetch_feedback[0]['message']}}
-			                        </p>
+		                		@foreach ($fetch_feedback as $fetch_feedback_by_user)
+									<div class="note note-success">
+										<h4>{{$fetch_feedback_by_user['user_info']['first_name']}} {{$fetch_feedback_by_user['user_info']['last_name']}}</h4>
+										<p>
+										    {{$fetch_feedback_by_user['message']}}
+				                        </p>
+									</div>
+								@endforeach
+								<div id="no_feedback">
+									<a href="javascript:void(0);" onclick="show_feedback_form();" class="btn btn-info">Give Feedback</a>
 								</div>
 							@else
 							<div id="no_feedback">
 								<span class="txt">Please give your valuable feedback</span><br /><br />
 								<a href="javascript:void(0);" onclick="show_feedback_form();" class="btn btn-info">Give Feedback</a>
 							</div>
+							@endif
 							<div id="feedback_form_div" style="display: none;">
 								<form name="feedback_form" id="feedback_form" method="post" action="/group/feedback_submit">
 									{{ csrf_field() }}
@@ -524,60 +588,10 @@
 					                </div>
 					            </form>
 							</div>
-							@endif
 		                </div>
 		            @endif
 	            </div>
 	        @endif
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-8">
-			<div class="post"> 
-				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
-					<div class="panel panel-inverse" data-sortable-id="index-8">
-						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
-							{{ csrf_field() }}
-			                <div class="panel-heading">
-			                    <h4 class="panel-title">Quick Post</h4>
-			                </div>
-			                <div class="panel-toolbar">
-			                    <div class="btn-group m-r-5">
-									<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
-									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
-									<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
-								</div>
-			                    <div class="btn-group">
-									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
-									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
-									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
-									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
-								</div>
-			                </div>
-			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
-
-			                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
-
-			                <div class="form-control no-rounded-corner bg-silver">
-                                <div class="col-md-9 ui-sortable">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" name="sticky_to_top" value="1">
-                                        Sticky to Top
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div></div>
-
-			                <div class="panel-footer text-right">
-			                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
-			                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
-			                </div>
-		                </form>
-		            </div>
-	            @endif
-	        </div>
 		</div>
 	</div>
 	<!-- end row -->

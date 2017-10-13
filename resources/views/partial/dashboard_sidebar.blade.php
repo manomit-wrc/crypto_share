@@ -65,11 +65,19 @@
 
 			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
 
-				<li class="has-sub {{ (Request::segment(1) === 'group' ? 'active' : '')}}">
+				<li class="has-sub {{(Request::segment(1) === 'group' ? 'active' : '')}}">
 					<a href="/group">
 						<span>Group</span>
 					</a>
 				</li>
+
+				@foreach($fetch_user_group as $fetch_user_group_list)
+					<li class="has-sub">
+						<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
+							<span>{{$fetch_user_group_list['groups']['group_name']}}</span>
+						</a>
+					</li>
+				@endforeach
 
 				<li class="has-sub {{ (Request::segment(1) === 'my-post' ? 'active' : '')}}">
 					<a href="/my-post">

@@ -284,11 +284,11 @@ class GroupController extends Controller
             $k++;
         }
 
-        $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
+        $fetch_latest_post = QuickPost::with('user_name')->where([['group_id',$id],['current_status','1']])->orderby('id','desc')->get()->toArray();
 
-        $fetch_latest_post_image = QuickPost::where([['group_id', $id],['sticky_to_top','1']] )->orderby('id','desc')->get()->toArray();
+        $fetch_latest_post_image = QuickPost::where([['group_id', $id],['sticky_to_top','1'],['current_status','1']] )->orderby('id','desc')->get()->toArray();
 
-        $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1']] )->orderby('id','desc')->get()->toArray();
+        $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1'],['current_status','1']] )->orderby('id','desc')->get()->toArray();
 
         $chatArray = array();
         $chats = \App\Message::with('users')->where('group_id', base64_decode($group_id))->get()->toArray();
@@ -410,6 +410,17 @@ class GroupController extends Controller
         if ($add->save()) {
             $request->session()->flash("submit-status", "Feedback submitted successfully.");
             return redirect('/group/dashboard/'.base64_encode($group_id));
+        }
+    }
+
+    public function delete_post (Request $request){
+        $post_id = $request->post_id;
+
+        $delete = QuickPost::find($post_id);
+        $delete->current_status = 5;
+        if($delete->save()) {
+            echo 1;
+            exit();
         }
     }
 }
