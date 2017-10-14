@@ -143,11 +143,11 @@
 	<div class="row">
 		<div class="col-md-8">
 			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
-				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+				<a href="/group/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 
 			@if($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
-				<a href="/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+				<a href="/group/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
 		<div class="col-md-4">
@@ -324,7 +324,7 @@
 															<br>
 														@endif
 
-														<a title="Edit" href="javascript:void(0)" class="btn btn-primary btn-sm m-r-5 edit_post" post_id="{{$value['id']}}"><i class="fa fa-pencil"></i></a>
+														<a title="Edit" href="/group/dashboard/{{$group_id}}/{{$value['id']}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
 
     													<a title="Delete" href="javascript:void(0)" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5 delete_post" post_id="{{$value['id']}}"><i class="fa fa-trash"></i></a>
 														

@@ -423,4 +423,19 @@ class GroupController extends Controller
             exit();
         }
     }
+
+    public function edit_post($group_id,$post_id){
+        $group_id = base64_decode($group_id);
+        $post_id = $post_id;
+
+        $fetch_details_of_group_post = QuickPost::where([['id',$post_id],['group_id',$group_id],['current_status','1']])->get()->toArray();
+
+        if(empty($fetch_details_of_group_post)){
+            return redirect('/group/dashboard/'.base64_encode($group_id));
+        }else{
+            echo "<pre>";
+            print_r($fetch_details_of_group_post);
+            die();
+        }
+    }
 }

@@ -69,15 +69,19 @@
 					<a href="/group">
 						<span>Group</span>
 					</a>
-				</li>
+					<ul class="sub-menu">
+						@foreach($fetch_user_group as $fetch_user_group_list)
+							<li class="{{(Request::segment(3) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '' || Request::segment(4) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '')}}">
 
-				@foreach($fetch_user_group as $fetch_user_group_list)
-					<li class="has-sub">
-						<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
-							<span>{{$fetch_user_group_list['groups']['group_name']}}</span>
-						</a>
-					</li>
-				@endforeach
+								<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
+									<span>{{$fetch_user_group_list['groups']['group_name']}}</span>
+								</a>
+
+							</li>
+						@endforeach
+
+					</ul>
+				</li>
 
 				<li class="has-sub {{ (Request::segment(1) === 'my-post' ? 'active' : '')}}">
 					<a href="/my-post">

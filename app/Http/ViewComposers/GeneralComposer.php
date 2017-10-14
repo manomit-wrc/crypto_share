@@ -3,6 +3,8 @@ namespace App\Http\ViewComposers;
 use Illuminate\View\View;
 use Auth;
 use App\User;
+use App\Group;
+use App\Invitation;
 
 
 Class GeneralComposer {
@@ -40,16 +42,49 @@ Class GeneralComposer {
                 }
             }
 
-            $fetch_user_group = \App\Invitation::with('groups')->where([['status','=','1'],['user_id','=',Auth::guard('crypto')->user()->id]])->get()->toArray();
+            
+            //for group name fetch
+            $new_fetch_group = array();
+        
+            $fetch_all_group = Group::where('user_id', Auth::guard('crypto')->user()->id)
+            ->where('current_status',1)
+            ->orderby('id','desc')
+            ->get()
+            ->toArray();
 
-            /*echo "<pre>";
-            print_r($fetch_user_group);
-            die();*/
+            foreach($fetch_all_group as $key=>$value){
+
+                $new_fetch_group[$key]['groups'] = $value;
+                $new_fetch_group[$key]['groups']['group_admin_name'] = Auth::guard('crypto')->user()->first_name.' '.Auth::guard('crypto')->user()->last_name;
+
+            }
+
+            $fetch_my_join_group_list = Invitation::with('groups')->where([['status','=','1'],['user_id',Auth::guard('crypto')->user()->id]])
+                ->orderby('id','desc')
+                ->get()
+                ->toArray();
+
+            foreach ($fetch_my_join_group_list as $key => $value) {
+
+                $user_id_of_group_admin = $value['groups']['user_id'];
+
+                $find_user = User::find($user_id_of_group_admin);
+                $user_id_of_group_admin_name = $find_user['first_name'].' '.$find_user['last_name'];
+
+                $fetch_my_join_group_list[$key]['groups']['group_admin_name'] = $user_id_of_group_admin_name;
+            }
+
+            $fetch_all_group1 = array_merge($new_fetch_group,$fetch_my_join_group_list);
+            //end
+
+            // echo "<pre>";
+            // print_r($fetch_all_group1);
+            // die();
 
             $view->with('details', $tempArray);
             $view->with('total_record', $i);
             $view->with('chatChannel', 'chat');
-            $view->with('fetch_user_group', $fetch_user_group);
+            $view->with('fetch_user_group', $fetch_all_group1);
         }
     }
 }
