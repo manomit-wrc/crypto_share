@@ -19,19 +19,20 @@
         <!-- begin navbar-collapse -->
         <div class="collapse navbar-collapse" id="header-navbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#home" data-click="scroll-to-target">HOME</a></li>
+                <li><a href="/">HOME</a></li>
+                <!-- <li><a href="#home" data-click="scroll-to-target">HOME</a></li>
                 <li><a href="#about" data-click="scroll-to-target">ABOUT</a></li>
                 <li><a href="#team" data-click="scroll-to-target">TEAM</a></li>
                 <li><a href="#service" data-click="scroll-to-target">SERVICES</a></li>
                 <li><a href="#work" data-click="scroll-to-target">WORK</a></li>
                 <li><a href="#client" data-click="scroll-to-target">CLIENT</a></li>
                 <li><a href="#pricing" data-click="scroll-to-target">PRICING</a></li>
-                <li><a href="#contact" data-click="scroll-to-target">CONTACT</a></li>
-                @if(Auth::guard('crypto')->check())
+                <li><a href="#contact" data-click="scroll-to-target">CONTACT</a></li> -->
+                <!-- @if(Auth::guard('crypto')->check())
                     <li><a href="/dashboard">DASHBOARD</a></li>
                 @else
                     <li><a href="/login">LOGIN</a></li>
-                @endif
+                @endif -->
             </ul>
         </div>
         <!-- end navbar-collapse -->
