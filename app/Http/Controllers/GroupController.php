@@ -260,7 +260,7 @@ class GroupController extends Controller
 
     	$fetch_all_user_of_group = $fetch_user_details;
 
-        $user_coin_group_list = UserCoin::with('coinlists')->where('group_id','=',$id)->with('userInfo')->orderby('coin_list_id','asc')->get()->toArray();
+        $user_coin_group_list = UserCoin::with('coinlists')->where([['group_id', '=', $id],['status', '=', 1]])->with('userInfo')->orderby('coin_list_id','asc')->get()->toArray();
         
         $coin_lists_main = array();
         $new_coin_list_id = '';
@@ -312,7 +312,7 @@ class GroupController extends Controller
 
         $group_status = \App\Invitation::where([['user_id', '=', Auth::guard('crypto')->user()->id],['group_id','=',$id],['status','!=','5']])->get()->toArray();
 
-        $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id',$id],['status',1]])->with('userInfo')->get()->toArray();
+        $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id', '=', $id],['status', '=', 1]])->with('userInfo')->get()->toArray();
 
         $fetch_feedback = Feedback::with('user_info')->where([['group_id', '=', $id],['user_id', '=', Auth::guard('crypto')->user()->id]])->get()->toArray();
 
@@ -428,7 +428,7 @@ class GroupController extends Controller
     public function group_wise_transaction($group_id) {
         $group_id = base64_decode($group_id);
         $group_info = Group::find($group_id)->toArray();
-        $fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where('group_id',$group_id)->get()->toArray();
+        $fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where([['group_id', '=', $group_id],['status', '=', 1]])->get()->toArray();
         return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
     }
 

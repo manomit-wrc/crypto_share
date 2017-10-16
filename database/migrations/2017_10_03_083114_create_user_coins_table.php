@@ -21,10 +21,9 @@ class CreateUserCoinsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('transaction_type', 50);
             $table->string('current_price', 100);
-            $table->string('total_price', 100);
-            $table->string('total_value', 100);
-            $table->string('trade_price', 100);
+            $table->string('trade_price_usd', 100);
             $table->string('quantity', 20);
+            $table->string('total_value_usd', 100);
             $table->date('trade_date');
             $table->text('notes');
             $table->string('chip_value', 100)->nullable();

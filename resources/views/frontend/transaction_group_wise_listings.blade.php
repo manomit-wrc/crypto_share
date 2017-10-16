@@ -46,7 +46,7 @@
                                     <th style="text-align: right;">Qty.</th>
                                     <th style="text-align: right;">Total Value</th>
                                     <th style="width: 10%;">Date</th>
-                                    <th style="text-align: right; width: 10%;">Action</th>
+                                    <th style="text-align: right; width: 11%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody><!--  class="even" -->
@@ -56,21 +56,18 @@
                                     <td>{{$value['coinlists']['full_name']}}</td>
                                     <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Trade @else Watch @endif</td>
                                     <td>{{$value['user_info']['first_name'].' '.$value['user_info']['last_name']}}</td>
-                                    <td style="text-align: right;">{{$value['trade_price']}}</td>
+                                    <td style="text-align: right;">{{$value['trade_price_usd']}}</td>
                                     <td style="text-align: right;">{{$value['high']}}</td>
                                     <td style="text-align: right;">{{$value['low']}}</td>
                                     <td style="text-align: right;">{{$value['quantity']}}</td>
-                                    <td style="text-align: right;">{{$value['total_value']}}</td>
+                                    <td style="text-align: right;">{{$value['total_value_usd']}}</td>
                                     <td>{{date('jS M, Y', strtotime($value['trade_date']))}}</td>
                                     <td style="text-align: right;">
                                     @if($value['user_info']['id'] == Auth::guard('crypto')->user()->id)
-
                                         <a title="Edit" href="/group/group_transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-
+                                        <a href="/transaction/remove/{{$value['id']}}" onclick="return confirm('Do you want to move the current record to recycle bin ?');" class="btn btn-warning btn-sm"><i class="fa fa-eraser"></i></a>
                                         <a href="/transaction/delete/{{$value['id']}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-
                                     @endif
-
                                     </td>
                                 </tr>
                                 @endforeach
