@@ -24,7 +24,7 @@
             <!-- begin col-12 -->
 		    <div class="col-md-12">
                 <div class="pull-right">
-                    <a href="/transaction/add/{{base64_encode($group_id)}}"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
+                    <a href="/group/transaction/add/{{base64_encode($group_id)}}"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
                 </div>
                 <div style="clear: both;"></div>
 		        <!-- begin panel -->
@@ -65,7 +65,7 @@
                                     <td style="text-align: right;">
                                     @if($value['user_info']['id'] == Auth::guard('crypto')->user()->id)
 
-                                        <a title="Edit" href="/group_transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                        <a title="Edit" href="/group/group_transaction/edit/{{base64_encode($group_id)}}/{{$value['id']}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
                                         <a href="/transaction/delete/{{$value['id']}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 

@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCuurentStatus' => $baseDir . '/database/migrations/2017_10_13_160301_add_cuurent_status.php',
+    'AddFieldInQuickPost' => $baseDir . '/database/migrations/2017_10_13_130110_add_field_in_quick_post.php',
     'AddFieldNameToUsersTabel' => $baseDir . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
     'AddFieldToGroup' => $baseDir . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
     'AddFieldToInvitations' => $baseDir . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',

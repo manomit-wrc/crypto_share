@@ -191,17 +191,11 @@
           rules:{
             quick_post:{
               required: true
-            },
-            quick_post_image:{
-              required: true
             }
           },
           messages:{
             quick_post:{
               required: "<font color='red'>Quick post can't be left blank.</font>"
-            },
-            quick_post_image:{
-              required: "<font color='red'>Quick post image can't be left blank.</font>"
             }
           }
         });
@@ -286,7 +280,33 @@
               }
             }
           });
+        });
 
+        $('.delete_post').on('click',function(){
+          var post_id = $(this).attr('post_id');
+          
+          $.ajax({
+            type: "POST",
+            url: '/group/delete-post',
+            data:{
+              post_id:post_id,
+              _token: '{{csrf_token()}}'
+            },
+            success: function(data){
+              if(data == 1){
+
+                $.confirm({
+                    title: 'Confirmation!',
+                    content: 'Post deleted successfully',
+                    buttons: {
+                        OK: function () {
+                          window.location.reload();
+                        }
+                    }
+                });
+              }
+            }
+          });
         });
 
         //for auto refresh Transaction Lists div

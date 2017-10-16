@@ -284,11 +284,11 @@ class GroupController extends Controller
             $k++;
         }
 
-        $fetch_latest_post = QuickPost::with('user_name')->where('group_id', $id )->orderby('id','desc')->get()->toArray();
+        $fetch_latest_post = QuickPost::with('user_name')->where([['group_id',$id],['current_status','1']])->orderby('id','desc')->get()->toArray();
 
-        $fetch_latest_post_image = QuickPost::where('group_id', $id )->orderby('id','desc')->get()->toArray();
+        $fetch_latest_post_image = QuickPost::where([['group_id', $id],['sticky_to_top','1'],['current_status','1']] )->orderby('id','desc')->get()->toArray();
 
-        $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1']] )->orderby('id','desc')->get()->toArray();
+        $fetch_pinned_post = QuickPost::with('user_name')->where([['group_id', $id],['status','1'],['current_status','1']] )->orderby('id','desc')->get()->toArray();
 
         $chatArray = array();
         $chats = \App\Message::with('users')->where('group_id', base64_decode($group_id))->get()->toArray();
@@ -338,19 +338,24 @@ class GroupController extends Controller
     	$group_id = base64_decode($group_id);
     	$text = $request->quick_post;
     	$image = $request->quick_post_image;
+        $sticky_to_top = $request->sticky_to_top;
 
-    	if ($request->hasFile('quick_post_image')) {
-            $file = $request->file('quick_post_image');
-            $fileName = time().'_'.$file->getClientOriginalName();
-            //thumb destination path
-            $destinationPath_2 = public_path().'/upload/quick_post/resize';
-            $img = Image::make($file->getRealPath());
-            $img->resize(200, 150, function ($constraint) {
-              $constraint->aspectRatio();
-            })->save($destinationPath_2.'/'.$fileName);
-            //original destination path
-            $destinationPath = public_path().'/upload/quick_post/original/';
-            $file->move($destinationPath,$fileName);
+        if($image){
+            if ($request->hasFile('quick_post_image')) {
+                $file = $request->file('quick_post_image');
+                $fileName = time().'_'.$file->getClientOriginalName();
+                //thumb destination path
+                $destinationPath_2 = public_path().'/upload/quick_post/resize';
+                $img = Image::make($file->getRealPath());
+                $img->resize(200, 150, function ($constraint) {
+                  $constraint->aspectRatio();
+                })->save($destinationPath_2.'/'.$fileName);
+                //original destination path
+                $destinationPath = public_path().'/upload/quick_post/original/';
+                $file->move($destinationPath,$fileName);
+            }
+        }else{
+            $fileName = 'images.jpg';
         }
 
     	$add = new QuickPost;
@@ -358,6 +363,7 @@ class GroupController extends Controller
     	$add->user_id = Auth::guard('crypto')->user()->id;
     	$add->post = $text;
     	$add->post_image = $fileName;
+        $add->sticky_to_top = $sticky_to_top;
 
     	if($add->save()){
     		$request->session()->flash("submit-status", "Post submitted successfully.");
@@ -404,6 +410,32 @@ class GroupController extends Controller
         if ($add->save()) {
             $request->session()->flash("submit-status", "Feedback submitted successfully.");
             return redirect('/group/dashboard/'.base64_encode($group_id));
+        }
+    }
+
+    public function delete_post (Request $request){
+        $post_id = $request->post_id;
+
+        $delete = QuickPost::find($post_id);
+        $delete->current_status = 5;
+        if($delete->save()) {
+            echo 1;
+            exit();
+        }
+    }
+
+    public function edit_post($group_id,$post_id){
+        $group_id = base64_decode($group_id);
+        $post_id = $post_id;
+
+        $fetch_details_of_group_post = QuickPost::where([['id',$post_id],['group_id',$group_id],['current_status','1']])->get()->toArray();
+
+        if(empty($fetch_details_of_group_post)){
+            return redirect('/group/dashboard/'.base64_encode($group_id));
+        }else{
+            echo "<pre>";
+            print_r($fetch_details_of_group_post);
+            die();
         }
     }
 }

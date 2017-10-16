@@ -67,8 +67,10 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/dashboard/{group_id}', 'GroupController@group_dashboard');
 	Route::post('/group/quick_post_submit/{group_id}', 'GroupController@quick_post_submit');
 	Route::post('/group/pinned-post', 'GroupController@pinned_post');
-	Route::get('/group_transaction/{group_id}', 'GroupController@group_wise_transaction');
+	Route::get('/group/group_transaction/{group_id}', 'GroupController@group_wise_transaction');
 	Route::post('/group/unpinned-post', 'GroupController@unpinned_post');
+	Route::post('/group/delete-post', 'GroupController@delete_post');
+	Route::get('/group/dashboard/{group_id}/{post_id}','GroupController@edit_post');
 
 	Route::get('/my-post', 'MyPostController@index');
 
@@ -80,10 +82,10 @@ Route::group(['middleware' => ['crypto']], function() {
 	//end
 
 	Route::get('/transaction', 'TransactionController@index');
-	Route::get('/transaction/add/{group_id}', 'TransactionController@add_transaction');
+	Route::get('/group/transaction/add/{group_id}', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');
 	Route::post('/insert_transaction', 'TransactionController@insert_transaction');
-	Route::get('/group_transaction/edit/{group_id}/{tran_id}', 'TransactionController@edit_transaction');
+	Route::get('/group/group_transaction/edit/{group_id}/{tran_id}', 'TransactionController@edit_transaction');
 	Route::post('/update_transaction', 'TransactionController@update_transaction');
 	Route::get('/transaction/delete/{id}', 'TransactionController@delete_transaction');
 	

@@ -149,11 +149,60 @@
                               <input type="hidden" name="user_id" id="user_id" value="{{base64_encode(Auth::guard('crypto')->user()->id)}}">
                             </div>
                         </div>
+                        <br>
+                        <div></div>
 
                     </form>
+
+                    <br>
+                    <div></div>
+
+                    <!-- begin row -->
+                    
+
                 </div>
                 <!-- end profile-section -->
+
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label ui-sortable">My Groups:</label>
+                    </div>
+                            <!-- begin col-6 -->
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            @foreach($fetch_all_group_name as $key => $value)
+                                <li class=""><a href="#default-tab-{{$value['groups']['id']}}" data-toggle="tab">{{$value['groups']['group_name']}}</a></li>
+                            @endforeach
+                            {{-- <li class="active"><a href="#default-tab-1" data-toggle="tab">Default Tab 1</a></li> --}}
+                            {{-- <li class=""><a href="#default-tab-2" data-toggle="tab">Default Tab 2</a></li> --}}
+                            {{-- <li class=""><a href="#default-tab-3" data-toggle="tab">Default Tab 3</a></li> --}}
+                        </ul>
+                        <div class="tab-content">
+                            @foreach($fetch_all_group_name as $key => $value)
+                                <div class="tab-pane fade in" id="default-tab-{{$value['groups']['id']}}">
+                                    <h3 class="m-t-10"><i class="fa fa-cog"></i> Lorem ipsum dolor sit amet</h3>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                        Integer ac dui eu felis hendrerit lobortis. Phasellus elementum, nibh eget adipiscing porttitor, 
+                                        est diam sagittis orci, a ornare nisi quam elementum tortor. Proin interdum ante porta est convallis 
+                                        dapibus dictum in nibh. Aenean quis massa congue metus mollis fermentum eget et tellus. 
+                                        Aenean tincidunt, mauris ut dignissim lacinia, nisi urna consectetur sapien, nec eleifend orci eros id lectus.
+                                    </p>
+                                    
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                    <!-- end col-6 -->
+                </div>
             </div>
+
+            
+
+
+                    <!-- end row -->
 			<!-- end profile-container -->
 		</div>
 		<!-- end #content -->
