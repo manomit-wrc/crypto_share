@@ -24,7 +24,7 @@ class TransactionController extends Controller
     
 	public function index() {
         $user_id = Auth::user()->id;
-        $user_coin_data_list = UserCoin::with('coinlists','groupInfo')->where('user_id',$user_id)->get();
+        $user_coin_data_list = UserCoin::with('coinlists','groupInfo')->where([['user_id', '=', $user_id],['status', '=', 1]])->get();
     	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
     }
 
@@ -32,17 +32,15 @@ class TransactionController extends Controller
         $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();
         $user_id = Auth::guard('crypto')->user()->id;
-        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '1']])->sum('chip_value');
-        $user_id = Auth::user()->id;
-        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '1'],['status', '=', '1']])->sum('chip_value');
         $remain_longterm_chip = 100 - $tot_longterm_chip;
-        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['transaction_type', '=', '2'],['status', '=', '1']])->sum('chip_value');
         $remain_trade_chip = 100 - $tot_trade_chip;
         return view('frontend.transaction_add')->with('coin_list', $coin_list)->with(['group_id' => $group_id, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);
     }
 
     public function get_price($coin_name) {
-        $url = "https://min-api.cryptocompare.com/data/price?fsym=".$coin_name."&tsyms=USD";
+        $url = "https://min-api.cryptocompare.com/data/price?fsym=".$coin_name."&tsyms=USD,BTC";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -64,18 +62,22 @@ class TransactionController extends Controller
         $user_coin->transaction_type = $request->tran_type;
         if ($request->tran_type == 1) {
             $user_coin->current_price = $request->tab1_current_price;
-            $user_coin->trade_price = $request->tab1_trade_price;
+            $user_coin->trade_price_usd = $request->tab1_trade_price_usd;
+            $user_coin->trade_price_btc = $request->tab1_trade_price_btc;
             $user_coin->quantity = $request->tab1_qty;
-            $user_coin->total_value = $request->tab1_total_val;
+            $user_coin->total_value_usd = $request->tab1_total_val_usd;
+            $user_coin->total_value_btc = $request->tab1_total_val_btc;
             $user_coin->trade_date = date('Y-m-d', strtotime($request->tab1_trade_date));
             $user_coin->notes = $request->tab1_notes;
             $user_coin->chip_value = $request->tab1_chip_qty;
             $user_coin->trade_type = 'long_term';
         } else if ($request->tran_type == 2) {
             $user_coin->current_price = $request->tab2_current_price;
-            $user_coin->trade_price = $request->tab2_trade_price;
+            $user_coin->trade_price_usd = $request->tab2_trade_price_usd;
+            $user_coin->trade_price_btc = $request->tab2_trade_price_btc;
             $user_coin->quantity = $request->tab2_qty;
-            $user_coin->total_value = $request->tab2_total_val;
+            $user_coin->total_value_usd = $request->tab2_total_val_usd;
+            $user_coin->total_value_btc = $request->tab2_total_val_btc;
             $user_coin->trade_date = date('Y-m-d', strtotime($request->tab2_trade_date));
             $user_coin->notes = $request->tab2_notes;
             $user_coin->trade_type = 'trade';
@@ -85,9 +87,11 @@ class TransactionController extends Controller
             $user_coin->target_3 = $request->tab2_target3;
         } else {
             $user_coin->current_price = $request->tab3_current_price;
-            $user_coin->trade_price = $request->tab3_trade_price;
+            $user_coin->trade_price_usd = $request->tab3_trade_price_usd;
+            $user_coin->trade_price_btc = $request->tab3_trade_price_btc;
             $user_coin->quantity = 1;
-            $user_coin->total_value = $request->tab3_trade_price;
+            $user_coin->total_value_usd = $request->tab3_trade_price_usd;
+            $user_coin->total_value_btc = $request->tab3_trade_price_btc;
             $user_coin->notes = $request->tab3_notes;
             $user_coin->trade_date = date('Y-m-d');
         }
@@ -97,7 +101,7 @@ class TransactionController extends Controller
             return redirect('/group/dashboard/'.$request->group_id);
         } else {
             $request->session()->flash("submit-status", "Transaction addition failed.");
-            return redirect('/group_transaction/add/'.$request->group_id);
+            return redirect('/group/transaction/add/'.$request->group_id);
         }
     }
 
@@ -105,14 +109,14 @@ class TransactionController extends Controller
         $group_id = base64_decode($group_id);
         $user_id = Auth::user()->id;
         $tran_details = UserCoin::with('coinlists')->where([['id','=',$tran_id],['group_id','=',$group_id]])->get()->toArray();
-        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '1']])->sum('chip_value');
+        $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '1'],['status', '=', '1']])->sum('chip_value');
         $remain_longterm_chip = 100 - $tot_longterm_chip;
-        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '2']])->sum('chip_value');
+        $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['group_id', '=', $group_id],['id', '<>', $tran_id],['transaction_type', '=', '2'],['status', '=', '1']])->sum('chip_value');
         $remain_trade_chip = 100 - $tot_trade_chip;
         if (!empty($tran_details)) {
             return view('frontend.transaction_edit')->with(['group_id' => $group_id, 'tran_id' => $tran_id, 'tran_details' => $tran_details, 'tot_longterm_chip' => $tot_longterm_chip, 'remain_longterm_chip' => $remain_longterm_chip, 'tot_trade_chip' => $tot_trade_chip, 'remain_trade_chip' => $remain_trade_chip]);
         } else {
-            return redirect('/group_transaction/'.base64_encode($group_id));
+            return redirect('/group/group_transaction/'.base64_encode($group_id));
         }
     }
 
@@ -122,13 +126,15 @@ class TransactionController extends Controller
         $user_coin->transaction_type = $request->tran_type;
         if ($request->tran_type == 1) {
             $user_coin->quantity = $request->tab1_qty;
-            $user_coin->total_value = $request->tab1_total_val;
+            $user_coin->total_value_usd = $request->tab1_total_val_usd;
+            $user_coin->total_value_btc = $request->tab1_total_val_btc;
             $user_coin->notes = $request->tab1_notes;
             $user_coin->chip_value = $request->tab1_chip_qty;
             $user_coin->trade_type = 'long_term';
         } else if ($request->tran_type == 2) {
             $user_coin->quantity = $request->tab2_qty;
-            $user_coin->total_value = $request->tab2_total_val;
+            $user_coin->total_value_usd = $request->tab2_total_val_usd;
+            $user_coin->total_value_btc = $request->tab2_total_val_btc;
             $user_coin->notes = $request->tab2_notes;
             $user_coin->trade_type = 'trade';
             $user_coin->chip_value = $request->tab2_chip_qty;
@@ -137,7 +143,8 @@ class TransactionController extends Controller
             $user_coin->target_3 = $request->tab2_target3;
         } else {
             $user_coin->quantity = 1;
-            $user_coin->total_value = $user_coin->trade_price;
+            $user_coin->total_value_usd = $user_coin->trade_price_usd;
+            $user_coin->total_value_btc = $user_coin->trade_price_btc;
             $user_coin->notes = $request->tab3_notes;
             $user_coin->trade_type = '';
             $user_coin->chip_value = '';
@@ -151,7 +158,19 @@ class TransactionController extends Controller
             return redirect('/group/dashboard/'.$request->group_id);
         } else {
             $request->session()->flash("submit-status", "Transaction updation failed.");
-            return redirect('/group_transaction/edit/'.$request->group_id.'/'.$tran_id);
+            return redirect('/group/group_transaction/edit/'.$request->group_id.'/'.$tran_id);
+        }
+    }
+
+    public function remove_transaction($id, Request $request) {
+        $user_coin = UserCoin::find($id);
+        $user_coin->status = 0;
+        if ($user_coin->save()) {
+            $request->session()->flash("submit-status", "Transaction moved successfully.");
+            return redirect('/transaction');
+        } else {
+            $request->session()->flash("submit-status", "Transaction movement failed.");
+            return redirect('/transaction');
         }
     }
 
@@ -162,7 +181,7 @@ class TransactionController extends Controller
             return redirect('/transaction');
         } else {
             $request->session()->flash("submit-status", "Transaction delete failed.");
-            return redirect('/transaction/');
+            return redirect('/transaction');
         }
     }
 }

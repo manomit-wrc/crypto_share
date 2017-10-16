@@ -13,6 +13,7 @@ return array(
     'AddFieldToInvitations' => $baseDir . '/database/migrations/2017_09_21_093842_add_field_to_invitations.php',
     'AddFieldToQuickPost' => $baseDir . '/database/migrations/2017_10_06_060906_add_field_to_quick_post.php',
     'AddFieldToUserCoins' => $baseDir . '/database/migrations/2017_10_06_085414_add_field_to_user_coins.php',
+    'AddFieldToUsercoins' => $baseDir . '/database/migrations/2017_10_16_074401_add_field_to_usercoins.php',
     'AddGroupIdToMessagesTable' => $baseDir . '/database/migrations/2017_10_07_201307_add_group_id_to_messages_table.php',
     'AddImageToTeams' => $baseDir . '/database/migrations/2017_09_20_093320_add_image_to_teams.php',
     'AddToTableUserCoins' => $baseDir . '/database/migrations/2017_10_05_084404_add_to_table_user_coins.php',

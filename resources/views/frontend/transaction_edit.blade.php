@@ -16,7 +16,7 @@
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
             <li><a href="/group/dashboard/{{base64_encode($group_id)}}">Group Dashboard</a></li>
-            <li><a href="/group_transaction/{{base64_encode($group_id)}}">Group Transaction</a></li>
+            <li><a href="/group/group_transaction/{{base64_encode($group_id)}}">Group Transaction</a></li>
             <li class="active">Edit Transaction</li>
         </ol>
         <!-- end breadcrumb -->
@@ -65,15 +65,21 @@
                         <div class="tab-content">
                             <div class="tab-pane fade @if ($tran_details[0]['transaction_type'] == 1)active in @endif" id="use_100_chips">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Buy in Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Buy in Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Trade Price</label>
+                                    <label class="col-md-2 control-label">Trade Price (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_price" id="tab1_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
+                                        <input class="form-control" name="tab1_trade_price_usd" id="tab1_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Trade Price (BTC)</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="tab1_trade_price_btc" id="tab1_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -83,9 +89,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Total Value</label>
+                                    <label class="col-md-2 control-label">Total Value (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_total_val" id="tab1_total_val" placeholder="Total Value" type="text" value="@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['total_value']}}@endif" readonly>
+                                        <input class="form-control" name="tab1_total_val_usd" id="tab1_total_val_usd" placeholder="Total Value (USD)" type="text" value="@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['total_value_usd']}}@endif" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Total Value (BTC)</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="tab1_total_val_btc" id="tab1_total_val_btc" placeholder="Total Value (BTC)" type="text" value="@if($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['total_value_btc']}}@endif" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -106,21 +118,27 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control chip_qty_validation_longterm" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="@if ($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['chip_value']}}@endif" min="0" max="{{$remain_longterm_chip}}">
+                                        <input class="form-control chip_qty_validation_longterm" name="tab1_chip_qty" placeholder="No. of Chips" type="number" value="@if ($tran_details[0]['transaction_type'] == 1){{$tran_details[0]['chip_value']}}@endif" min="1" max="{{$remain_longterm_chip}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade @if ($tran_details[0]['transaction_type'] == 2)active in @endif" id="input_trade_targets">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Buy in Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Buy in Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Trade Price</label>
+                                    <label class="col-md-2 control-label">Trade Price (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_price" id="tab2_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
+                                        <input class="form-control" name="tab2_trade_price_usd" id="tab2_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Trade Price (BTC)</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="tab2_trade_price_btc" id="tab2_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -130,9 +148,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Total Value</label>
+                                    <label class="col-md-2 control-label">Total Value (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_total_val" id="tab2_total_val" placeholder="Total Value" type="text" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['total_value']}}@endif" readonly>
+                                        <input class="form-control" name="tab2_total_val_usd" id="tab2_total_val_usd" placeholder="Total Value (USD)" type="text" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['total_value_usd']}}@endif" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Total Value (BTC)</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="tab2_total_val_btc" id="tab2_total_val_btc" placeholder="Total Value (BTC)" type="text" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['total_value_btc']}}@endif" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -160,7 +184,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">No. of Chips</label>
                                     <div class="col-md-10">
-                                        <input class="form-control chip_qty_validation_trade" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['chip_value']}}@endif" min="0" max="{{$remain_trade_chip}}">
+                                        <input class="form-control chip_qty_validation_trade" name="tab2_chip_qty" placeholder="No. of Chips" type="number" value="@if($tran_details[0]['transaction_type'] == 2){{$tran_details[0]['chip_value']}}@endif" min="1" max="{{$remain_trade_chip}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -184,15 +208,21 @@
                             </div>
                             <div class="tab-pane fade @if($tran_details[0]['transaction_type'] == 3)active in @endif" id="watch">
                                 <div class="form-group" style="display: none;">
-                                    <label class="col-md-2 control-label">Buy in Price</label>
+                                    <label class="col-md-2 control-label">Buy in Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Buy in Price" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab3_current_price" id="tab3_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group" style="display: none;">
-                                    <label class="col-md-2 control-label">Trade Price</label>
+                                    <label class="col-md-2 control-label">Trade Price (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab3_trade_price" id="tab3_trade_price" placeholder="Trade Price" type="text" value="{{$tran_details[0]['trade_price']}}" readonly>
+                                        <input class="form-control" name="tab3_trade_price_usd" id="tab3_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: none;">
+                                    <label class="col-md-2 control-label">Trade Price (BTC)</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="tab3_trade_price_btc" id="tab3_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group" style="display: none;">
@@ -259,28 +289,37 @@
 
         $("#tab1_qty").blur(function() {
             if ($("#tab1_qty").val() != '') {
-                var cur_price = parseFloat($("#tab1_current_price").val());
+                var trade_price_usd = parseFloat($("#tab1_trade_price_usd").val());
                 var qty = parseFloat($("#tab1_qty").val());
-                var tot_val = (cur_price * qty);
-                $('#tab1_total_val').val(tot_val);
+                var tot_val_usd = (trade_price_usd * qty);
+                var trade_price_btc = parseFloat($("#tab1_trade_price_btc").val());
+                var tot_val_btc = (trade_price_btc * qty);
+                $('#tab1_total_val_usd').val(tot_val_usd);
+                $('#tab1_total_val_btc').val(tot_val_btc);
             }
         });
 
         $("#tab2_qty").blur(function() {
             if ($("#tab2_qty").val() != '') {
-                var cur_price = parseFloat($("#tab2_current_price").val());
+                var trade_price_usd = parseFloat($("#tab2_trade_price_usd").val());
                 var qty = parseFloat($("#tab2_qty").val());
-                var tot_val = (cur_price * qty);
-                $('#tab2_total_val').val(tot_val);
+                var tot_val_usd = (trade_price_usd * qty);
+                var trade_price_btc = parseFloat($("#tab2_trade_price_btc").val());
+                var tot_val_btc = (trade_price_btc * qty);
+                $('#tab2_total_val_usd').val(tot_val_usd);
+                $('#tab2_total_val_btc').val(tot_val_btc);
             }
         });
 
         $("#tab3_qty").blur(function() {
             if ($("#tab3_qty").val() != '') {
-                var cur_price = parseFloat($("#tab3_current_price").val());
+                var trade_price_usd = parseFloat($("#tab3_trade_price_usd").val());
                 var qty = parseFloat($("#tab3_qty").val());
-                var tot_val = (cur_price * qty);
-                $('#tab3_total_val').val(tot_val);
+                var tot_val_usd = (trade_price_usd * qty);
+                var trade_price_btc = parseFloat($("#tab3_trade_price_btc").val());
+                var tot_val_btc = (trade_price_btc * qty);
+                $('#tab3_total_val_usd').val(tot_val_usd);
+                $('#tab3_total_val_btc').val(tot_val_btc);
             }
         });
 
@@ -289,6 +328,9 @@
             if (value > {{$remain_longterm_chip}}) {
                 alert ('You have consumed {{$tot_longterm_chip}} chips. Your remaining chip is {{$remain_longterm_chip}}');
                 return false;
+            } else if (value < 1) {
+                alert ('Minimum 1 Chip must be added for Long Term Hold');
+                return false;
             }
         });
 
@@ -296,6 +338,9 @@
             var value = $(this).val();
             if (value > {{$remain_trade_chip}}) {
                 alert ('You have consumed {{$tot_trade_chip}} chips. Your remaining chip is {{$remain_trade_chip}}');
+                return false;
+            } else if (value < 1) {
+                alert ('Minimum 1 Chip must be added for Trade');
                 return false;
             }
         });
