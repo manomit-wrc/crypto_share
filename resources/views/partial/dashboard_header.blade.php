@@ -14,8 +14,20 @@
 		
 		<!-- begin header navigation right -->
 		<ul class="nav navbar-nav navbar-right">
-			<li>
-				<a href="/" target="_blank"><i class="fa fa-globe"></i> View Site</a>
+			<li class="dropdown navbar-user">
+				<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">View Groups</a>
+
+				<ul class="dropdown-menu animated fadeInLeft">
+					@foreach($fetch_user_group as $fetch_user_group_list)
+						<li class="{{(Request::segment(3) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '' || Request::segment(4) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '')}}">
+
+							<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
+								<span>{{$fetch_user_group_list['groups']['group_name']}}</span>
+							</a>
+
+						</li>
+					@endforeach
+				</ul>
 			</li>
 			{{-- //use for notification// --}}
 			<li class="dropdown">
@@ -69,8 +81,8 @@
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
 					<li><a href="/edit_profile">Profile</a></li>
-					@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
-					<li><a href="/transaction">My Transaction</a></li>
+					@if(Auth::guard('crypto')->user()->role_code == 'SITEUSR')
+						<li><a href="/transaction">My Transaction</a></li>
 					@endif
 					<li><a href="/change_pass">Change Password</a></li>
 					<li class="divider"></li>

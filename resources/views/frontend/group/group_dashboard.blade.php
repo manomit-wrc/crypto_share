@@ -253,7 +253,7 @@
 		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
 		                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <i class="fa fa-anchor fa-2x"></i> @elseif($value['transaction_type'] == 2) <i class="fa fa-handshake-o fa-2x"></i> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
 		                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
-		                            <td style="text-align: right;">{{$value['trade_price']}}</td>
+		                            <td style="text-align: right;">{{$value['trade_price_usd']}}</td>
 		                            <td style="text-align: right;">{{$value['current_price']}}</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
@@ -324,7 +324,7 @@
 															<br>
 														@endif
 
-														<a title="Edit" href="/group/dashboard/{{$group_id}}/{{$value['id']}}" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-pencil"></i></a>
+														<a title="Edit" href="javascript:void(0)" class="btn btn-primary btn-sm m-r-5 edit_post" post_id="{{$value['id']}}"><i class="fa fa-pencil"></i></a>
 
     													<a title="Delete" href="javascript:void(0)" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5 delete_post" post_id="{{$value['id']}}"><i class="fa fa-trash"></i></a>
 														
@@ -422,14 +422,19 @@
 									<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
 								</div>
 			                </div>
-			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post"></textarea>
+			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post" id="quick_post"></textarea>
 
-			                <input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+			                <div>
+			                	<div id="quick_post_image_append"></div>
+			                	<div>
+			                		<input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+			                	</div>
+			                </div>
 
 			                <div class="form-control no-rounded-corner bg-silver">
                                 <div class="col-md-9 ui-sortable">
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="sticky_to_top" value="1">
+                                        <input type="checkbox" name="sticky_to_top" id="sticky_to_top" value="1">
                                         Sticky to Top
                                     </label>
                                 </div>
@@ -438,6 +443,7 @@
                             <div></div>
 
 			                <div class="panel-footer text-right">
+			                	<input type="hidden" name="edit_post_id" id="edit_post_id" value="">
 			                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
 			                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
 			                </div>

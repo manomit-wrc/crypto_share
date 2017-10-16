@@ -282,6 +282,36 @@
           });
         });
 
+        $('.edit_post').on('click', function(){
+          var post_id = $(this).attr('post_id');
+          $.ajax({
+            type: "POST",
+            url: '/group/edit-post',
+            data:{
+              post_id:post_id,
+              _token: '{{csrf_token()}}'
+            },
+            success: function(response){
+              $('#quick_post').html(response.fetch_details_of_group_post[0].post);
+
+              var res = response.fetch_details_of_group_post[0].post_image;
+              var new_url =  '{{url('upload/quick_post/resize')}}/'+res;
+              var url_all = '<img src="'+new_url+'"/>';
+              $('#quick_post_image_append').html(url_all);
+
+              if (response.fetch_details_of_group_post[0].sticky_to_top == 1) {
+                //$('#sticky_to_top').checked = true;
+                $('#sticky_to_top').prop("checked", "checked");
+              } else {
+                $('#sticky_to_top').prop("checked", "");
+              }
+              
+              $('#edit_post_id').val(response.fetch_details_of_group_post[0].id)
+
+            }
+          });
+        });
+
         $('.delete_post').on('click',function(){
           var post_id = $(this).attr('post_id');
           

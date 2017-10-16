@@ -28,7 +28,7 @@
 			    </a>
 			</li>
 
-			@if((Auth::guard('crypto')->user()->role_code) == 'SITEADM')
+			@if(Auth::guard('crypto')->user()->role_code == 'SITEADM')
 
 				<li class="has-sub {{ (Request::segment(1) === 'view-settings' ? 'active' : '')}}">
 					<a href="/view-settings">
@@ -63,7 +63,7 @@
 			
 			@endif
 
-			@if((Auth::guard('crypto')->user()->role_code) == 'SITEUSR')
+			@if(Auth::guard('crypto')->user()->role_code == 'SITEUSR')
 
 				<li class="has-sub {{(Request::segment(1) === 'group' ? 'active' : '')}}">
 					<a href="/group">

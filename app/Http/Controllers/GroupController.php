@@ -340,35 +340,69 @@ class GroupController extends Controller
     	$image = $request->quick_post_image;
         $sticky_to_top = $request->sticky_to_top;
 
-        if($image){
-            if ($request->hasFile('quick_post_image')) {
-                $file = $request->file('quick_post_image');
-                $fileName = time().'_'.$file->getClientOriginalName();
-                //thumb destination path
-                $destinationPath_2 = public_path().'/upload/quick_post/resize';
-                $img = Image::make($file->getRealPath());
-                $img->resize(200, 150, function ($constraint) {
-                  $constraint->aspectRatio();
-                })->save($destinationPath_2.'/'.$fileName);
-                //original destination path
-                $destinationPath = public_path().'/upload/quick_post/original/';
-                $file->move($destinationPath,$fileName);
+        $post_id = $request->edit_post_id;
+
+        if(!empty($post_id)){
+            if($image){
+                if ($request->hasFile('quick_post_image')) {
+                    $file = $request->file('quick_post_image');
+                    $fileName = time().'_'.$file->getClientOriginalName();
+                    //thumb destination path
+                    $destinationPath_2 = public_path().'/upload/quick_post/resize';
+                    $img = Image::make($file->getRealPath());
+                    $img->resize(200, 150, function ($constraint) {
+                      $constraint->aspectRatio();
+                    })->save($destinationPath_2.'/'.$fileName);
+                    //original destination path
+                    $destinationPath = public_path().'/upload/quick_post/original/';
+                    $file->move($destinationPath,$fileName);
+                }
+            }else{
+                $fileName = 'images.jpg';
             }
+
+            $edit = QuickPost::find($post_id);
+
+            $edit->post = $text;
+            $edit->post_image = $fileName;
+            $edit->sticky_to_top = $sticky_to_top;
+
+            if($edit->save()){
+                $request->session()->flash("submit-status", "Post edit successfully.");
+                return redirect('/group/dashboard/'. base64_encode($group_id));
+            }
+
         }else{
-            $fileName = 'images.jpg';
+            if($image){
+                if ($request->hasFile('quick_post_image')) {
+                    $file = $request->file('quick_post_image');
+                    $fileName = time().'_'.$file->getClientOriginalName();
+                    //thumb destination path
+                    $destinationPath_2 = public_path().'/upload/quick_post/resize';
+                    $img = Image::make($file->getRealPath());
+                    $img->resize(200, 150, function ($constraint) {
+                      $constraint->aspectRatio();
+                    })->save($destinationPath_2.'/'.$fileName);
+                    //original destination path
+                    $destinationPath = public_path().'/upload/quick_post/original/';
+                    $file->move($destinationPath,$fileName);
+                }
+            }else{
+                $fileName = 'images.jpg';
+            }
+
+            $add = new QuickPost;
+            $add->group_id = $group_id;
+            $add->user_id = Auth::guard('crypto')->user()->id;
+            $add->post = $text;
+            $add->post_image = $fileName;
+            $add->sticky_to_top = $sticky_to_top;
+
+            if($add->save()){
+                $request->session()->flash("submit-status", "Post submitted successfully.");
+                return redirect('/group/dashboard/'. base64_encode($group_id));
+            }
         }
-
-    	$add = new QuickPost;
-    	$add->group_id = $group_id;
-    	$add->user_id = Auth::guard('crypto')->user()->id;
-    	$add->post = $text;
-    	$add->post_image = $fileName;
-        $add->sticky_to_top = $sticky_to_top;
-
-    	if($add->save()){
-    		$request->session()->flash("submit-status", "Post submitted successfully.");
-            return redirect('/group/dashboard/'. base64_encode($group_id));
-    	}
     }
 
     public function pinned_post(Request $request) {
@@ -424,18 +458,15 @@ class GroupController extends Controller
         }
     }
 
-    public function edit_post($group_id,$post_id){
-        $group_id = base64_decode($group_id);
-        $post_id = $post_id;
+    public function edit_post(Request $request){
+        $post_id = $request->post_id;
 
-        $fetch_details_of_group_post = QuickPost::where([['id',$post_id],['group_id',$group_id],['current_status','1']])->get()->toArray();
+        $fetch_details_of_group_post = QuickPost::where([['id',$post_id],['current_status','1']])->get()->toArray();
 
         if(empty($fetch_details_of_group_post)){
             return redirect('/group/dashboard/'.base64_encode($group_id));
         }else{
-            echo "<pre>";
-            print_r($fetch_details_of_group_post);
-            die();
+            return response()->json(['fetch_details_of_group_post'=>$fetch_details_of_group_post]);
         }
     }
 }

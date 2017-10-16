@@ -70,7 +70,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/group_transaction/{group_id}', 'GroupController@group_wise_transaction');
 	Route::post('/group/unpinned-post', 'GroupController@unpinned_post');
 	Route::post('/group/delete-post', 'GroupController@delete_post');
-	Route::get('/group/dashboard/{group_id}/{post_id}','GroupController@edit_post');
+	Route::post('/group/edit-post', 'GroupController@edit_post');
 
 	Route::get('/my-post', 'MyPostController@index');
 
