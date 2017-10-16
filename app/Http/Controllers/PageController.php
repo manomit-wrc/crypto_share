@@ -56,19 +56,19 @@ class PageController extends Controller
 
     public function explore_group() {
         //$all_groups = Group::with('user_info')->where('status','1')->get()->toArray();
-        $all_groups = Group::with('user_info')->where([['status','1'],['current_status','1']])->paginate(5);
+        $all_groups = Group::with('user_info')->where([['status','1'],['current_status','1']])->orderby('id','desc')->paginate(5);
         
         foreach($all_groups as $key => $value){
             $group_id = $value['id'];
-            $fetch_member_of_group = Invitation::where([['group_id','=',$group_id],['status','=',1]])->get()->toArray();
+            $fetch_member_of_group = Invitation::where([['group_id','=',$group_id],['status','=',1]])->orderby('id','desc')->get()->toArray();
             $total_member_of_group = count($fetch_member_of_group);
             $all_groups[$key]['total_member_of_group'] = $total_member_of_group;
         }
         $temp_array = $all_groups->toArray();
         $from_page = $temp_array['from'];
         
-        //echo "<pre>";
-        //print_r($all_groups); exit;
+        // echo "<pre>";
+        // print_r($all_groups); exit;
         return view('frontend.explore_group')->with('all_groups', $all_groups)->with('from_page', $from_page);
     }
 

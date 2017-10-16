@@ -88,9 +88,26 @@ class GroupController extends Controller
             'status.required' => "Please select status."
         ])->validate();
 
+        if ($request->hasFile('group_image')) {
+            $file = $request->file('group_image');
+            $fileName = time().'_'.$file->getClientOriginalName();
+            //thumb destination path
+            $destinationPath_2 = public_path().'/upload/group_image/resize';
+            $img = Image::make($file->getRealPath());
+            $img->resize(75, 75, function ($constraint) {
+              $constraint->aspectRatio();
+            })->save($destinationPath_2.'/'.$fileName);
+            //original destination path
+            $destinationPath = public_path().'/upload/group_image/original/';
+            $file->move($destinationPath,$fileName);
+        }else{
+            $fileName = 'default_group_image.png';
+        }
+
         $add = new Group();
         $add->group_name = ucwords($request->group_name);
         $add->group_type = $request->group_type;
+        $add->group_image = $fileName;
         $add->status = $request->status;
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->current_status = 1;

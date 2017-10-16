@@ -73,7 +73,7 @@
 		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
-		<div class="col-md-4">
+		<div @if(count($fetch_latest_post_image) > 0) class="col-md-4" @else class="col-md-12" @endif>
 			<div class="row">
 				<div class="col-sm-6">
 					<!-- begin col-3 -->

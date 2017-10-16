@@ -63,6 +63,15 @@
 									</div>
 								</div>
 
+								<div class="form-group {{ $errors->has('group_image') ? 'has-error' : '' }}">
+									<label class="control-label col-md-4 col-sm-4" for="website">Group Image :</label>
+									<div class="col-md-6 col-sm-6">
+										<input class="form-control" type="file" id="group_image" name="group_image" placeholder="Group Name" value="{{ old('group_image') }}" data-parsley-required="true" />
+
+										<span class="text-danger">{{ $errors->first('group_image') }}</span>
+									</div>
+								</div>
+
 								<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
 									<label class="control-label col-md-4 col-sm-4" for="website">Status :</label>
 									<div class="col-md-6 col-sm-6">
