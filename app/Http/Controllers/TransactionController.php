@@ -31,7 +31,7 @@ class TransactionController extends Controller
     public function add_transaction($group_id) {
         $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();
-        $user_id = Auth::user()->id;
+        $user_id = Auth::guard('crypto')->user()->id;
         $tot_longterm_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '1']])->sum('chip_value');
         $remain_longterm_chip = 100 - $tot_longterm_chip;
         $tot_trade_chip = UserCoin::where([['user_id', '=', $user_id],['transaction_type', '=', '2']])->sum('chip_value');
