@@ -241,6 +241,11 @@ class PageController extends Controller
 
         $fetch_all_group1 = array_merge($new_fetch_group,$fetch_my_join_group_list);
 
+        $fetch_my_active_coin_list = UserCoin::with('groupInfo','coinlists')->where('user_id',Auth::guard('crypto')->user()->id)->orderby('id','desc')->get()->toArray();
+        echo "<pre>";
+        print_r($fetch_my_active_coin_list);
+        die();
+
         return view('frontend.profile')->with('fetch_all_countries', $fetch_all_countries)
                                         ->with('fetch_all_group_name', $fetch_all_group1);
     }
