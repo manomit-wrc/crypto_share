@@ -232,14 +232,14 @@
 	                <h4 class="panel-title">Recent Transactions</h4>
 	            </div>
 				<div class="panel-body">
-	                <table id="data-table_coin_list" class="table table-striped table-bordered data-table">
+	                <table id="data-table_coin_list" class="table table-striped table-bordered data-table table-responsive">
 	                    <thead>
 	                        <tr>
-	                            <th>Coin Image/Name</th>
-	                            <th>Tran Type</th>
+	                            <th>Coin</th>
+	                            <th>Tranaction</th>
 	                            <th>User Name</th>
-	                            <th style="text-align: right;">Amount BTC</th>
-	                            <th style="text-align: right;">Buy In</th>
+	                            <th style="text-align: right;">Chips</th>
+	                            <th style="text-align: right;">Buy In (BTC)</th>
 	                            <th>Target 1</th>
 	                            <th>Target 2</th>
 	                            <th>Target 3</th>
@@ -253,12 +253,12 @@
 		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
 		                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
 		                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
-		                            <td style="text-align: right;">{{$value['trade_price_usd']}}</td>
+		                            <td style="text-align: right;">{{$value['chip_value']}}</td>
 		                            <td style="text-align: right;">{{$value['current_price']}}</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
 		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
-		                            <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a>@endif</td>
+		                            <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal"><i class="fa fa-sticky-note"></i></a>@endif</td>
 		                        </tr>
 		                        <div class="modal fade" id="details-{{$value['id']}}">
 									<div class="modal-dialog">
@@ -299,7 +299,7 @@
 		                        @endforeach
 		                    @else
 		                    	<tr class="odd">
-		                    		<td colspan="7">There is no user coin available for this group.</td>
+		                    		<td colspan="9">There is no user coin available for this group.</td>
 		                    	</tr>
 		                    @endif
 	                    </tbody>

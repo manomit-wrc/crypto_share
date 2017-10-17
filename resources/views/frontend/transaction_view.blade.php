@@ -35,16 +35,19 @@
                         <table id="data-table_myTransaction" class="table table-striped table-bordered data-table">
                             <thead>
                                 <tr>
-                                    <th>Coin Image</th>
-                                    <th>Coin Name</th>
+                                    <th>Coin</th>
                                     <th>Group Name</th>
                                     <th>Transaction Type</th>
-                                    <th style="text-align: right;">Trade Price</th>
-                                    <th style="text-align: right;">High</th>
-                                    <th style="text-align: right;">Low</th>
-                                    <th style="text-align: right;">Qty.</th>
-                                    <th style="text-align: right;">Total Value</th>
-                                    <th style="width: 10%;">Date</th>
+                                    <th style="text-align: right;">Buyin Price (BTC)</th>
+                                    <th style="text-align: right;">Chips</th>
+                                    <th style="width: 9%;">Date</th>
+                                    <th style="text-align: right;">Coins</th>
+                                    <th style="text-align: right;">Total Amount (BTC)</th>
+                                    <th style="text-align: right;">Total Amount (USD)</th>
+                                    <th style="text-align: right;">Target 1</th>
+                                    <th style="text-align: right;">Target 2</th>
+                                    <th style="text-align: right;">Target 3</th>
+                                    <th>Notes</th>
                                     <th style="text-align: right; width: 8%;">Action</th>
                                 </tr>
                             </thead>
@@ -52,21 +55,44 @@
                                 @if (count($user_coin_data_list) > 0)
                                 	@foreach ($user_coin_data_list AS $user_coin_data)
                                     <tr class="odd">
-                                        <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"></td>
-                                        <td>{{$user_coin_data->coinlists->full_name}}</td>
+                                        <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"><br />{{$user_coin_data->coinlists->full_name}}</td>
                                         <td><a href="group/dashboard/{{base64_encode($user_coin_data->groupInfo->id)}}">{{$user_coin_data->groupInfo->group_name}}</td>
                                         <td>@if($user_coin_data->transaction_type == 1) Long Term Hold @elseif($user_coin_data->transaction_type == 2) Trade @else Watch @endif</td>
-                                        <td style="text-align: right;">{{$user_coin_data->trade_price}}</td>
-                                        <td style="text-align: right;">{{$user_coin_data->high}}</td>
-                                        <td style="text-align: right;">{{$user_coin_data->low}}</td>
-                                        <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
-                                        <td style="text-align: right;">{{$user_coin_data->total_value}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->current_price}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->chip_value}}</td>
                                         <td>{{date('jS M, Y', strtotime($user_coin_data->trade_date))}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->total_value_btc}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->total_value_usd}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->target_1}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->target_2}}</td>
+                                        <td style="text-align: right;">{{$user_coin_data->target_3}}</td>
+                                        <td>@if($user_coin_data->notes > '')<a href="/#notes-{{$user_coin_data->id}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a>@endif</td>
                                         <td style="text-align: right;"><a href="/transaction/delete/{{$user_coin_data->id}}" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                     </tr>
+                                    @if($user_coin_data->notes > '')
+                                    <!-- #modal-dialog -->
+                                    <div class="modal fade" id="notes-{{$user_coin_data->id}}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h4 class="modal-title">{{$user_coin_data->coinlists->full_name}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{$user_coin_data->notes}}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    
+                                                    <!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                     @endforeach
                                 @else
-                                    <tr class="odd"><td colspan="11">There is no transaction till now.</td></tr>
+                                    <tr class="odd"><td colspan="14">There is no transaction till now.</td></tr>
                                 @endif
                             </tbody>
                         </table>
