@@ -32,7 +32,7 @@
                         <h4 class="panel-title">&nbsp;</h4>
                     </div>
                     <div class="panel-body">
-                        <table id="data-table_myTransaction" class="table table-striped table-bordered data-table">
+                        <table id="data-table" class="table table-striped table-bordered data-table">
                             <thead>
                                 <tr>
                                     <th>Coin</th>
@@ -83,7 +83,7 @@
                                                     {{$user_coin_data->notes}}
                                                 </div>
                                                 <div class="modal-footer">
-                                                    
+                                                    {{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}
                                                     <!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
                                                 </div>
                                             </div>
