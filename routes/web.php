@@ -71,6 +71,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/group/unpinned-post', 'GroupController@unpinned_post');
 	Route::post('/group/delete-post', 'GroupController@delete_post');
 	Route::post('/group/edit-post', 'GroupController@edit_post');
+	Route::post('/group/send_invitation', 'GroupController@send_invitation');
 
 	Route::get('/my-post', 'MyPostController@index');
 

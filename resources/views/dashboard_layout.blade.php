@@ -34,21 +34,23 @@
 	{!! Html::style('storage/dashboard/assets/plugins/gritter/css/jquery.gritter.css') !!}
   {!! Html::style('storage/dashboard/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') !!}
   {!! Html::style('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') !!}
+
+  {!! Html::style('storage/dashboard/assets/css/bootstrap-multiselect.css') !!}
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
-  
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
-{!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.time.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.resize.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.pie.min.js') !!}
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multiple-select/1.2.0/multiple-select.css">
   
 	<!-- ================== END BASE JS ================== -->
 </head>
@@ -114,6 +116,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
+
+  {!! Html::script('storage/dashboard/assets/js/bootstrap-multiselect.js') !!}
+
 
     {!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
 
@@ -338,6 +343,81 @@
             }
           });
         });
+
+        //send group invitation
+        $('.group_invitation_modal').on('click', function(){
+          var group_id = $(this).attr('group_id');
+
+          $('.send_group_id').val(group_id);
+        });
+
+        $('#send_group_invitation').multiselect({
+            includeSelectAllOption: false,
+            enableFiltering: true,
+            numberDisplayed: 4,
+            enableCaseInsensitiveFiltering: true,
+            maxHeight: 300
+        });
+
+        $('#group_invitation_form').validate({
+          rules:{
+            'send_group_invitation[]':{
+              required: true
+            },
+            send_group_invitation_note:{
+              required: true
+            }
+          },
+          messages:{
+            'send_group_invitation[]':{
+              required: "<font color='red'>Please select user."
+            },
+            send_group_invitation_note:{
+              required: "<font color='red'>Note can't be left blank."
+            }
+          }
+        });
+
+        $('#send_invitation').on('click', function(){
+          var valid = $('#group_invitation_form').valid();
+          var group_id = $('.send_group_id').val();
+
+          var user_ids = $('#send_group_invitation').val();
+          var notes = $('#send_group_invitation_note').val();
+
+          if(valid){
+            $('button').prop('disabled', true);
+
+            $.ajax({
+              type: "POST",
+              url: '/group/send_invitation/',
+              data:{
+                user_ids:user_ids,
+                group_id:group_id,
+                notes:notes,
+                _token: "{{ csrf_token() }}"
+              },
+              success: function(data){
+                if(data == 1){
+                  $('button').prop('disabled', false);
+                  //$('#modal_for_send_invitation').modal('toggle');
+
+                  jconfirm({
+                      title: 'Confirmation!',
+                      content: 'Invitation sent successfully',
+                      buttons: {
+                          OK: function () {
+                            window.location.reload();
+                          }
+                      }
+                  });
+                }
+              }
+            });
+          }
+
+        });
+        //end
 
         //for auto refresh Transaction Lists div
         // $('#data-table').DataTable( {

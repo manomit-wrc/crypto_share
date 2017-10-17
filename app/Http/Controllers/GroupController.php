@@ -503,4 +503,45 @@ class GroupController extends Controller
             return response()->json(['fetch_details_of_group_post'=>$fetch_details_of_group_post]);
         }
     }
+
+    public function send_invitation(Request $request){
+        $group_id = $request->group_id;
+        $user_ids = $request->user_ids;
+        
+        $fetch_group_details = Group::find($group_id)->toArray();
+        // echo "<pre>";
+        // print_r($user_ids);
+        // print_r($fetch_group_details);
+        // die();
+
+        $group_type = $fetch_group_details['group_type'];
+        if ($group_type == 'og') {
+            $status = 1;
+            $read_status = 0;
+        } else {
+            $status = 2;
+            $read_status = 1;
+        }
+
+        $notes = $request->notes;
+
+        for($i = 0; $i<count($user_ids); $i++){
+            $add = new Invitation();
+            $add->group_id = $group_id;
+            $add->user_id = $user_ids[$i];
+            $add->status = $status;
+            $add->notes = $notes;
+            $add->read_status = $read_status;
+            $add->sender_id = Auth::guard('crypto')->user()->id;
+            $add->invitation_type = 'ga';
+
+            $save = $add->save();
+        }
+        
+        if ($save) {
+            echo 1;
+            exit();
+        }
+
+    }
 }

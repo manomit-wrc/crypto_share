@@ -81,10 +81,14 @@ Class GeneralComposer {
             // print_r($fetch_all_group1);
             // die();
 
+            $fetch_all_user = User::where([['role_code','SITEUSR'],['id','!=',Auth::guard('crypto')->user()->id]])->get()->toArray();
+
+
             $view->with('details', $tempArray);
             $view->with('total_record', $i);
             $view->with('chatChannel', 'chat');
             $view->with('fetch_user_group', $fetch_all_group1);
+            $view->with('fetch_all_user',$fetch_all_user);
         }
     }
 }
