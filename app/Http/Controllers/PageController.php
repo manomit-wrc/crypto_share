@@ -66,9 +66,6 @@ class PageController extends Controller
         }
         $temp_array = $all_groups->toArray();
         $from_page = $temp_array['from'];
-        
-        // echo "<pre>";
-        // print_r($all_groups); exit;
         return view('frontend.explore_group')->with('all_groups', $all_groups)->with('from_page', $from_page);
     }
 
@@ -84,13 +81,10 @@ class PageController extends Controller
 
         if ($add->save()) {
             $to_email = 'sobhandas30@gmail.com';
-            try{
+            try {
                 Mail::to($to_email)->send(new contact_us_email($name,$email,$msg));
                 echo 1;
-            }catch(Exception $e){
-                echo "<pre>";
-                print_r($e);
-                die();
+            } catch(Exception $e) {
                 return response()->json(['code'=>500,'message'=>$e]);
             }
         }
@@ -111,7 +105,7 @@ class PageController extends Controller
     }
 
     public function submit_registration(Request $request) {
-    	Validator::make($request->all(),[
+    	/*Validator::make($request->all(),[
     		'first_name' => 'required|max:50',
     		'last_name' => 'required|max:50',
     		'email' => 'required|email|unique:users,email',
@@ -130,37 +124,41 @@ class PageController extends Controller
 			'password.min:32' => 'Maximum 32 character long',
 			'confirm_password.required' => 'Enter confirm password',
 			'aggrement.required' => 'Select aggrement'
-		])->validate();
+		])->validate();*/
 
-        $config_details = Organization::all()->toArray();
+        $check_user = User::where('email', '=', $request->email)->get()->toArray();
+        if (count($check_user) > 0) {
+            return 0;
+        } else {
+            $config_details = Organization::all()->toArray();
 
-    	$user = new User();
-    	$user->first_name = $request->first_name;
-    	$user->last_name = $request->last_name;
-    	$user->email = $request->email;
-    	$user->password = bcrypt($request->password);
-        $user->role_code = "SITEUSR";
-        $user->status = "2";
+        	$user = new User();
+        	$user->first_name = $request->first_name;
+        	$user->last_name = $request->last_name;
+        	$user->email = $request->email;
+        	$user->password = bcrypt($request->password);
+            $user->role_code = "SITEUSR";
+            $user->status = "2";
 
-        $user->active_token = str_replace("/", "", Hash::make(str_random(30)));
+            $user->active_token = str_replace("/", "", Hash::make(str_random(30)));
 
-    	if ($user->save()) {
-            $activation_link = config('app.url').'activate/'.$user->active_token."/".time();
-            Mail::to($request->email)->send(new RegistrationEmail($activation_link, $config_details[0]['email']));
-    		$request->session()->flash("message", "Registration completed successfully. One activation link has been sent to your email to activate your account.");
-    	}
-    	else {
-    		$request->session()->flash("error_message", "There are some problem occured in registration process. Please try again!");
-    	}
-    	return redirect('/register');
+        	if ($user->save()) {
+                $activation_link = config('app.url').'activate/'.$user->active_token."/".time();
+                Mail::to($request->email)->send(new RegistrationEmail($activation_link, $config_details[0]['email']));
+        		//$request->session()->flash("message", "Registration completed successfully. One activation link has been sent to your email to activate your account.");
+                return 1;
+        	}
+        	else {
+        		//$request->session()->flash("error_message", "There are some problem occured in registration process. Please try again!");
+                return 2;
+        	}
+        	//return redirect('/register');
+        }
     }
 
     public function activate_reg($token, $activate_time, Request $request) {
         $user = User::where('active_token', '=', $token);
         $user_details = $user->get()->toArray();
-        /*echo "<pre>";
-        print_r($user_details);
-        die();*/
         if($user_details[0]['status'] === "1") {
             $request->session()->flash("login-status", "Already activated");
             return redirect('/login');
@@ -178,31 +176,27 @@ class PageController extends Controller
     }
 
     public function submit_login(Request $request) {
-        Validator::make($request->all(),[
+        /*Validator::make($request->all(),[
             'email' => 'required|email',
             'password' => 'required'
         ],[
-            'email.required' => 'Enter username',
-            'password.required' => 'Enter password'
-        ])->validate();
+            'email.required' => 'Please enter your email address',
+            'password.required' => 'Please enter your password'
+        ])->validate();*/
 
-        if (Auth::guard('crypto')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->remember)) {
-
-            if(Auth::guard('crypto')->user()->status === "2") {
-                
-                $request->session()->flash("login-status", "User is not active. Please activate your account to log in!");
-                return redirect('/login');
+        if (Auth::guard('crypto')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            if (Auth::guard('crypto')->user()->status === "2") {
+                /*$request->session()->flash("login-status", "User is not active. Please activate your account to log in!");
+                return redirect('/login');*/
+                return 2;
+            } else {
+                //return redirect('/dashboard');
+                return 1;
             }
-            else {
-                
-                return redirect('/dashboard');
-            }
-            
-        }
-        
-        else {
-            $request->session()->flash("login-status", "Email Address or Password didn't matched!");
-            return redirect('/login');
+        } else {
+            /*$request->session()->flash("login-status", "Email Address or Password didn't matched!");
+            return redirect('/login');*/
+            return 0;
         }
     }
 

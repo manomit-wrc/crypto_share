@@ -126,7 +126,7 @@
 							<div class="stats-icon"><i class="fa fa-thumbs-up"></i></div>
 							<div class="stats-info">
 								<h4>NO. OF VISITOR(S)</h4>
-								<p>1,22,666</p>
+								<p>1</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -232,78 +232,92 @@
 	                <h4 class="panel-title">Recent Transactions</h4>
 	            </div>
 				<div class="panel-body">
-	                <table id="data-table_coin_list" class="table table-striped table-bordered data-table">
-	                    <thead>
-	                        <tr>
-	                            <th>Coin Image/Name</th>
-	                            <th>Tran Type</th>
-	                            <th>User Name</th>
-	                            <th style="text-align: right;">Amount BTC</th>
-	                            <th style="text-align: right;">Buy In</th>
-	                            <th>Target 1</th>
-	                            <th>Target 2</th>
-	                            <th>Target 3</th>
-	                            <th>Notes</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                    	@if (count($fetch_coin_all_details) > 0)
-		                    	@foreach ($fetch_coin_all_details as $key => $value)
-		                        <tr class="odd">
-		                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
-		                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
-		                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
-		                            <td style="text-align: right;">{{$value['trade_price_usd']}}</td>
-		                            <td style="text-align: right;">{{$value['current_price']}}</td>
-		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
-		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
-		                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
-		                            <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a>@endif</td>
+					<div class="table-responsive">
+		                <table id="data-table_coin_list" class="table table-striped table-bordered data-table">
+		                    <thead>
+		                        <tr>
+		                            <th>Coin</th>
+		                            <th>Tranaction</th>
+		                            <th>User Name</th>
+		                            <th style="text-align: right;">Chips</th>
+		                            <th style="text-align: right;">Buy In (BTC)</th>
+		                            <th>Target 1</th>
+		                            <th>Target 2</th>
+		                            <th>Target 3</th>
+		                            <th>Notes</th>
 		                        </tr>
-		                        <div class="modal fade" id="details-{{$value['id']}}">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-												<h4 class="modal-title">{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</h4>
-											</div>
-											<div class="modal-body">
-												
-											</div>
-											<div class="modal-footer">
-												<!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
+		                    </thead>
+		                    <tbody>
+		                    	@if (count($fetch_coin_all_details) > 0)
+			                    	@foreach ($fetch_coin_all_details as $key => $value)
+			                        <tr class="odd">
+			                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
+			                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
+			                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
+			                            <td style="text-align: right;">{{$value['chip_value']}}</td>
+			                            <td style="text-align: right;">{{$value['current_price']}}</td>
+			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
+			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
+			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
+			                            <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal"><i class="fa fa-sticky-note"></i></a>@endif</td>
+			                        </tr>
+			                        <div class="modal fade" id="details-{{$value['id']}}">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+													<h4 class="modal-title">{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</h4>
+												</div>
+												<div class="modal-body">
+													<address>
+														<strong>Coin:</strong> {{$value['coinlists']['full_name']}}<br>
+														<strong>Buy In Price (BTC):</strong> {{$value['current_price']}}<br>
+														<strong>Current Market Price (USD):</strong> {{$value['trade_price_usd']}}<br>
+														<strong>Current Market Price (BTC):</strong> {{$value['trade_price_btc']}}<br>
+														<strong>Amount of Coins:</strong> {{$value['quantity']}}<br>
+														<strong>Total Amount USD:</strong> {{$value['total_value_usd']}}<br>
+														<strong>Total Amount BTC:</strong> {{$value['total_value_btc']}}<br>
+														<strong>No. of Chips:</strong> {{$value['chip_value']}}<br>
+														<strong>Trade Date:</strong> {{date('jS M, Y', strtotime($value['trade_date']))}}<br>
+														@if ($value['transaction_type'] == 2)
+														<strong>Target 1:</strong> {{$value['target_1']}}<br>
+														<strong>Target 2:</strong> {{$value['target_2']}}<br>
+														<strong>Target 3:</strong> {{$value['target_3']}}
+														@endif
+													</address>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-		                        @if($value['notes'] > '')
-		                        <!-- #modal-dialog -->
-								<div class="modal fade" id="notes-{{$value['id']}}">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-												<h4 class="modal-title">{{$value['coinlists']['coin_name']}}</h4>
-											</div>
-											<div class="modal-body">
-												{{$value['notes']}}
-											</div>
-											<div class="modal-footer">
-												{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}
-												<!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
+			                        @if($value['notes'] > '')
+			                        <!-- #modal-dialog -->
+									<div class="modal fade" id="notes-{{$value['id']}}">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+													<h4 class="modal-title">{{$value['coinlists']['coin_name']}}</h4>
+												</div>
+												<div class="modal-body">
+													{{$value['notes']}}
+												</div>
+												<div class="modal-footer">
+													{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}
+													<!-- <a class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								@endif
-		                        @endforeach
-		                    @else
-		                    	<tr class="odd">
-		                    		<td colspan="7">There is no user coin available for this group.</td>
-		                    	</tr>
-		                    @endif
-	                    </tbody>
-	                </table>
+									@endif
+			                        @endforeach
+			                    @else
+			                    	<tr class="odd">
+			                    		<td colspan="9">There is no user coin available for this group.</td>
+			                    	</tr>
+			                    @endif
+		                    </tbody>
+		                </table>
+		            </div>
 	            </div>
             </div>
 			{{-- //end --}}
@@ -314,7 +328,7 @@
 
 					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
 
-					<li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li>
+					<!-- <li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li> -->
 				</ul>
 				<div class="tab-content" data-sortable-id="index-3">
 					<div class="tab-pane fade active in" id="latest-post">
@@ -326,24 +340,19 @@
 											<a href="javascript:;" class="pull-left">
 												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt=""  style="width: 200px;height: 150px;" />
 											</a>
-											<div class="media-body">
+											<div class="media-body p-r-15" style="text-align: justify;">
 												{{$value['post']}}
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
 												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
 												@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)) 
-												
-												
 													@if($value['user_id'] == Auth::guard('crypto')->user()->id)
-														@if($value['status']!=1)
+														@if($value['status'] != 1)
 															<span class="pull-right m-r-15" title="Pinned Post"><a href="javascript:void(0)" style="color:#000000;"><i class="fa fa-thumb-tack pinned_post" aria-hidden="true" user_id="{{$value['id']}}"></i></a></span>
 															<br>
 															<br>
 														@endif
-
 														<a title="Edit" href="javascript:void(0)" class="btn btn-primary btn-sm m-r-5 edit_post" post_id="{{$value['id']}}"><i class="fa fa-pencil"></i></a>
-
     													<a title="Delete" href="javascript:void(0)" onclick="return confirm('Do you really want to delete the current record ?');" class="btn btn-danger btn-sm m-r-5 delete_post" post_id="{{$value['id']}}"><i class="fa fa-trash"></i></a>
-														
 													@endif 
 												@endif
 											</div>
@@ -364,7 +373,7 @@
 											<a href="javascript:;" class="pull-left">
 												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" style="width: 200px;height: 150px;"/>
 											</a>
-											<div class="media-body">
+											<div class="media-body p-r-15" style="text-align: justify;">
 												{{$value['post']}}
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
 												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
@@ -385,34 +394,6 @@
 								@endif
 							</ul>
 						</div>
-					</div>
-					<div class="tab-pane fade" id="chat">
-						<div class="height-sm" data-scrollbar="true">
-							<ul class="media-list media-list-with-divider" id="message_list">
-								@foreach($chatArray as $value)
-								<li class="media media-sm">
-									<a href="javascript:;" class="pull-left">
-										<img src="{{$value['avatar']}}" alt="" class="media-object img-responsive img-circle" style="width: 40px; height: 40px;" />
-									</a>
-									<div class="media-body">
-										<a href="javascript:;"><h4 class="media-heading">{{$value['username']}}</h4></a>
-										<p class="m-b-5">
-											{{$value['text']}}
-										</p>
-										<i class="text-muted">Posted on {{ Carbon\Carbon::parse($value['timestamp'])->format('d-m-Y h:i:s A') }}</i>
-									</div>
-								</li>
-								@endforeach
-							</ul>
-						</div>
-						@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
-						<div class="input-group">
-                            <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
-                            </span>
-                        </div>
-                        @endif
 					</div>
 				</div>
 			</div>
@@ -439,7 +420,6 @@
 								</div>
 			                </div>
 			                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post" id="quick_post"></textarea>
-
 			                <div>
 			                	<div id="quick_post_image_append"></div>
 			                	<div>
@@ -455,8 +435,6 @@
                                     </label>
                                 </div>
                             </div>
-
-                            <div></div>
 
 			                <div class="panel-footer text-right">
 			                	<input type="hidden" name="edit_post_id" id="edit_post_id" value="">
@@ -518,6 +496,40 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+
+			<div class="panel panel-inverse" data-sortable-id="index-4">
+				<div class="panel-heading">
+					<h4 class="panel-title"><i class="fa fa-comments"></i> Chat</h4>
+				</div>
+				<div class="panel-body p-t-10 p-b-10 p-l-5 p-r-5">
+					<div class="height-sm" data-scrollbar="true">
+						<ul class="media-list media-list-with-divider p-r-5" id="message_list">
+							@foreach($chatArray as $value)
+							<li class="media media-sm">
+								<a href="javascript:;" class="pull-left">
+									<img src="{{$value['avatar']}}" alt="" class="media-object img-responsive img-circle" style="width: 40px; height: 40px;" />
+								</a>
+								<div class="media-body">
+									<a href="javascript:;"><h4 class="media-heading">{{$value['username']}}</h4></a>
+									<p class="m-b-5">
+										{{$value['text']}}
+									</p>
+									<i class="text-muted">Posted on {{ Carbon\Carbon::parse($value['timestamp'])->format('d-m-Y h:i:s A') }}</i>
+								</div>
+							</li>
+							@endforeach
+						</ul>
+					</div>
+					@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+					<div class="input-group">
+	                    <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
+	                    <span class="input-group-btn">
+	                        <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
+	                    </span>
+	                </div>
+	                @endif
+	            </div>
 			</div>
 
 			<div class="panel panel-inverse" data-sortable-id="index-10">

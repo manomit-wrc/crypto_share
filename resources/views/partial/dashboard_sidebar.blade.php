@@ -10,11 +10,10 @@
 		          	<?php }else{?>
 			            <a href="javascript:;"><img class="sidebar_image_preview" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}" alt="" /></a>
 		          	<?php } ?>
-
 				</div>
-				<div class="info">
+				<div class="info m-t-5">
 					{{Auth::guard('crypto')->user()->first_name}} {{Auth::guard('crypto')->user()->last_name}}
-					<small>Front end developer</small>
+					<!-- <small>Front end developer</small> -->
 				</div>
 			</li>
 		</ul>
@@ -66,10 +65,10 @@
 			@if(Auth::guard('crypto')->user()->role_code == 'SITEUSR')
 
 				<li class="has-sub {{(Request::segment(1) === 'group' ? 'active' : '')}}">
-					<a href="/group">
-						<span>Groups</span>
+					<a href="javascript:void(0);">
+						<span>My Groups</span>
 					</a>
-					<ul class="sub-menu">
+					<ul class="sub-menu" style="display: block;">
 						@foreach($fetch_user_group as $fetch_user_group_list)
 							<li class="{{(Request::segment(3) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '' || Request::segment(4) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '')}}">
 								<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
@@ -82,10 +81,16 @@
 
 				<li class="has-sub {{ (Request::segment(1) === 'my-post' ? 'active' : '')}}">
 					<a href="/my-post">
-						<span>My Post</span>
+						<span>My Posts</span>
 					</a>
 				</li>
 				
+				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '')}}">
+					<a href="/transaction">
+						<span>My Transactions</span>
+					</a>
+				</li>
+
 			@endif
 
 	        <!-- begin sidebar minify button -->
