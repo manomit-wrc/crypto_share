@@ -11,17 +11,32 @@ Class GeneralComposer {
     public function compose(View $view) {
         if (Auth::guard('crypto')->check()) {
 
-     	  	$details_for_count = \App\Invitation::with('groups')->where([['read_status','=','1'],['user_id','<>',Auth::guard('crypto')->user()->id]])->get()->toArray();
+     	  	$details_for_count = \App\Invitation::with('groups')->where([['read_status','=','1'],['user_id','<>',Auth::guard('crypto')->user()->id],['invitation_type','=','gu']])->get()->toArray();
 
-            $details_for_list = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id]])->orderby('id','desc')->get()->toArray();
+            $details_for_list = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','<>',Auth::guard('crypto')->user()->id],['invitation_type','=','gu']])->orderby('id','desc')->get()->toArray();
+
+            $details_for_total_group_request= \App\Invitation::with('groups')->where([['read_status','=','1'],['user_id','=',Auth::guard('crypto')->user()->id],['invitation_type','=','ga']])->orderby('id','desc')->get()->toArray();
+
+            $details_for_group_request_count = \App\Invitation::with('groups')->where([['status','=','2'],['user_id','=',Auth::guard('crypto')->user()->id],['invitation_type','=','ga']])->orderby('id','desc')->get()->toArray();
+            // echo "<pre>";
+            // print_r($details_for_group_request_count);
+            // die();
 
             $i = 0;
+            $j = 0;
             $tempArray = array();
+            $tempArray1 = array();
 
             foreach ($details_for_count as $key => $value) {
                 $user_id = $value['groups']['user_id'];
                 if (Auth::guard('crypto')->user()->id == $user_id) {
                     $i++;   
+                }
+            }
+
+            if(count($details_for_total_group_request) > 0){
+                foreach ($details_for_total_group_request as $key => $value) {
+                    $j++;
                 }
             }
 
@@ -41,6 +56,25 @@ Class GeneralComposer {
                     }
                 }
             }
+
+            foreach ($details_for_group_request_count as $key => $value) {
+                $sender_id = $value['sender_id'];
+
+                $fetch_group_owner_details = User::find($sender_id)->toArray();
+                $group_owner_user_name = $fetch_group_owner_details['first_name'].' '.$fetch_group_owner_details['last_name'];
+
+                $details_for_group_request_count[$key]['sent_invitation_user_name'] = $group_owner_user_name;
+                $details_for_group_request_count[$key]['user_image'] = $fetch_group_owner_details['image'];
+
+                if (!empty($group_owner_user_name)) {
+                    $tempArray1[] = $details_for_group_request_count[$key];
+                }
+            }
+            // die();
+            // echo "<pre>";
+            // // print_r($tempArray);
+            // print_r($tempArray1);
+            // die();
 
             
             //for group name fetch
@@ -77,15 +111,17 @@ Class GeneralComposer {
             $fetch_all_group1 = array_merge($new_fetch_group,$fetch_my_join_group_list);
             //end
 
-            // echo "<pre>";
-            // print_r($fetch_all_group1);
-            // die();
-
             $fetch_all_user = User::where([['role_code','SITEUSR'],['id','!=',Auth::guard('crypto')->user()->id]])->get()->toArray();
 
+            // echo $i;echo "<br>";
+            // echo $j;echo "<br>";
+
+            $total_record = $i + $j;
+            // die();
 
             $view->with('details', $tempArray);
-            $view->with('total_record', $i);
+            $view->with('group_request', $tempArray1);
+            $view->with('total_record', $total_record);
             $view->with('chatChannel', 'chat');
             $view->with('fetch_user_group', $fetch_all_group1);
             $view->with('fetch_all_user',$fetch_all_user);

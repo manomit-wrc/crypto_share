@@ -40,24 +40,50 @@
 						<ul class="dropdown-menu media-list pull-right animated fadeInDown">
 							@if(Auth::guard('crypto')->user()->role_code != 'SITEADM')
 								<li class="dropdown-header">Notifications ({{$total_record}})</li>
-								@foreach($details as $key=>$value)
-									<li class="media">
-		                                <a href="/group/pending-request/{{$value['id']}}">
-		                                    <div class="media-left">
-		                                    	<?php if (empty($value['user_image'])) { ?>
-							                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
-							                    <?php } else { ?>
-							                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
-							                    <?php } ?>
-	                                    	</div>
-		                                    <div class="media-body">
-		                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
-		                                        <div class="text-muted f-s-11">sent you a group request.</div>
-		                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
-		                                    </div>
-		                                </a>
-		                            </li>
-                            	@endforeach
+								@if(count($details) > 0)
+									@foreach($details as $key=>$value)
+										<li class="media">
+			                                <a href="/group/pending-request/{{$value['id']}}">
+			                                    <div class="media-left">
+			                                    	<?php if (empty($value['user_image'])) { ?>
+								                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
+								                    <?php } else { ?>
+								                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
+								                    <?php } ?>
+		                                    	</div>
+			                                    <div class="media-body">
+			                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
+			                                        <div class="text-muted f-s-11">sent you a request for join group.</div>
+			                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
+			                                    </div>
+			                                </a>
+			                            </li>
+	                            	@endforeach
+                            	@endif
+
+                            	@if(count($group_request) > 0 )
+
+	                            	@foreach($group_request as $key=>$value)
+										<li class="media">
+			                                <a href="/group/join-group-request/{{$value['id']}}">
+			                                    <div class="media-left">
+			                                    	<?php if (empty($value['user_image'])) { ?>
+								                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
+								                    <?php } else { ?>
+								                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
+								                    <?php } ?>
+		                                    	</div>
+			                                    <div class="media-body">
+			                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
+			                                        <div class="text-muted f-s-11">sent you a group invitation.</div>
+			                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
+			                                    </div>
+			                                </a>
+			                            </li>
+	                            	@endforeach
+
+                            	@endif
+
 							@endif
 						</ul>
 					</li>
