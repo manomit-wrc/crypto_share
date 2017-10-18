@@ -8,11 +8,11 @@
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb pull-right">
 				<li><a href="javascript:;">Home</a></li>
-				<li><a href="javascript:;">Join Groups Request</a></li>
+				<li><a href="javascript:;">Groups Invitation</a></li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
-			<h1 class="page-header">Join Groups Request</h1>
+			<h1 class="page-header">Groups Invitation</h1>
 			<!-- end page-header -->
 
 			@if(Session::has('submit-status'))
@@ -28,7 +28,7 @@
 			        <!-- begin panel -->
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
-                            <h4 class="panel-title">Join Groups Request Listing</h4>
+                            <h4 class="panel-title">Groups Invitation Listing</h4>
                         </div>
                         <div class="panel-body">
                         
@@ -52,9 +52,9 @@
                                             <td>{{$details_array['sent_invitation_user_name']}}</td>
                                             <td>{{$details_array[0]['created_at']}}</td>
                                             <td>
-                                                <a href="/group/pending_request_accept/{{base64_encode($details_array[0]['id'])}}" onclick="return confirm('Do you want to accept the current request from {{$details_array['sent_invitation_user_name']}} ?');" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-check"></i></a>
+                                                <a href="/group/group_invitation_accept/{{base64_encode($details_array[0]['id'])}}" onclick="return confirm('Do you want to accept the current request from {{$details_array['sent_invitation_user_name']}} ?');" class="btn btn-primary btn-sm m-r-5"><i class="fa fa-check"></i></a>
 
-                                                <a href="/group/pending_request_decline/{{base64_encode($details_array[0]['id'])}}" onclick="return confirm('Do you really want to decline the current request from {{$details_array['sent_invitation_user_name']}} ?');" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
+                                                <a href="/group/group_invitation_decline/{{base64_encode($details_array[0]['id'])}}" onclick="return confirm('Do you really want to decline the current request from {{$details_array['sent_invitation_user_name']}} ?');" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                     
@@ -69,6 +69,5 @@
             </div>
             <!-- end row -->
 		</div>
-
 
 @endsection

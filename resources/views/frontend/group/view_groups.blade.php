@@ -66,7 +66,7 @@
 
                                                     <a title="View Dashboard" href="/group/dashboard/{{base64_encode($value['groups']['id'])}}" class="btn btn-inverse btn-sm m-r-5"><i class="fa fa-tachometer"></i></a>
 
-                                                    <a title="Send Invitation" href="#modal_for_send_invitation" class="btn btn-inverse btn-sm m-r-5 group_invitation_modal" data-toggle="modal" group_id="{{$value['groups']['id']}}"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                                                    <a title="Send Invitation" href="javascript:void(0)" class="btn btn-inverse btn-sm m-r-5 group_invitation_modal" data-toggle="modal" group_id="{{$value['groups']['id']}}"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
 
                                                 @else
 
@@ -88,51 +88,49 @@
                 <!-- end col-12 -->
             </div>
             <!-- end row -->
-		</div>
+</div>
 
-        <div class="modal fade" id="modal_for_send_invitation" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Send Group Invitation</h4>
-                    </div>
+<div class="modal fade" id="modal_for_send_invitation" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Send Group Invitation</h4>
+            </div>
 
-                    <div class="modal-body">
-                        <div class="panel-body">
-                            <form name="group_invitation_form" id="group_invitation_form" action="javascript:void(0)">
-                            
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Select User:</label>
-                                        <br>
-                                        <select class="form-control" multiple="multiple" name="send_group_invitation[]" id="send_group_invitation">
-                                            @foreach($fetch_all_user as $key=>$value)
-                                                <option value="{{$value['id']}}">{{$value['first_name'].' '.$value['last_name']}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Note:</label>
-                                        <textarea class="form-control" rows="" cols="" name="send_group_invitation_note" id="send_group_invitation_note"></textarea>
-                                    </div>
-                                </fieldset>
-
-                                <div class="">
-                                    <input type="hidden" name="send_group_id" class="send_group_id" value="">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-success" id="send_invitation">Send</a>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form name="group_invitation_form" id="group_invitation_form" action="javascript:void(0)">
                     
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Select User:</label>
+                                <br>
+                                <select class="form-control" multiple="multiple" name="send_group_invitation[]" id="send_group_invitation">
+                                    
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Note:</label>
+                                <textarea class="form-control" rows="" cols="" name="send_group_invitation_note" id="send_group_invitation_note"></textarea>
+                            </div>
+                        </fieldset>
+
+                        <div class="">
+                            <input type="hidden" name="send_group_id" class="send_group_id" value="">
+                            <a href="javascript:void(0);" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                            <a href="javascript:void(0);" class="btn btn-sm btn-success" id="send_invitation">Send</a>
+
+                        </div>
+                    </form>
                 </div>
             </div>
+            
         </div>
+    </div>
+</div>
 
 
 @endsection

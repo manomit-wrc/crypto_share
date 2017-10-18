@@ -21,46 +21,63 @@
 			@endif
 			@if(Auth::guard('crypto')->user()->role_code == 'SITEUSR')
 			<li class="dropdown navbar-user">
-				<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">View Groups</a>
-				<ul class="dropdown-menu animated fadeInLeft">
-					@foreach($fetch_user_group as $fetch_user_group_list)
-						<li class="{{(Request::segment(3) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '' || Request::segment(4) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '')}}">
-							<a href="/group/dashboard/{{base64_encode($fetch_user_group_list['groups']['id'])}}">
-								<span>{{$fetch_user_group_list['groups']['group_name']}}</span>
-							</a>
-						</li>
-					@endforeach
-				</ul>
+				<a href="/group">View Groups</a>
 			</li>
 			{{-- //use for notification// --}}
 			<li class="dropdown">
 				<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
 					<i class="fa fa-bell-o"></i>
-					@if(Auth::guard('crypto')->user()->role_code != 'SITEADM')
+					@if((Auth::guard('crypto')->user()->role_code != 'SITEADM'))
 						<span class="label">{{$total_record}}</span>
 					@endif
 				</a>
 				<ul class="dropdown-menu media-list pull-right animated fadeInDown">
 					@if(Auth::guard('crypto')->user()->role_code != 'SITEADM')
 						<li class="dropdown-header">Notifications ({{$total_record}})</li>
-						@foreach($details as $key=>$value)
-							<li class="media">
-                                <a href="/group/pending-request/{{$value['id']}}">
-                                    <div class="media-left">
-                                    	<?php if (empty($value['user_image'])) { ?>
-					                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
-					                    <?php } else { ?>
-					                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
-					                    <?php } ?>
-                                	</div>
-                                    <div class="media-body">
-                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
-                                        <div class="text-muted f-s-11">sent you a group request.</div>
-                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
-                                    </div>
-                                </a>
-                            </li>
-                    	@endforeach
+						@if(count($details) > 0)
+							@foreach($details as $key=>$value)
+								<li class="media">
+	                                <a href="/group/pending-request/{{$value['id']}}">
+	                                    <div class="media-left">
+	                                    	<?php if (empty($value['user_image'])) { ?>
+						                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
+						                    <?php } else { ?>
+						                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
+						                    <?php } ?>
+                                    	</div>
+	                                    <div class="media-body">
+	                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
+	                                        <div class="text-muted f-s-11">sent you a request for join group.</div>
+	                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
+	                                    </div>
+	                                </a>
+	                            </li>
+                        	@endforeach
+                    	@endif
+
+                    	@if(count($group_request) > 0 )
+
+                        	@foreach($group_request as $key=>$value)
+								<li class="media">
+	                                <a href="/group/join-group-request/{{$value['id']}}">
+	                                    <div class="media-left">
+	                                    	<?php if (empty($value['user_image'])) { ?>
+						                        <img class="media-object" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
+						                    <?php } else { ?>
+						                        <img class="media-object" src="{{url('upload/profile_image/resize/'.$value['user_image'])}}" alt="" />
+						                    <?php } ?>
+                                    	</div>
+	                                    <div class="media-body">
+	                                        <h6 class="media-heading">{{$value['sent_invitation_user_name']}}</h6>
+	                                        <div class="text-muted f-s-11">sent you a group invitation.</div>
+	                                        <div class="text-muted f-s-11">{{date('jS M, Y', strtotime($value['created_at']))}}</div>
+	                                    </div>
+	                                </a>
+	                            </li>
+                        	@endforeach
+
+                    	@endif
+
 					@endif
 				</ul>
 			</li>

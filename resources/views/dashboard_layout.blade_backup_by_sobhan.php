@@ -8,7 +8,7 @@
 <head>
 	<meta charset="utf-8" />
   
-	<title>CryptShares Admin | Dashboard</title>
+	<title>Crypto Share Admin | Dashboard</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -39,11 +39,7 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	{!! Html::script('storage/dashboard/assets/plugins/pace/pace.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-1.9.1.min.js') !!}
-  
-  {!! Html::style('storage/dashboard/assets/css/bootstrap-multiselect.css') !!}
-  {!! Html::script('storage/dashboard/assets/js/bootstrap-multiselect.js') !!}
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   {!! Html::script('storage/dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') !!}
@@ -86,10 +82,10 @@
 
 	{!! Html::script('storage/dashboard/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
 
-    {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/jquery.dataTables.js') !!}
-    {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js') !!}
-    {!! Html::script('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') !!}
-    {!! Html::script('storage/dashboard/assets/js/table-manage-default.demo.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/jquery.dataTables.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/js/table-manage-default.demo.min.js') !!}
 	
 	<!--[if lt IE 9]>
 		<script src="storage/dashboard/assets/crossbrowserjs/html5shiv.js"></script>
@@ -102,7 +98,7 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
+  {!! Html::script('storage/dashboard/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/gritter/js/jquery.gritter.js') !!}
 	{!! Html::script('storage/dashboard/assets/plugins/sparkline/jquery.sparkline.js') !!}
 
@@ -110,14 +106,13 @@
 	{!! Html::script('storage/dashboard/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js') !!}
 
 	{!! Html::script('storage/dashboard/assets/js/dashboard.min.js') !!}
-    {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
+  {!! Html::script('storage/dashboard/assets/js/form-plugins.demo.min.js') !!}
 	{!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
+  
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
-
-    {!! Html::script('storage/dashboard/assets/js/apps.min.js') !!}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
 
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	
@@ -341,37 +336,20 @@
           });
         });
 
+        //send group invitation
         $('.group_invitation_modal').on('click', function(){
           var group_id = $(this).attr('group_id');
 
           $('.send_group_id').val(group_id);
-
-          $.ajax({
-            type: "POST",
-            url: '/group/check-user',
-            data:{
-              group_id: group_id,
-              _token: "{{ csrf_token() }}"
-            },
-            success:function(data) {
-              $('#send_group_invitation').empty();
-              for(var i=0; i<data.user_list.length; i++) {
-                $("#send_group_invitation").append('<option value="'+data.user_list[i].user_id+'">'+data.user_list[i].first_name+" "+data.user_list[i].last_name+'</option>');
-              }
-              $('#send_group_invitation').multiselect('destroy');
-              $('#send_group_invitation').multiselect({
-                includeSelectAllOption: false,
-                enableFiltering: true,
-                numberDisplayed: 4,
-                enableCaseInsensitiveFiltering: true,
-                maxHeight: 300
-            });
-              $("#modal_for_send_invitation").modal('show');
-            }
-          });
         });
 
-        
+        $('#send_group_invitation').multiselect({
+            includeSelectAllOption: false,
+            enableFiltering: true,
+            numberDisplayed: 4,
+            enableCaseInsensitiveFiltering: true,
+            maxHeight: 300
+        });
 
         $('#group_invitation_form').validate({
           rules:{
@@ -400,49 +378,38 @@
           var notes = $('#send_group_invitation_note').val();
 
           if(valid){
-            if(user_ids == null){
-              $.alert({
-                title: 'Confirmation!',
-                  content: 'Please select atleast One user.',
-                  buttons: {
-                      OK: function () {
+            $('button').prop('disabled', true);
+
+            $.ajax({
+              type: "POST",
+              url: '/group/send_invitation/',
+              data:{
+                user_ids:user_ids,
+                group_id:group_id,
+                notes:notes,
+                _token: "{{ csrf_token() }}"
+              },
+              success: function(data){
+                if(data == 1){
+                  $('button').prop('disabled', false);
+                  //$('#modal_for_send_invitation').modal('toggle');
+
+                  jconfirm({
+                      title: 'Confirmation!',
+                      content: 'Invitation sent successfully',
+                      buttons: {
+                          OK: function () {
+                            window.location.reload();
+                          }
                       }
-                  }
-              });
-            }else{
-              $('.btn').prop('disabled', true);
-
-              $.ajax({
-                type: "POST",
-                url: '/group/send_invitation/',
-                data:{
-                  user_ids:user_ids,
-                  group_id:group_id,
-                  notes:notes,
-                  _token: "{{ csrf_token() }}"
-                },
-                success: function(data){
-                  if(data == 1){
-                    $('.btn').prop('disabled', false);
-                    //$('#modal_for_send_invitation').modal('toggle');
-
-                    jconfirm({
-                        title: 'Confirmation!',
-                        content: 'Invitation sent successfully',
-                        buttons: {
-                            OK: function () {
-                              window.location.reload();
-                            }
-                        }
-                    });
-                  }
+                  });
                 }
-              });
-            }
-            
+              }
+            });
           }
 
         });
+        //end
 
         //for auto refresh Transaction Lists div
         // $('#data-table').DataTable( {

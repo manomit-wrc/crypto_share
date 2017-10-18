@@ -228,6 +228,8 @@ class GroupController extends Controller
         $add->group_id = $group_id;
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->status = $status;
+        $add->invitation_type = 'gu';
+        $add->sender_id = 0;
         $add->notes = $notes;
         $add->read_status = $read_status;
         if ($add->save()) {
@@ -505,15 +507,36 @@ class GroupController extends Controller
         }
     }
 
+    public function check_user (Request $request){
+        $group_id = $request->group_id;
+        
+        $user_array = array();
+
+        $user_list = \App\User::where([['role_code', 'SITEUSR'],['id', '<>', Auth::guard('crypto')->user()->id]])
+          ->with([ 'invitations' => function($query) use ($group_id) {
+            $query->where([
+            ['group_id', '=', $group_id],
+            ['sender_id', '=', Auth::guard('crypto')->user()->id],
+            ['status', '!=', '1'],
+            ['invitation_type', '=', 'ga']
+        ]);
+        }])->get()->toArray();
+
+
+        
+        foreach ($user_list as $key => $value) {
+            if(count($value['invitations']) <= 0) {
+                $user_array[] = array('user_id' => $value['id'], 'first_name' => $value['first_name'], 'last_name' => $value['last_name']);
+            }
+        }
+        return response()->json(['user_list' => $user_array]);
+    }
+
     public function send_invitation(Request $request){
         $group_id = $request->group_id;
         $user_ids = $request->user_ids;
         
         $fetch_group_details = Group::find($group_id)->toArray();
-        // echo "<pre>";
-        // print_r($user_ids);
-        // print_r($fetch_group_details);
-        // die();
 
         $group_type = $fetch_group_details['group_type'];
         if ($group_type == 'og') {
@@ -527,22 +550,72 @@ class GroupController extends Controller
         $notes = $request->notes;
 
         for($i = 0; $i<count($user_ids); $i++){
-            $add = new Invitation();
-            $add->group_id = $group_id;
-            $add->user_id = $user_ids[$i];
-            $add->status = $status;
-            $add->notes = $notes;
-            $add->read_status = $read_status;
-            $add->sender_id = Auth::guard('crypto')->user()->id;
-            $add->invitation_type = 'ga';
+            $if_allready_exit = Invitation::where([['group_id',$group_id],['user_id',$user_ids[$i]],['status','=','1']])->get()->toArray();
 
-            $save = $add->save();
+            if(count($if_allready_exit) == 0){
+                $add = new Invitation();
+                $add->group_id = $group_id;
+                $add->user_id = $user_ids[$i];
+                $add->status = $status;
+                $add->notes = $notes;
+                $add->read_status = $read_status;
+                $add->sender_id = Auth::guard('crypto')->user()->id;
+                $add->invitation_type = 'ga';
+
+                $save = $add->save();
+            }
         }
-        
         if ($save) {
             echo 1;
             exit();
         }
 
+    }
+
+    public function join_group_request ($invitation_id) {
+        $details = \App\Invitation::with('groups')->where([['id',$invitation_id],['status','=','2'],['user_id','=',Auth::guard('crypto')->user()->id]])
+        ->orderby('id','desc')
+        ->get()
+        ->toArray();
+
+        if(!empty($details)){
+            $id = $details[0]['id'];
+            $edit = Invitation::find($id);
+            $edit->read_status = 0;
+            
+            if ($edit->save()) {
+                $sent_invitation_user_id = $details[0]['sender_id'];
+
+                $find_user = User::find($sent_invitation_user_id);
+                $sent_invitation_user_name = $find_user['first_name'].' '.$find_user['last_name'];
+
+                $details['sent_invitation_user_name'] = $sent_invitation_user_name;
+            }
+            return view('frontend.group.groups_invitation_list')->with('details_array', $details);
+        }else{
+            return redirect('/group');
+        }
+
+        
+    }
+
+    public function group_invitation_accept (Request $request,$invitation_id) {
+        $id = base64_decode($invitation_id);
+        $edit = Invitation::find($id);
+        $edit->status = 1;
+        if ($edit->save()) {
+            $request->session()->flash("submit-status", "Request accepted successfully.");
+            return redirect('/group');
+        }
+    }
+
+    public function group_invitation_decline(Request $request,$invitation_id){
+        $id = base64_decode($invitation_id);
+        $edit = Invitation::find($id);
+        $edit->status = 5;
+        if ($edit->save()) {
+            $request->session()->flash("submit-status", "Request declined successfully.");
+            return redirect('/group');
+        }
     }
 }

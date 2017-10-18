@@ -71,7 +71,11 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/group/unpinned-post', 'GroupController@unpinned_post');
 	Route::post('/group/delete-post', 'GroupController@delete_post');
 	Route::post('/group/edit-post', 'GroupController@edit_post');
+	Route::post('/group/check-user', 'GroupController@check_user');
 	Route::post('/group/send_invitation', 'GroupController@send_invitation');
+	Route::get('/group/join-group-request/{invitation_id}', 'GroupController@join_group_request');
+	Route::get('/group/group_invitation_accept/{invitation_id}', 'GroupController@group_invitation_accept');
+	Route::get('/group/group_invitation_decline/{invitation_id}', 'GroupController@group_invitation_decline');
 
 	Route::get('/my-post', 'MyPostController@index');
 
