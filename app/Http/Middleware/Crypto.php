@@ -19,11 +19,11 @@ class Crypto
     {
         if(!Auth::guard('crypto')->check())
         {
-            return redirect("/login");
+            return redirect("/");
         }
         else {
             if(Auth::guard('crypto')->user()->status === "2") {
-                return redirect("/login");
+                return redirect("/");
             }
             else {
                 return $next($request);
