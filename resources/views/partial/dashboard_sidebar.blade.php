@@ -38,6 +38,16 @@
 						<span>Organization</span>
 					</a>
 				</li>
+				<li class="has-sub {{(Request::segment(1) === 'users' ? 'active' : '' )}}">
+					<a href="/users">
+						<span>User Lists</span>
+					</a>
+				</li>
+				<li class="has-sub {{(Request::segment(1) === 'feedback' ? 'active' : '' )}}">
+					<a href="/feedback">
+						<span>Feedback Lists</span>
+					</a>
+				</li>
 				<li class="has-sub {{(Request::segment(1) === 'testimonial' ? 'active' : '' )}}">
 					<a href="/testimonial">
 						<span>Testimonial</span>
@@ -46,11 +56,6 @@
 				<li class="has-sub {{(Request::segment(1) === 'pricing' ? 'active' : '' )}}">
 					<a href="/pricing">
 						<span>Pricing</span>
-					</a>
-				</li>
-				<li class="has-sub {{(Request::segment(1) === 'users' ? 'active' : '' )}}">
-					<a href="/users">
-						<span>User Lists</span>
 					</a>
 				</li>
 				<li class="has-sub {{(Request::segment(1) === 'work' ? 'active' : '' )}}">

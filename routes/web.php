@@ -25,6 +25,8 @@ Route::get('/test-email', 'PageController@test_email');
 Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/dashboard','DashboardController@index');
 	Route::get('/dashboard/coinList','DashboardController@coinList');
+	Route::post('/feedback_submit', 'DashboardController@feedback_submit');
+	Route::get('/feedback', 'DashboardController@get_all_feedback');
 
 	Route::get('/edit_profile', 'PageController@edit_profile_view');
 	Route::post('/profile_edit', 'PageController@profile_edit');
@@ -76,11 +78,10 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/join-group-request/{invitation_id}', 'GroupController@join_group_request');
 	Route::get('/group/group_invitation_accept/{invitation_id}', 'GroupController@group_invitation_accept');
 	Route::get('/group/group_invitation_decline/{invitation_id}', 'GroupController@group_invitation_decline');
+	Route::post('/group/feedback_submit', 'GroupController@feedback_submit');
 	Route::post('/group/group-leave/', 'GroupController@leave_group');
 
 	Route::get('/my-post', 'MyPostController@index');
-
-	Route::post('/group/feedback_submit', 'GroupController@feedback_submit');
 
 	//coin property update
 	Route::get('/coin/property-update', 'PageController@coin_property_update');
