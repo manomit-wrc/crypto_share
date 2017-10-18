@@ -192,6 +192,13 @@
 										<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#{{$coin_user['coin_id']}}" aria-expanded="true">
 										    <i class="fa fa-plus-circle pull-right"></i> 
 											{{$coin_user['full_name']}}
+
+											<span class="pull-right" style="padding-right: 80px;">
+												
+												$/USD: $23 &nbsp;&nbsp;
+												$/BTC: 0.04
+												
+											</span>
 										</a>
 									</h3>
 								</div>
@@ -639,7 +646,7 @@
 	        </div>
 	        <!-- end panel -->
 
-	        <!-- @if (($group_status && $group_status[0]['status'] == "1") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+	        {{-- @if (($group_status && $group_status[0]['status'] == "1") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
 		        <div class="panel panel-inverse" data-sortable-id="index-12">
 	                <div class="panel-heading">
 	                    <h4 class="panel-title">Feedback</h4>
@@ -694,7 +701,7 @@
 		                </div>
 		            @endif
 	            </div>
-	        @endif -->
+	        @endif --}}
 		</div>
 	</div>
 	<!-- end row -->
