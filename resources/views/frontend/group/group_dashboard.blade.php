@@ -48,7 +48,7 @@
 	                            <div class="carousel-inner onebyone-carosel">
 	                            	@if(count($fetch_latest_post_image) > 0)
 	                            		<?php $i=0; ?>
-		                            	@foreach($fetch_latest_post_image as $key=>$value)
+		                            	@foreach($fetch_latest_post_image as $key => $value)
 			                                <div class="item @if($i==0) active @endif">
 			                                    <div class="col-md-4">
 		                                        	<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
@@ -142,21 +142,23 @@
 
 	<div class="row">
 		<div class="col-md-8">
-			@if($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0")
-				<a href="/group/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
-			@endif
-
-			@if($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
+			@if($fetch_group_details['user_id'] != Auth::guard('crypto')->user()->id)
+				@if($fetch_group_details && $fetch_group_details['activity_status'] == 1)
+					@if($group_status && $group_status[0]['status'] == "1")
+						<a href="/group/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
+					@endif
+				@endif
+			@else
 				<a href="/group/group_transaction/{{$group_id}}"><button type="button" class="btn btn-primary m-b-5">Add New Transaction</button></a>
 			@endif
 		</div>
 		<div class="col-md-4">
 			@if($group_status && $group_status[0]['status'] == "2")
-				<span style="font-size: 15px;">Invitation is pending</span></h1>
+				<div class="m-b-15"><span style="font-size: 15px;">Invitation is pending</span></div>
 			@elseif($group_status && $group_status[0]['status'] == "1")
-				<span style="font-size: 15px;">You are member of this group</span></h1>
+				<div class="m-b-15"><span style="font-size: 15px;">You are member of this group</span></div>
 			@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
-				<span style="font-size: 15px;">You are admin of this group</span></h1>
+				<div class="m-b-15"><span style="font-size: 15px;">You are admin of this group</span></div>
 			@else
 				<span style="font-size: 15px;"><button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">Join Group</button></span></h1>
 			@endif
@@ -398,8 +400,58 @@
 				</div>
 			</div>
 
-			<div class="post"> 
-				@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+			@if($fetch_group_details['user_id'] != Auth::guard('crypto')->user()->id)
+				@if($fetch_group_details && $fetch_group_details['activity_status'] == 1)
+					<div class="post">
+						@if($group_status && $group_status[0]['status'] == "1")
+							<div class="panel panel-inverse" data-sortable-id="index-8">
+								<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
+									{{ csrf_field() }}
+					                <div class="panel-heading">
+					                    <h4 class="panel-title">Quick Post</h4>
+					                </div>
+					                <div class="panel-toolbar">
+					                    <div class="btn-group m-r-5">
+											<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
+											<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
+											<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
+										</div>
+					                    <div class="btn-group">
+											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
+											<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
+											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
+											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
+										</div>
+					                </div>
+					                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post" id="quick_post"></textarea>
+					                <div>
+					                	<div id="quick_post_image_append"></div>
+					                	<div>
+					                		<input class="form-control no-rounded-corner bg-silver" type="file" name="quick_post_image" id="quick_post_image">
+					                	</div>
+					                </div>
+
+					                <div class="form-control no-rounded-corner bg-silver">
+		                                <div class="col-md-9 ui-sortable">
+		                                    <label class="checkbox-inline">
+		                                        <input type="checkbox" name="sticky_to_top" id="sticky_to_top" value="1">
+		                                        Sticky to Top
+		                                    </label>
+		                                </div>
+		                            </div>
+
+					                <div class="panel-footer text-right">
+					                	<input type="hidden" name="edit_post_id" id="edit_post_id" value="">
+					                    <input class="btn btn-white btn-sm" type="reset" value="Cancel">
+					                    <input class="btn btn-primary btn-sm m-l-5" id="quick_post_form_submit" type="submit" name="submit" value="Post">
+					                </div>
+				                </form>
+				            </div>
+			            @endif
+			        </div>
+		        @endif
+		    @else
+		    	<div class="post">
 					<div class="panel panel-inverse" data-sortable-id="index-8">
 						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 							{{ csrf_field() }}
@@ -443,8 +495,8 @@
 			                </div>
 		                </form>
 		            </div>
-	            @endif
-	        </div>
+		        </div>
+		    @endif
 		</div>
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
@@ -521,14 +573,25 @@
 							@endforeach
 						</ul>
 					</div>
-					@if(($group_status && $group_status[0]['status'] == "1" && $group_status[0]['read_status'] == "0") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
-					<div class="input-group">
-	                    <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
-	                    </span>
-	                </div>
-	                @endif
+					@if($fetch_group_details['user_id'] != Auth::guard('crypto')->user()->id)
+						@if($fetch_group_details && $fetch_group_details['activity_status'] == 1)
+							@if($group_status && $group_status[0]['status'] == "1")
+							<div class="input-group">
+			                    <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
+			                    <span class="input-group-btn">
+			                        <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
+			                    </span>
+			                </div>
+			                @endif
+			            @endif
+			        @else
+			        	<div class="input-group">
+		                    <input type="text" class="form-control input-sm" name="group_message" id="group_message" placeholder="Enter your message here.">
+		                    <span class="input-group-btn">
+		                        <button class="btn btn-primary btn-sm" type="button" id="btn_message" name="btn_message">Send</button>
+		                    </span>
+		                </div>
+			        @endif
 	            </div>
 			</div>
 
@@ -570,7 +633,7 @@
 	        </div>
 	        <!-- end panel -->
 
-	        @if (($group_status && $group_status[0]['status'] == "1") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
+	        <!-- @if (($group_status && $group_status[0]['status'] == "1") || ($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id))
 		        <div class="panel panel-inverse" data-sortable-id="index-12">
 	                <div class="panel-heading">
 	                    <h4 class="panel-title">Feedback</h4>
@@ -625,7 +688,7 @@
 		                </div>
 		            @endif
 	            </div>
-	        @endif
+	        @endif -->
 		</div>
 	</div>
 	<!-- end row -->
