@@ -125,8 +125,8 @@
 						<div class="widget widget-stats bg-red">
 							<div class="stats-icon"><i class="fa fa-thumbs-up"></i></div>
 							<div class="stats-info">
-								<h4>NO. OF VISITOR(S)</h4>
-								<p>1</p>
+								<h4>Join/Leave Group</h4>
+								<p>{{ $total_member_of_group }}/0</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
