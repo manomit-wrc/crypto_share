@@ -85,6 +85,9 @@ Route::group(['middleware' => ['crypto']], function() {
 
 	//coin property update
 	Route::get('/coin/property-update', 'PageController@coin_property_update');
+
+	//coin property update group wise
+	Route::post('/group/coin-property-update', 'GroupController@coin_property_update');
 	//end
 
 	Route::get('/transaction', 'TransactionController@index');
