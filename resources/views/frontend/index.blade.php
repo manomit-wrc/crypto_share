@@ -13,8 +13,8 @@
     <!-- begin container -->
     <div class="container home-content">
         <img src="storage/frontend/assets/img/logo.png" alt="CryptShares" width="" height="200" />
-        <a href="/explore" class="btn btn-theme">Explore Group</a> 
-        @if(Auth::guard('crypto')->check())
+        <a href="/explore" class="btn btn-theme">Explore Groups</a> 
+        @if(Auth::guard('crypto')->check() && Auth::guard('crypto')->user()->status === "1")
             <a href="/dashboard" class="btn btn-outline">Dashboard</a>
         @else
             <a href="javascript:void(0);" class="btn btn-outline" id="btn_login" data-toggle="modal">&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;</a>

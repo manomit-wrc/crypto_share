@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index() {
-    	return view('frontend.dashboard');
+        if (Auth::guard('crypto')->user()->role_code == 'SITEADM') {
+            return view('frontend.dashboard_admin');
+        } else {
+            return view('frontend.dashboard_user');
+        }
     }
 
     public function coinList() {

@@ -1,8 +1,5 @@
 @extends('welcome')
 @section('content')
-
-
-
 <!-- begin #home -->
 <div id="home" class="content has-bg home">
     <!-- begin content-bg -->
@@ -12,8 +9,8 @@
     <!-- end content-bg -->
     <!-- begin container -->
     <div class="container explore-content">
-        <h2>Group Listings</h2>
-        <br>
+        <div class="text-center"><img src="storage/frontend/assets/img/logo.png" alt="CryptShares" width="" height="100" /></div>
+        <h2 class="text-center">Group Listings</h2>
             <table id="data-table_explore_group" class="table">
                 <tr>
                     <th class="text-center">Group Image</th>
@@ -22,7 +19,6 @@
                     <th class="text-center">Group Owner</th>
                     <th class="text-center">No. of Member(s)</th>
                 </tr>
-                
                 @foreach ($all_groups as $key => $group_details)
                 <tr>
                     <td class="text-center">
@@ -38,23 +34,13 @@
                     
                     <td class="text-center vertical-middle">{{$group_details['total_member_of_group']}}</td>
                 </tr>
-                
                 @endforeach
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </table>
             <div class="text-center"> {!! $all_groups->links('') !!} </div>
         </div>
     <!-- end container -->
 </div>
-<style type="text/css"> 
-  
+<style type="text/css">
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
         border-top: 0px solid #ddd!important;
     }

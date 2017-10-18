@@ -379,6 +379,7 @@ class GroupController extends Controller
         $post_id = $request->edit_post_id;
 
         if(!empty($post_id)){
+            $edit = QuickPost::find($post_id);
             if($image){
                 if ($request->hasFile('quick_post_image')) {
                     $file = $request->file('quick_post_image');
@@ -394,10 +395,10 @@ class GroupController extends Controller
                     $file->move($destinationPath,$fileName);
                 }
             }else{
-                $fileName = 'images.jpg';
+                $fileName = $edit->post_image ? $edit->post_image : 'images.jpg';
             }
 
-            $edit = QuickPost::find($post_id);
+            
 
             $edit->post = $text;
             $edit->post_image = $fileName;

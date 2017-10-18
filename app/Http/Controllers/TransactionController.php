@@ -28,6 +28,12 @@ class TransactionController extends Controller
     	return view('frontend.transaction_view')->with('user_coin_data_list', $user_coin_data_list);
     }
 
+    public function previous_transaction() {
+        $user_id = Auth::user()->id;
+        $user_coin_data_list = UserCoin::with('coinlists','groupInfo')->where([['user_id', '=', $user_id],['status', '=', 0]])->get();
+        return view('frontend.previous_transaction_view')->with('user_coin_data_list', $user_coin_data_list);
+    }
+
     public function add_transaction($group_id) {
         $group_id = base64_decode($group_id);
         $coin_list = CoinList::All();

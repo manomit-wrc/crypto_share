@@ -1,13 +1,17 @@
+<style type="text/css">
+	.my_groups { padding: 8px 20px; line-height: 20px; color: #a8acb1; display: table; }
+	.sidebar .nav .active .my-groups { color: #fff; background: #00acac; }
+</style>
 <div id="sidebar" class="sidebar">
-			<!-- begin sidebar scrollbar -->
+	<!-- begin sidebar scrollbar -->
 	<div data-scrollbar="true" data-height="100%">
 		<!-- begin sidebar user -->
 		<ul class="nav">
 			<li class="nav-profile">
 				<div class="image">
-					<?php if(empty(Auth::guard('crypto')->user()->image)){?>
+					<?php if (empty(Auth::guard('crypto')->user()->image)) { ?>
 			            <img class="profile-user-img img-responsive img-circle sidebar_image_preview" src="{{ url('/upload/profile_image/default.png')}}" alt="User profile picture">
-		          	<?php }else{?>
+		          	<?php } else { ?>
 			            <a href="javascript:;"><img class="sidebar_image_preview" src="{{url('upload/profile_image/resize/'.Auth::guard('crypto')->user()->image)}}" alt="" /></a>
 		          	<?php } ?>
 				</div>
@@ -65,9 +69,7 @@
 			@if(Auth::guard('crypto')->user()->role_code == 'SITEUSR')
 
 				<li class="has-sub {{(Request::segment(1) === 'group' ? 'active' : '')}}">
-					<a href="javascript:void(0);">
-						<span>My Groups</span>
-					</a>
+					<span class="my_groups">My Groups</span>
 					<ul class="sub-menu" style="display: block;">
 						@foreach($fetch_user_group as $fetch_user_group_list)
 							<li class="{{(Request::segment(3) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '' || Request::segment(4) === base64_encode($fetch_user_group_list['groups']['id']) ? 'active' : '')}}">
@@ -85,7 +87,7 @@
 					</a>
 				</li>
 				
-				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '')}}">
+				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '' || Request::segment(1) === 'previous_transaction' ? 'active' : '')}}">
 					<a href="/transaction">
 						<span>My Transactions</span>
 					</a>
@@ -99,6 +101,6 @@
 		</ul>
 		<!-- end sidebar nav -->
 	</div>
-			<!-- end sidebar scrollbar -->
+	<!-- end sidebar scrollbar -->
 </div>
 <div class="sidebar-bg"></div>

@@ -9,11 +9,12 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li><a href="/dashboard">Home</a></li>
-            <li class="active">Transaction</li>
+            <li><a href="/transaction">Transaction</a></li>
+            <li class="active">Old Transaction</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header">Transaction Lists</h1>
+        <h1 class="page-header">Old Transaction Lists</h1>
 
         <!-- end page-header -->
         <div class="row">
@@ -22,13 +23,6 @@
             @endif
             <!-- begin col-12 -->
 		    <div class="col-md-12">
-                <!-- <div class="pull-right">
-                    <a href="/transaction/add"><button type="button" class="btn btn-success m-b-5"><i class="fa fa-plus"></i> Add</button></a>
-                </div> -->
-                <div class="pull-right">
-                    <a href="/previous_transaction"><button type="button" class="btn btn-success m-b-5">Old Transaction</button></a>
-                </div>
-                <div style="clear: both;"></div>
 		        <!-- begin panel -->
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
@@ -96,7 +90,7 @@
                                         @endif
                                         @endforeach
                                     @else
-                                        <tr class="odd"><td colspan="14">There is no transaction till now.</td></tr>
+                                        <tr class="odd"><td colspan="14">There is no old transaction till now.</td></tr>
                                     @endif
                                 </tbody>
                             </table>
