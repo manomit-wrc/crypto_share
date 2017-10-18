@@ -85,7 +85,7 @@
 					</a>
 				</li>
 				
-				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '')}}">
+				<li class="has-sub {{ (Request::segment(1) === 'transaction' ? 'active' : '' || Request::segment(1) === 'previous_transaction' ? 'active' : '')}}">
 					<a href="/transaction">
 						<span>My Transactions</span>
 					</a>

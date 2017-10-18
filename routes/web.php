@@ -77,12 +77,12 @@ Route::group(['middleware' => ['crypto']], function() {
 
 	Route::post('/group/feedback_submit', 'GroupController@feedback_submit');
 
-
 	//coin property update
 	Route::get('/coin/property-update', 'PageController@coin_property_update');
 	//end
 
 	Route::get('/transaction', 'TransactionController@index');
+	Route::get('/previous_transaction', 'TransactionController@previous_transaction');
 	Route::get('/group/transaction/add/{group_id}', 'TransactionController@add_transaction');
 	Route::get('/get_price/{coin_name}', 'TransactionController@get_price');
 	Route::post('/insert_transaction', 'TransactionController@insert_transaction');
