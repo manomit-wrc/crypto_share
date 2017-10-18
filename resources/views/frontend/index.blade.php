@@ -13,7 +13,7 @@
     <!-- begin container -->
     <div class="container home-content">
         <img src="storage/frontend/assets/img/logo.png" alt="CryptShares" width="" height="200" />
-        <a href="/explore" class="btn btn-theme">Explore Group</a> 
+        <a href="/explore" class="btn btn-theme">Explore Groups</a> 
         @if(Auth::guard('crypto')->check() && Auth::guard('crypto')->user()->status === "1")
             <a href="/dashboard" class="btn btn-outline">Dashboard</a>
         @else
