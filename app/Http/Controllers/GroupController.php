@@ -73,19 +73,17 @@ class GroupController extends Controller
         return view('frontend.group.view_groups')->with('fetch_all_group', $fetch_all_group1);
     }
 
-    public function create_group(){
+    public function create_group() {
         return view('frontend.group.create_group');
     }
 
     public function add_create_groups(Request $request) {
         Validator::make($request->all(),[
             'group_name' => 'required | unique:groups,group_name',
-            'group_type' => 'required',
-            'status' => 'required'
+            'group_type' => 'required'
         ], [
-            'group_name.required' => "Please enter group name.",
-            'group_type.required' => "Please select group type.",
-            'status.required' => "Please select status."
+            'group_name.required' => "Please enter group name",
+            'group_type.required' => "Please select group type"
         ])->validate();
 
         if ($request->hasFile('group_image')) {
@@ -95,11 +93,11 @@ class GroupController extends Controller
             $destinationPath_2 = public_path().'/upload/group_image/resize';
             $img = Image::make($file->getRealPath());
             $img->resize(75, 75, function ($constraint) {
-              $constraint->aspectRatio();
+                $constraint->aspectRatio();
             })->save($destinationPath_2.'/'.$fileName);
             //original destination path
             $destinationPath = public_path().'/upload/group_image/original/';
-            $file->move($destinationPath,$fileName);
+            $file->move($destinationPath, $fileName);
         }else{
             $fileName = 'default_group_image.png';
         }
@@ -108,6 +106,8 @@ class GroupController extends Controller
         $add->group_name = ucwords($request->group_name);
         $add->group_type = $request->group_type;
         $add->group_image = $fileName;
+        $add->description = $request->description;
+        $add->activity_status = $request->activity_status;
         $add->status = $request->status;
         $add->user_id = Auth::guard('crypto')->user()->id;
         $add->current_status = 1;
@@ -116,7 +116,7 @@ class GroupController extends Controller
             $request->session()->flash("submit-status", "Group added successfully.");
             return redirect('/group');
         } else {
-           $request->session()->flash("error-status", "Group added failed.");
+           $request->session()->flash("error-status", "Group addition failed.");
             return redirect('/group/add'); 
         }
     }
@@ -131,12 +131,10 @@ class GroupController extends Controller
         $id = base64_decode($group_id);
         Validator::make($request->all(),[
             'group_name' => 'required | unique:groups,group_name,'.$id,
-            'group_type' => 'required',
-            'status' => 'required'
+            'group_type' => 'required'
         ], [
             'group_name.required' => "Please enter group name.",
-            'group_type.required' => "Please select group type.",
-            'status.required' => "Please select status."
+            'group_type.required' => "Please select group type."
         ])->validate();
 
         if ($request->hasFile('group_image')) {
@@ -146,7 +144,7 @@ class GroupController extends Controller
             $destinationPath_2 = public_path().'/upload/group_image/resize';
             $img = Image::make($file->getRealPath());
             $img->resize(75, 75, function ($constraint) {
-              $constraint->aspectRatio();
+                $constraint->aspectRatio();
             })->save($destinationPath_2.'/'.$fileName);
             //original destination path
             $destinationPath = public_path().'/upload/group_image/original/';
@@ -159,18 +157,20 @@ class GroupController extends Controller
         $edit->group_name = ucwords($request->group_name);
         $edit->group_type = $request->group_type;
         $edit->group_image = $fileName;
+        $edit->description = $request->description;
+        $edit->activity_status = $request->activity_status;
         $edit->status = $request->status;
 
         if ($edit->save()) {
-            $request->session()->flash("submit-status", "Group edited successfully.");
+            $request->session()->flash("submit-status", "Group updated successfully.");
             return redirect('/group');
         } else {
-            $request->session()->flash("error-status", "Group added failed.");
+            $request->session()->flash("error-status", "Group updation failed.");
             return redirect('/group/edit/{group_id}'); 
         }
     }
 
-    public function add_group_delete(Request $request, $group_id){
+    public function add_group_delete(Request $request, $group_id) {
         $id = base64_decode($group_id);
         $delete = Group::find($id);
         $delete->current_status = 5;

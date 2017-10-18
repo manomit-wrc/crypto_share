@@ -28,7 +28,7 @@
                             <img class="img-circle" src="{{ url('/upload/group_image/default_group_image.png')}}" style="width: 50px; height: 40px;" alt="User profile picture">
                         @endif
                     </td>
-                    <td class="text-center vertical-middle"><a href="/group/dashboard/{{base64_encode($group_details['id'])}}">{{$group_details['group_name']}}</a></td>
+                    <td class="text-center vertical-middle"><a href="/group/dashboard/{{base64_encode($group_details['id'])}}" @if($group_details['description'] != '') title="{{$group_details['description']}}" @endif>{{$group_details['group_name']}}</a></td>
                     <td class="text-center vertical-middle">{{$group_details['group_type'] == 'cg' ? 'Close Group' : 'Open Group'}}</td>
                     <td class="text-center vertical-middle">{{$group_details['user_info']['first_name']}} {{$group_details['user_info']['last_name']}}</td>
                     
