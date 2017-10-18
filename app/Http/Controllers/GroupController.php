@@ -550,7 +550,7 @@ class GroupController extends Controller
         $notes = $request->notes;
 
         for($i = 0; $i<count($user_ids); $i++){
-            $if_allready_exit = Invitation::where([['group_id',$group_id],['user_id',$user_ids[$i]]])->get()->toArray();
+            $if_allready_exit = Invitation::where([['group_id',$group_id],['user_id',$user_ids[$i]],['status','=','1']])->get()->toArray();
 
             if(count($if_allready_exit) == 0){
                 $add = new Invitation();
