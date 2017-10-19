@@ -34,6 +34,9 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/update_password', 'PageController@update_password');
 	Route::get('/view-settings', 'PageController@view_settings');
 	Route::post('/edit_settings', 'PageController@edit_settings');
+	Route::post('/edit_settings', 'PageController@edit_settings');
+	Route::get('/tools', 'PageController@view_tools');
+	Route::post('/edit_tools', 'PageController@edit_tools');
 
 	Route::get('/testimonial', 'TestimonialController@index');
 	Route::get('/testimonial/add', 'TestimonialController@testimonial_add');

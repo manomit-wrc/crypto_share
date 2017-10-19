@@ -48,6 +48,11 @@
 						<span>Feedback Lists</span>
 					</a>
 				</li>
+				<li class="has-sub {{(Request::segment(1) === 'tools' ? 'active' : '' )}}">
+					<a href="/tools">
+						<span>Tools</span>
+					</a>
+				</li>
 				<li class="has-sub {{(Request::segment(1) === 'testimonial' ? 'active' : '' )}}">
 					<a href="/testimonial">
 						<span>Testimonial</span>
