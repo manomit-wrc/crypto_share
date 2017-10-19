@@ -20,6 +20,7 @@ use App\ContactUs;
 use App\CoinList;
 use App\UserCoin;
 use Mail;
+use App\Tools;
 use App\Mail\contact_us_email;
 use App\Mail\RegistrationEmail;
 // use Illuminate\Support\Facades\Mail;
@@ -357,6 +358,29 @@ class PageController extends Controller
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Edit Successfully.");
             return redirect('/view-settings');
+        }
+    }
+
+    public function view_tools () {
+        $fetch_details = Tools::all()->toArray();
+        //echo "<pre>";
+        //print_r($fetch_details); exit;
+        return view('frontend.tools')->with('fetch_details' , $fetch_details);
+    }
+
+    public function edit_tools (Request $request) {
+        Validator::make($request->all(), [
+            'message' => 'required'
+        ], [
+            'message.required' => "Message can't be left blank"
+        ])->validate();
+
+        $edit = Tools::find('1');
+        $edit->message = $request->message;
+
+        if ($edit->save()) {
+            $request->session()->flash("submit-status", "Edit Successfully.");
+            return redirect('/tools');
         }
     }
 
