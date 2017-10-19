@@ -354,9 +354,9 @@ class GroupController extends Controller
 
         $fetch_coin_all_details = UserCoin::with('coinlists')->where([['group_id', '=', $id],['status', '=', 1]])->with('userInfo')->get()->toArray();
 
-        $fetch_feedback = Feedback::with('user_info')->where([['group_id', '=', $id],['user_id', '=', Auth::guard('crypto')->user()->id]])->get()->toArray();
+        // $fetch_feedback = Feedback::with('user_info')->where([['group_id', '=', $id],['user_id', '=', Auth::guard('crypto')->user()->id]])->get()->toArray();
 
-        $fetch_feedback_list = Feedback::with('user_info')->where([['group_id', '=', $id]])->get()->toArray();
+        // $fetch_feedback_list = Feedback::with('user_info')->where([['group_id', '=', $id]])->get()->toArray();
 
     	return view('frontend.group.group_dashboard')->with('fetch_group_details', $fetch_group_details[0])
 													->with('total_member_of_group', $total_member_of_group)
@@ -370,9 +370,7 @@ class GroupController extends Controller
                                                     ->with('group_id', $group_id)
                                                     ->with('chatArray', $chatArray)
                                                     ->with('group_status', $group_status)
-                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details)
-                                                    ->with('fetch_feedback', $fetch_feedback)
-                                                    ->with('fetch_feedback_list', $fetch_feedback_list);
+                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details);
     }
 
     public function quick_post_submit (Request $request, $group_id) {
