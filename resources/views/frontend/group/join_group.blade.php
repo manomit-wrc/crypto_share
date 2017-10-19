@@ -59,7 +59,7 @@
 	                                        		<span><i class="fa fa-2x fa-check"></i></span>
                                         		@elseif($value['invitation_status'] == 2)
                                                     <button type="button" class="btn btn-info m-r-5 m-b-5" disabled="">Pending</button>
-                                                @elseif($value['invitation_status'] == 5)
+                                                @elseif($value['invitation_status'] == 5 || $value['invitation_status'] == 6)
                                                     <button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$value['id']}}" group_type="{{$value['group_type']}}">Join Group</button>
 	                                        	@elseif($value['invitation_status'] == 0)
 	                                        		<button type="button" class="btn btn-info m-r-5 m-b-5 open_join_group_modal" data-toggle="modal" data-target="#myModal" value="{{$value['id']}}" group_type="{{$value['group_type']}}">Join Group</button>

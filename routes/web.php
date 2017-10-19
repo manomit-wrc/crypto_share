@@ -76,6 +76,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::get('/group/join-group-request/{invitation_id}', 'GroupController@join_group_request');
 	Route::get('/group/group_invitation_accept/{invitation_id}', 'GroupController@group_invitation_accept');
 	Route::get('/group/group_invitation_decline/{invitation_id}', 'GroupController@group_invitation_decline');
+	Route::post('/group/group-leave/', 'GroupController@leave_group');
 
 	Route::get('/my-post', 'MyPostController@index');
 

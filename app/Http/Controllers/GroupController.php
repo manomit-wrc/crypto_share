@@ -289,6 +289,10 @@ class GroupController extends Controller
     	$fetch_member_of_group = Invitation::where([['group_id',$id],['status','1']])->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
+        $fetch_member_of_leave_from_group = Invitation::where([['group_id',$id],['status','6']])
+                                            ->get()->toArray();
+        $total_member_of_leave_from_group = count($fetch_member_of_leave_from_group);
+
     	foreach($fetch_member_of_group as $key => $value) {
     		$user_id = $value['user_id'];
     		$fetch_user_details[] = User::find($user_id)->toArray();
@@ -356,6 +360,7 @@ class GroupController extends Controller
 
     	return view('frontend.group.group_dashboard')->with('fetch_group_details', $fetch_group_details[0])
 													->with('total_member_of_group', $total_member_of_group)
+                                                    ->with('total_member_of_leave_from_group',$total_member_of_leave_from_group)
 													->with('fetch_user_details', $fetch_all_user_of_group)
 													->with('group_id', $id)
 													->with('fetch_latest_post', $fetch_latest_post)
@@ -616,6 +621,22 @@ class GroupController extends Controller
         if ($edit->save()) {
             $request->session()->flash("submit-status", "Request declined successfully.");
             return redirect('/group');
+        }
+    }
+
+    public function leave_group (Request $request) {
+        $group_id = $request->group_id;
+        $notes = $request->notes;
+        $user_id = Auth::guard('crypto')->user()->id;
+
+        $fetch_group_details = Invitation::where([['group_id',$group_id],['user_id',$user_id],['status','1']])->get()->toArray();
+
+        $leave_group = Invitation::find($fetch_group_details[0]['id']);
+        $leave_group->status = 6;
+
+        if($leave_group->save()){
+            echo 1;
+            exit;
         }
     }
 }
