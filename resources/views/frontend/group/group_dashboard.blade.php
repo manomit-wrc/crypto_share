@@ -126,7 +126,7 @@
 							<div class="stats-icon"><i class="fa fa-thumbs-up"></i></div>
 							<div class="stats-info">
 								<h4>Join/Leave Group</h4>
-								<p>{{ $total_member_of_group }}/0</p>
+								<p>{{ $total_member_of_group }} / {{ $total_member_of_leave_from_group }}</p>
 							</div>
 							<!-- <div class="stats-link">
 								<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -156,7 +156,13 @@
 			@if($group_status && $group_status[0]['status'] == "2")
 				<div class="m-b-15"><span style="font-size: 15px;">Invitation is pending</span></div>
 			@elseif($group_status && $group_status[0]['status'] == "1")
-				<div class="m-b-15"><span style="font-size: 15px;">You are member of this group</span></div>
+				<div class="m-b-15">
+					<span style="font-size: 15px;">
+						<button type="button" class="btn btn-info m-r-5 m-b-5 open_leave_group_modal" data-toggle="modal" data-target="#myleave_group_modal" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">
+							Leave Group
+						</button>
+					</span>
+				</div>
 			@elseif($fetch_group_details['user_id'] == Auth::guard('crypto')->user()->id)
 				<div class="m-b-15"><span style="font-size: 15px;">You are admin of this group</span></div>
 			@else
@@ -714,6 +720,35 @@
 						</fieldset>
 						<div class="">
 							<button type="submit" class="btn btn-success m-r-5 m-b-5" id="join_group_submit">Join</button>
+							<button type="button" class="btn btn-success m-r-5 m-b-5" data-dismiss="modal">Close</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="myleave_group_modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Leave Group</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel-body">
+					<form action="javascript:void(0)" id="leave_group_form" name="leave_group_form">
+						<input type="hidden" name="user_id" id="append_group_id" value="{{$fetch_group_details['id']}}" group_type="{{$fetch_group_details['group_type']}}">
+						<fieldset>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Notes</label>
+								<textarea style="height: 150px;" cols="" rows="" class="form-control" id="leave_notes" name="leave_notes"></textarea>
+							</div>
+						</fieldset>
+						<div class="">
+							<button type="submit" class="btn btn-success m-r-5 m-b-5" id="leave_group_submit">Leave</button>
 							<button type="button" class="btn btn-success m-r-5 m-b-5" data-dismiss="modal">Close</button>
 						</div>
 					</form>

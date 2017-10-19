@@ -188,6 +188,67 @@
             }
         });
 
+        $('.open_leave_group_modal').on('click', function(){
+            var group_id = $(this).attr('value');
+            var group_type = $(this).attr('group_type');
+            
+            $('#append_group_id').val(group_id);
+            $('#append_group_id').attr('group_type',group_type);
+        });
+
+        $('#leave_group_form').validate({
+            rules:{
+                leave_notes:{
+                    required: true
+                }
+            },
+            messages:{
+                leave_notes: {
+                    required: "<font color='red'>Please Enter Notes</font>"
+                }
+            }
+        });
+
+        $('#leave_group_submit').on('click', function(){
+          var valid = $('#leave_group_form').valid();
+          if(valid){
+            $('#leave_group_submit').prop('disabled', false);
+
+            var group_id = $("#append_group_id").val();
+            var group_type = $("#append_group_id").attr('group_type');
+            var notes = $('#leave_notes').val();
+            // alert (group_id);
+            // return false;
+
+            $.ajax({
+              type: 'POST',
+              url: '/group/group-leave',
+              data:{
+                group_id:group_id,
+                notes:notes,
+                _token: "{{ csrf_token() }}"
+              },
+              success: function (data){
+                if(data == 1){
+                  $('#leave_group_submit').prop('disabled', true);
+
+                  $.confirm({
+                      title: 'Confirmation!',
+                      content: 'You have successfully leaved from this group.',
+                      buttons: {
+                          OK: function () {
+                            window.location.href='/group';
+                          }
+                      }
+                  });
+                }
+              }
+            });
+
+          }
+
+        });
+
 
         $('#quick_post_form').validate({
           rules:{
