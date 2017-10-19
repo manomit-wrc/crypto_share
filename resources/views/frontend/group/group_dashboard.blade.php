@@ -253,7 +253,7 @@
 		                    	@if (count($fetch_coin_all_details) > 0)
 			                    	@foreach ($fetch_coin_all_details as $key => $value)
 			                        <tr class="odd">
-			                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
+			                            <td><img class="" width="40" height="40" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
 			                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
 			                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
 			                            <td style="text-align: right;">{{$value['chip_value']}}</td>

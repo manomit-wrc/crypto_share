@@ -9,7 +9,7 @@
     <!-- end content-bg -->
     <!-- begin container -->
     <div class="container explore-content">
-        <div class="text-center"><img src="storage/frontend/assets/img/logo.png" alt="CryptShares" width="" height="100" /></div>
+        <div class="text-center"><a href="/"><img src="storage/frontend/assets/img/logo.png" alt="CryptShares" width="" height="100" /></a></div>
         <h2 class="text-center">Group Listings</h2>
             <table id="data-table_explore_group" class="table">
                 <tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Auth;
+use App\Feedback;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -49,5 +50,26 @@ class DashboardController extends Controller
             echo "<br/>";
 
         }
+    }
+
+    public function feedback_submit (Request $request) {
+        $message = $request->feedback_msg;
+
+        $add = new Feedback;
+        $add->user_id = Auth::guard('crypto')->user()->id;
+        $add->message = $message;
+
+        if ($add->save()) {
+            $request->session()->flash("success-status", "Thank you for giving your valuable feedback.");
+            return redirect('/dashboard/');
+        } else {
+            $request->session()->flash("error-status", "Feedback submission failed!");
+            return redirect('/dashboard/');
+        }
+    }
+
+    public function get_all_feedback() {
+        $fetch_feedback_list = Feedback::with('user_info')->get()->toArray();
+        return view('frontend.feedback_view')->with('feedback_list', $fetch_feedback_list);
     }
 }
