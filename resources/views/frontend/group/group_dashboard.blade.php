@@ -186,7 +186,7 @@
                     	<?php $i = 0; ?>
                     	@if (count($coin_user_info) > 0)
 	                    	@foreach ($coin_user_info as $coin_user)
-							<div class="panel panel-info panel-inverse overflow-hidden">
+							<div class="panel panel-inverse overflow-hidden">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion" href="#{{$coin_user['coin_id']}}" aria-expanded="true">
