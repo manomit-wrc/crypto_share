@@ -286,6 +286,8 @@ class GroupController extends Controller
     	$fetch_group_details = Group::with('user_info')->where('id',$id)->get()->toArray();
     	$group_name = $fetch_group_details[0]['group_name'];
 
+        $group_admin_details = $fetch_group_details[0]['user_info'];
+
     	$fetch_member_of_group = Invitation::where([['group_id',$id],['status','1']])->get()->toArray();
     	$total_member_of_group = count($fetch_member_of_group);
 
@@ -370,7 +372,8 @@ class GroupController extends Controller
                                                     ->with('group_id', $group_id)
                                                     ->with('chatArray', $chatArray)
                                                     ->with('group_status', $group_status)
-                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details);
+                                                    ->with('fetch_coin_all_details', $fetch_coin_all_details)
+                                                    ->with('group_admin_details',$group_admin_details);
     }
 
     public function quick_post_submit (Request $request, $group_id) {

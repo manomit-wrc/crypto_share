@@ -635,6 +635,18 @@
 	                <h4 class="panel-title">Group Members</h4>
 	            </div>
                 <ul class="registered-users-list clearfix">
+                	<li>
+                    	@if(!empty($group_admin_details['image']))
+							<a href="javascript:;"><img src="{{url('upload/profile_image/resize/'.$group_admin_details['image'])}}" style="height: 50px;" alt="User profile picture" /></a>
+                		@else
+                			<a href="javascript:;"><img src="{{ url('/upload/profile_image/default.png')}}" style="height: 50px;" alt="User profile picture"></a>
+                    	@endif
+                        <h4 class="username text-ellipsis">
+                            {{$group_admin_details['first_name'].' '.$group_admin_details['last_name']}}
+                            <small>Admin</small>
+                        </h4>
+                    </li>
+
                 	@if(count($fetch_user_details))
 	                	@foreach ($fetch_user_details as $key => $value)
 		                    <li>
