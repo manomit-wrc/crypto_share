@@ -522,6 +522,7 @@
         setInterval(function()
         {
             $('#data-table_myTransaction').load(document.URL +  ' #data-table_myTransaction');
+            $('#accordion').load(document.URL +  ' #accordion');
 
         }, 3000);
         //end

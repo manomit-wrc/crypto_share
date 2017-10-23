@@ -229,9 +229,18 @@
 											{{$coin_user['full_name']}}
 
 											<span class="pull-right" style="padding-right: 80px;">
+												<?php 
+													$ch = curl_init(); 
+										            curl_setopt($ch, CURLOPT_URL, "https://min-api.cryptocompare.com/data/price?fsym=".$coin_user['name']."&tsyms=BTC,USD");
+										            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+										            $json = curl_exec($ch); 
+										            $json_data = json_decode($json,true);
+										            
+												?>
+												$/USD: <?php echo $json_data['USD'];?> &nbsp;&nbsp;
+												$/BTC: <?php echo number_format($json_data['BTC'],8);?>
 
-												$/USD: $23 &nbsp;&nbsp;
-												$/BTC: 0.04
+												<?php curl_close ($ch); ?>
 												
 											</span>
 										</a>
@@ -519,6 +528,16 @@
 			                    <h4 class="panel-title">Quick Post</h4>
 			                </div>
 			                <div class="panel-toolbar">
+			                	<div class="btn-group">
+			                		<div class="form-group">
+	                                    <label class="col-md-3 control-label">Post Title</label>
+	                                    <div class="col-md-9">
+	                                        <textarea style="margin: 0px -359.859px 0px 0px;width: 590px;height: 50px;" rows="" cols="" class="form-control"  name="post_title" id="post_title"></textarea>
+	                                    </div>
+	                                </div>
+			                	</div>
+			                	<div></div>
+			                	<br>
 			                    <div class="btn-group m-r-5">
 									<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
 									<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
