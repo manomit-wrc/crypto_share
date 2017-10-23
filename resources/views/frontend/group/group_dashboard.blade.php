@@ -99,7 +99,7 @@
 	                    </div><!--/myCarousel--> <?php */ ?>
 	                    <div id="carousel">
 	                    	@foreach($fetch_latest_post_image as $key => $value)
-								<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+								<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="{{$value['post_title']}}" />
 							@endforeach
 						</div>
 	                </div><!--/well-->
@@ -359,6 +359,14 @@
 										</div>
 									</div>
 									@endif
+									<script type="text/javascript">
+										$(document).keyup(function(e) {
+								          if (e.keyCode === 27) {
+								            $("#details-{{$value['id']}}").modal('hide');
+								            $("#notes-{{$value['id']}}").modal('hide');
+								          }
+								        });
+									</script>
 			                        @endforeach
 			                    @else
 			                    	<tr class="odd">
@@ -699,8 +707,8 @@
                     	No members as off now.
                 	@endif
                 </ul>
-	            <div class="panel-footer text-center">
-	                
+	            <div class="panel-footer">
+	                <a href="/group/members/{{$group_id}}">Show all members</a>
 	            </div>
 	        </div>
 	        <!-- end panel -->

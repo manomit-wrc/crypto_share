@@ -67,19 +67,19 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Buy in Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab1_current_price" id="tab1_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_price_usd" id="tab1_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}" readonly>
+                                        <input class="form-control" name="tab1_trade_price_usd" id="tab1_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab1_trade_price_btc" id="tab1_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}" readonly>
+                                        <input class="form-control" name="tab1_trade_price_btc" id="tab1_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -126,19 +126,19 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Buy in Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}" readonly>
+                                        <input class="form-control" name="tab2_current_price" id="tab2_current_price" placeholder="Buy in Price (BTC)" type="text" value="{{$tran_details[0]['current_price']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price (USD)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_price_usd" id="tab2_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}" readonly>
+                                        <input class="form-control" name="tab2_trade_price_usd" id="tab2_trade_price_usd" placeholder="Trade Price (USD)" type="text" value="{{$tran_details[0]['trade_price_usd']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Trade Price (BTC)</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="tab2_trade_price_btc" id="tab2_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}" readonly>
+                                        <input class="form-control" name="tab2_trade_price_btc" id="tab2_trade_price_btc" placeholder="Trade Price (BTC)" type="text" value="{{$tran_details[0]['trade_price_btc']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
