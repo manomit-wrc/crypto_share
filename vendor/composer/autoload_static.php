@@ -317,6 +317,7 @@ class ComposerStaticInitcbe14c96e829713acc5edb77dbaa64ba
         'AddCuurentStatus' => __DIR__ . '/../..' . '/database/migrations/2017_10_13_160301_add_cuurent_status.php',
         'AddFieldInQuickPost' => __DIR__ . '/../..' . '/database/migrations/2017_10_13_130110_add_field_in_quick_post.php',
         'AddFieldNameToUsersTabel' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_120909_add_field_name_to_users_tabel.php',
+        'AddFieldPostTitle' => __DIR__ . '/../..' . '/database/migrations/2017_10_23_065626_add_field_post_title.php',
         'AddFieldToGroup' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_131414_add_field_to_group.php',
         'AddFieldToGroups' => __DIR__ . '/../..' . '/database/migrations/2017_10_18_113036_add_field_to_groups.php',
         'AddFieldToInvitationTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_17_130214_add_field_to_invitation_table.php',
