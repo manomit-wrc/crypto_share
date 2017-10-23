@@ -70,6 +70,10 @@
                                             <td class="field">City</td>
                                             <td>{{Auth::guard('crypto')->user()->city}}</td>
                                         </tr>
+                                        <tr>
+                                            <td class="field"></td>
+                                            <td><a href="/edit_profile" class="btn btn-info">Edit Profile</a></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

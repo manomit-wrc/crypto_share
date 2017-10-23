@@ -486,19 +486,6 @@
 			                                    </div>
 			                                </div>
 					                	</div>
-					                	<div></div>
-					                	<br>
-					                    <div class="btn-group m-r-5">
-											<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
-											<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
-											<a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
-										</div>
-					                    <div class="btn-group">
-											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
-											<a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
-											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
-											<a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
-										</div>
 					                </div>
 					                <textarea class="form-control no-rounded-corner bg-silver" rows="14" name="quick_post" id="quick_post"></textarea>
 					                <div>
