@@ -56,12 +56,12 @@
                                         <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['full_name']}}"><br />{{$value['coinlists']['full_name']}}</td>
                                         <td>@if($value['transaction_type'] == 1) Long Term Hold @elseif($value['transaction_type'] == 2) Trade @else Watch @endif</td>
                                         <td>{{$value['user_info']['first_name'].' '.$value['user_info']['last_name']}}</td>
-                                        <td style="text-align: right;">{{$value['current_price']}}</td>
-                                        <td style="text-align: right;">{{$value['chip_value']}}</td>
+                                        <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['current_price']}} @endif</td>
+                                        <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['chip_value']}} @endif</td>
                                         <td>{{date('jS M, Y', strtotime($value['trade_date']))}}</td>
-                                        <td style="text-align: right;">{{$value['quantity']}}</td>
-                                        <td style="text-align: right;">{{$value['total_value_btc']}}</td>
-                                        <td style="text-align: right;">{{$value['total_value_usd']}}</td>
+                                        <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['quantity']}} @endif</td>
+                                        <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['total_value_btc']}} @endif</td>
+                                        <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['total_value_usd']}} @endif</td>
                                         <td>@if($value['notes'] > '')<a href="/#notes-{{$value['id']}}" class="btn btn-primary btn-xs" data-toggle="modal">Notes</a>@endif</td>
                                         <td style="text-align: right;">
                                         @if($value['user_info']['id'] == Auth::guard('crypto')->user()->id)

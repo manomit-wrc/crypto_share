@@ -51,6 +51,8 @@
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.time.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.resize.min.js') !!}
   {!! Html::script('storage/dashboard/assets/plugins/flot/jquery.flot.pie.min.js') !!}
+
+  {!! Html::script('storage/dashboard/assets/js/jquery.waterwheelCarousel.js') !!}
   
 	<!-- ================== END BASE JS ================== -->
 </head>

@@ -62,12 +62,12 @@
                                             <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$user_coin_data->coinlists->image_url}}" alt="{{$user_coin_data->coinlists->full_name}}"><br />{{$user_coin_data->coinlists->full_name}}</td>
                                             <td><a href="group/dashboard/{{base64_encode($user_coin_data->groupInfo->id)}}">{{$user_coin_data->groupInfo->group_name}}</a></td>
                                             <td>@if($user_coin_data->transaction_type == 1) Long Term Hold @elseif($user_coin_data->transaction_type == 2) Trade @else Watch @endif</td>
-                                            <td style="text-align: right;">{{$user_coin_data->current_price}}</td>
-                                            <td style="text-align: right;">{{$user_coin_data->chip_value}}</td>
+                                            <td style="text-align: right;">@if($user_coin_data->transaction_type != 3) {{$user_coin_data->current_price}} @endif</td>
+                                            <td style="text-align: right;">@if($user_coin_data->transaction_type != 3) {{$user_coin_data->chip_value}} @endif</td>
                                             <td>{{date('jS M, Y', strtotime($user_coin_data->trade_date))}}</td>
-                                            <td style="text-align: right;">{{$user_coin_data->quantity}}</td>
-                                            <td style="text-align: right;">{{$user_coin_data->total_value_btc}}</td>
-                                            <td style="text-align: right;">{{$user_coin_data->total_value_usd}}</td>
+                                            <td style="text-align: right;">@if($user_coin_data->transaction_type != 3) {{$user_coin_data->quantity}} @endif</td>
+                                            <td style="text-align: right;">@if($user_coin_data->transaction_type != 3) {{$user_coin_data->total_value_btc}} @endif</td>
+                                            <td style="text-align: right;">@if($user_coin_data->transaction_type != 3) {{$user_coin_data->total_value_usd}} @endif</td>
                                             <td style="text-align: right;">{{$user_coin_data->target_1}}</td>
                                             <td style="text-align: right;">{{$user_coin_data->target_2}}</td>
                                             <td style="text-align: right;">{{$user_coin_data->target_3}}</td>
