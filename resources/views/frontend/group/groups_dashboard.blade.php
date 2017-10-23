@@ -1,17 +1,28 @@
 @extends('dashboard_layout')
 @section('content')
 <style type="text/css">
-	.carousel-inner.onebyone-carosel { margin: auto; width: 90%; }
+	/*.carousel-inner.onebyone-carosel { margin: auto; width: 90%; }
 	.onebyone-carosel .active.left { left: -33.33%; }
 	.onebyone-carosel .active.right { left: 33.33%; }
 	.onebyone-carosel .next { left: 33.33%; }
-	.onebyone-carosel .prev { left: -33.33%; }
+	.onebyone-carosel .prev { left: -33.33%; }*/
 	.widget-stats .stats-info p { font-size: 20px; }
 	.error { text-align: left; }
+	#carousel {
+        height:153px;
+        position:relative;
+        clear:both;
+        overflow:hidden;
+        background:#FFF;
+	}
+	#carousel img {
+        visibility:hidden; /* hide images until carousel can handle them */
+        cursor:pointer; /* otherwise it's not as obvious items can be clicked */
+  	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function () {
-	    $('#myCarousel').carousel({
+	    /*$('#myCarousel').carousel({
 	        interval: 10000
 	    })
 	    $('.fdi-Carousel .item').each(function () {
@@ -27,7 +38,26 @@
 	        else {
 	            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
 	        }
-	    });
+	    });*/
+
+	    var carousel = $("#carousel").waterwheelCarousel({
+			flankingItems: 3,
+			movingToCenter: function ($item) {
+				$('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movedToCenter: function ($item) {
+				$('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movingFromCenter: function ($item) {
+				$('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movedFromCenter: function ($item) {
+				$('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
+			},
+			clickedCenter: function ($item) {
+				$('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
+			}
+		});
 	});
 </script>
 <div id="content" class="content">
@@ -42,7 +72,7 @@
 			@if(count($fetch_latest_post_image) > 0)
 				<div class="span12">
 	                <div class="well">
-	                    <div id="myCarousel" class="carousel fdi-Carousel slide">
+	                    <?php /* ?> <div id="myCarousel" class="carousel fdi-Carousel slide">
 							<!-- Carousel items -->
 	                        <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
 	                            <div class="carousel-inner onebyone-carosel">
@@ -66,7 +96,12 @@
 	                            @endif
 	                        </div>
 	                        <!--/carousel-inner-->
-	                    </div><!--/myCarousel-->
+	                    </div><!--/myCarousel--> <?php */ ?>
+	                    <div id="carousel">
+	                    	@foreach($fetch_latest_post_image as $key => $value)
+								<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+							@endforeach
+						</div>
 	                </div><!--/well-->
 	            </div>
             @endif
@@ -174,7 +209,7 @@
 	<div class="row">
 		<!-- begin col-8 -->
 		<div class="col-md-8">
-			<div class="panel panel-inverse" data-sortable-id="index-2">
+			<div class="panel panel-inverse" data-sortable-id="index-20">
 				<div class="panel-heading">
 					<h4 class="panel-title">Group Activities</h4>
 				</div>
@@ -242,7 +277,7 @@
 			</div>
 
 			{{-- //coin list view --}}
-			<div class="panel panel-inverse" data-sortable-id="index-1">
+			<div class="panel panel-inverse" data-sortable-id="index-21">
 				<div class="panel-heading">
 	                <h4 class="panel-title">Recent Transactions</h4>
 	            </div>
@@ -269,8 +304,8 @@
 			                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
 			                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
 			                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
-			                            <td style="text-align: right;">{{$value['chip_value']}}</td>
-			                            <td style="text-align: right;">{{$value['current_price']}}</td>
+			                            <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['chip_value']}}@endif</td>
+			                            <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['current_price']}}@endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
@@ -338,14 +373,14 @@
 			{{-- //end --}}
 
 			<div class="latest">
-				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
+				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-30">
 					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
 
 					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
 
 					<!-- <li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li> -->
 				</ul>
-				<div class="tab-content" data-sortable-id="index-3">
+				<div class="tab-content" data-sortable-id="index-4">
 					<div class="tab-pane fade active in" id="latest-post">
 						<div class="height-sm" data-scrollbar="true">
 							<ul class="media-list media-list-with-divider">
@@ -419,7 +454,7 @@
 				@if($fetch_group_details && $fetch_group_details['activity_status'] == 1)
 					<div class="post">
 						@if($group_status && $group_status[0]['status'] == "1")
-							<div class="panel panel-inverse" data-sortable-id="index-8">
+							<div class="panel panel-inverse" data-sortable-id="index-80">
 								<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 									{{ csrf_field() }}
 					                <div class="panel-heading">
@@ -477,7 +512,7 @@
 		        @endif
 		    @else
 		    	<div class="post">
-					<div class="panel panel-inverse" data-sortable-id="index-8">
+					<div class="panel panel-inverse" data-sortable-id="index-81">
 						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 							{{ csrf_field() }}
 			                <div class="panel-heading">
@@ -526,7 +561,7 @@
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
 		<div class="col-md-4">
-			<div class="panel panel-inverse" data-sortable-id="index-4">
+			<div class="panel panel-inverse" data-sortable-id="index-5">
 				<div class="panel-heading">
 					<h4 class="panel-title">Analytics Details</h4>
 				</div>
@@ -575,7 +610,7 @@
 				</div>
 			</div>
 
-			<div class="panel panel-inverse" data-sortable-id="index-4">
+			<div class="panel panel-inverse" data-sortable-id="index-6">
 				<div class="panel-heading">
 					<h4 class="panel-title"><i class="fa fa-comments"></i> Chat</h4>
 				</div>
