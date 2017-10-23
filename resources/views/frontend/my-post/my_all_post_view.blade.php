@@ -35,6 +35,7 @@
                                         <th>Sr. No</th>
                                         <th>Group Name</th>
                                         <th>Group Type</th>
+                                        <th>Posts Title</th>
                                         <th>Posts</th>
                                         <th>Post Image</th>
                                     </tr>
@@ -47,6 +48,7 @@
 	                                        <td><?php echo ++$i; ?></td>
 	                                        <td>{{$value['group_name']['group_name']}}</td>
 	                                        <td>{{$value['group_name']['group_type'] == 'cg' ? 'Close Group' : 'Open Group'}}</td>
+                                            <td>{{$value['post_title']}}</td>
                                             <td>{{$value['post']}}</td>
                                             <td><img src="{{url('upload/quick_post/resize/'.$value['post_image'])}}" style="width: 50px; height: 50px;"></td>
 	                                    </tr>
