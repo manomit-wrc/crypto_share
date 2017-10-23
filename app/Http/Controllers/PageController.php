@@ -251,20 +251,20 @@ class PageController extends Controller
         Validator::make($request->all(),[
             'first_name' => 'required',
             'last_name' => 'required',
-            'address' => 'required',
-            'state' => 'required',
+            // 'address' => 'required',
+            // 'state' => 'required',
             'country' => 'required',
             'city' => 'required',
-            'pincode' => 'required',
+            // 'pincode' => 'required',
             'profile_image' => 'required_with|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'first_name.required' => "First name can't be left blank.",
             'last_name.required' => "Last name can't be left blank.",
-            'address.required' => "Address can't be left blank.",
-            'state.required' => "State name can't be left blank.",
+            // 'address.required' => "Address can't be left blank.",
+            // 'state.required' => "State name can't be left blank.",
             'country.required' => "Country name can't be left blank.",
             'city.required' => "City name can't be left blank.",
-            'pincode.required' => "Pincode can't be left blank.",
+            // 'pincode.required' => "Pincode can't be left blank.",
             'profile_image.required_with' => "Profile image can't be left blank.",
             'profile_image.image|mimes:jpeg,png,jpg,gif,svg' => 'Please choose proper image type',
             'profile_image.max:2048' => 'Maximum file size should be 2 MB'
@@ -291,11 +291,11 @@ class PageController extends Controller
         $obj = User::find($id);
         $obj->first_name = $request->first_name;
         $obj->last_name = $request->last_name;
-        $obj->street_address = $request->address;
+        // $obj->street_address = $request->address;
         $obj->country_id = $request->country;
-        $obj->state = $request->state;
+        // $obj->state = $request->state;
         $obj->city = $request->city;
-        $obj->pincode = $request->pincode;
+        // $obj->pincode = $request->pincode;
         $obj->image = $fileName;
 
         if ($obj->save()) {

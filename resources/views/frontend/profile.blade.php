@@ -80,25 +80,13 @@
                                             </tr>
 
                                             <tr>
-                                                <td class="field">Address</td>
-                                                <td><textarea cols="" rows="" name="address">{{Auth::guard('crypto')->user()->street_address}}</textarea>
-
-                                                    <span class="text-danger">{{ $errors->first('address') }}</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="divider">
-                                                <td colspan="2"></td>
-                                            </tr>
-
-                                            <tr>
                                                 <td class="field">Country/Region</td>
                                                 <td>
                                                     <select name="country">
                                                         <option value="">Select Country</option>
                                                         @foreach($fetch_all_countries as $value)
 
-                                                            <option value="{{$value['id']}}" @if((Auth::guard('crypto')->user()->country_id)==$value['id']) selected @endif>
+                                                            <option value="{{$value['id']}}" @if(Auth::guard('crypto')->user()->country_id == $value['id']) selected @endif>
                                                                 {{$value['name']}}
                                                             </option>
 
@@ -110,29 +98,11 @@
                                             </tr>
 
                                             <tr>
-                                                <td class="field">State</td>
-                                                <td><input type="text" name="state" value="{{Auth::guard('crypto')->user()->state}}">
-
-                                                    <span class="text-danger">{{ $errors->first('state') }}</span>
-                                                </td>
-                                            
-                                            </tr>
-
-                                            <tr>
                                                 <td class="field">City</td>
                                                 <td><input type="text" name="city" value="{{Auth::guard('crypto')->user()->city}}">
 
                                                     <span class="text-danger">{{ $errors->first('city') }}</span>
                                                 </td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td class="field">Pincode</td>
-                                                <td><input type="text" name="pincode" value="{{Auth::guard('crypto')->user()->pincode}}">
-
-                                                    <span class="text-danger">{{ $errors->first('pincode') }}</span>
-                                                </td>
-                                            
                                             </tr>
                                         </tbody>
                                     </table>

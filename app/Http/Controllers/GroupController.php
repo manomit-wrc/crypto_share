@@ -375,6 +375,7 @@ class GroupController extends Controller
 
     public function quick_post_submit (Request $request, $group_id) {
     	$group_id = base64_decode($group_id);
+        $post_title = $request->post_title;
     	$text = $request->quick_post;
     	$image = $request->quick_post_image;
         $sticky_to_top = $request->sticky_to_top;
@@ -390,7 +391,7 @@ class GroupController extends Controller
                     //thumb destination path
                     $destinationPath_2 = public_path().'/upload/quick_post/resize';
                     $img = Image::make($file->getRealPath());
-                    $img->resize(200, 150, function ($constraint) {
+                    $img->resize(320, 180, function ($constraint) {
                       $constraint->aspectRatio();
                     })->save($destinationPath_2.'/'.$fileName);
                     //original destination path
@@ -402,7 +403,7 @@ class GroupController extends Controller
             }
 
             
-
+            $edit->post_title = $post_title;
             $edit->post = $text;
             $edit->post_image = $fileName;
             $edit->sticky_to_top = $sticky_to_top;
@@ -420,7 +421,7 @@ class GroupController extends Controller
                     //thumb destination path
                     $destinationPath_2 = public_path().'/upload/quick_post/resize';
                     $img = Image::make($file->getRealPath());
-                    $img->resize(200, 150, function ($constraint) {
+                    $img->resize(320, 180, function ($constraint) {
                       $constraint->aspectRatio();
                     })->save($destinationPath_2.'/'.$fileName);
                     //original destination path
@@ -434,6 +435,7 @@ class GroupController extends Controller
             $add = new QuickPost;
             $add->group_id = $group_id;
             $add->user_id = Auth::guard('crypto')->user()->id;
+            $add->post_title = $post_title;
             $add->post = $text;
             $add->post_image = $fileName;
             $add->sticky_to_top = $sticky_to_top;

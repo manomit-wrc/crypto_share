@@ -356,6 +356,8 @@
 												<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt=""  style="width: 200px;height: 150px;" />
 											</a>
 											<div class="media-body p-r-15" style="text-align: justify;">
+												<h4 class="media-heading">{{$value['post_title']}}</h4>
+
 												{{$value['post']}}
 												<br> <span style="color:#07afee; margin-right: 10px"><strong>Posted by</strong>: {{ucwords($value['user_name']['first_name'].' '.$value['user_name']['last_name'])}}</span>
 												<span style="color:#07afee;"> {{ $value['created_at']}}</span>
@@ -424,6 +426,16 @@
 					                    <h4 class="panel-title">Quick Post</h4>
 					                </div>
 					                <div class="panel-toolbar">
+					                	<div class="btn-group">
+					                		<div class="form-group">
+			                                    <label class="col-md-3 control-label">Post Title</label>
+			                                    <div class="col-md-9">
+			                                        <textarea style="margin: 0px -359.859px 0px 0px;width: 590px;height: 50px;" rows="" cols="" class="form-control"  name="post_title" id="post_title"></textarea>
+			                                    </div>
+			                                </div>
+					                	</div>
+					                	<div></div>
+					                	<br>
 					                    <div class="btn-group m-r-5">
 											<a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
 											<a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>

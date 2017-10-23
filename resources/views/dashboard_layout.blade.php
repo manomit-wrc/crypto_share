@@ -252,11 +252,17 @@
 
         $('#quick_post_form').validate({
           rules:{
+            post_title:{
+              required: true
+            },
             quick_post:{
               required: true
             }
           },
           messages:{
+            post_title:{
+              required: "<font color='red'>Post title can't be left blank.</font>"
+            },
             quick_post:{
               required: "<font color='red'>Quick post can't be left blank.</font>"
             }
@@ -355,6 +361,7 @@
               _token: '{{csrf_token()}}'
             },
             success: function(response){
+              $('#post_title').html(response.fetch_details_of_group_post[0].post_title);
               $('#quick_post').html(response.fetch_details_of_group_post[0].post);
 
               var res = response.fetch_details_of_group_post[0].post_image;
@@ -368,7 +375,7 @@
               } else {
                 $('#sticky_to_top').prop("checked", "");
               }
-              
+
               $('#edit_post_id').val(response.fetch_details_of_group_post[0].id)
 
             }
