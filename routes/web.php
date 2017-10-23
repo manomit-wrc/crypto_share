@@ -28,6 +28,7 @@ Route::group(['middleware' => ['crypto']], function() {
 	Route::post('/feedback_submit', 'DashboardController@feedback_submit');
 	Route::get('/feedback', 'DashboardController@get_all_feedback');
 
+	Route::get('/profile', 'PageController@profile_view');
 	Route::get('/edit_profile', 'PageController@edit_profile_view');
 	Route::post('/profile_edit', 'PageController@profile_edit');
 	Route::get('/change_pass', 'PageController@change_pass');

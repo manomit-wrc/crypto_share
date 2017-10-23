@@ -708,7 +708,7 @@
                 	@endif
                 </ul>
 	            <div class="panel-footer">
-	                <a href="/group/members/{{$group_id}}">Show all members</a>
+	                <!-- <a href="/group/members/{{$group_id}}">Show all members</a> -->
 	            </div>
 	        </div>
 	        <!-- end panel -->

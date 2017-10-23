@@ -385,9 +385,9 @@ class GroupController extends Controller
 
         $post_id = $request->edit_post_id;
 
-        if(!empty($post_id)){
+        if (!empty($post_id)) {
             $edit = QuickPost::find($post_id);
-            if($image){
+            if ($image) {
                 if ($request->hasFile('quick_post_image')) {
                     $file = $request->file('quick_post_image');
                     $fileName = time().'_'.$file->getClientOriginalName();
@@ -401,23 +401,21 @@ class GroupController extends Controller
                     $destinationPath = public_path().'/upload/quick_post/original/';
                     $file->move($destinationPath,$fileName);
                 }
-            }else{
+            } else {
                 $fileName = $edit->post_image ? $edit->post_image : 'images.jpg';
             }
 
-            
             $edit->post_title = $post_title;
             $edit->post = $text;
             $edit->post_image = $fileName;
             $edit->sticky_to_top = $sticky_to_top;
 
-            if($edit->save()){
+            if ($edit->save()) {
                 $request->session()->flash("submit-status", "Post edit successfully.");
                 return redirect('/group/dashboard/'. base64_encode($group_id));
             }
-
-        }else{
-            if($image){
+        } else {
+            if ($image) {
                 if ($request->hasFile('quick_post_image')) {
                     $file = $request->file('quick_post_image');
                     $fileName = time().'_'.$file->getClientOriginalName();
@@ -481,13 +479,23 @@ class GroupController extends Controller
         $group_id = base64_decode($group_id);
         $group_info = Group::find($group_id)->toArray();
         $fetch_group_wise_member_list = UserCoin::with('userInfo')->where([['group_id', '=', $group_id],['status', '=', 1]])->get()->toArray();
-        echo "<pre>";
-        print_r($fetch_group_wise_member_list); exit;
-        //$fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where([['group_id', '=', $group_id],['status', '=', 1]])->get()->toArray();
-        return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
+        $member_lists_main = array();
+        $new_member_list_id = '';
+        $i = -1;
+        foreach ($fetch_group_wise_member_list as $list) {
+            if($list['user_info']['id'] != $new_member_list_id) {
+                $i++;
+                $member_lists_main[$i]['user_info'] = $list['user_info'];
+                $new_member_list_id = $list['user_info']['id'];
+            }
+            else {
+                $member_lists_main[$i]['user_info'] = $list['user_info'];
+            }
+        }
+        return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_member_list', $member_lists_main)->with('group_id', $group_id)->with('group_info', $group_info);
     }
 
-    public function feedback_submit (Request $request) {
+    public function feedback_submit(Request $request) {
         $group_id = base64_decode($request->group_id);
         $message = $request->feedback_msg;
 
@@ -502,30 +510,30 @@ class GroupController extends Controller
         }
     }
 
-    public function delete_post (Request $request){
+    public function delete_post(Request $request) {
         $post_id = $request->post_id;
 
         $delete = QuickPost::find($post_id);
         $delete->current_status = 5;
-        if($delete->save()) {
+        if ($delete->save()) {
             echo 1;
             exit();
         }
     }
 
-    public function edit_post(Request $request){
+    public function edit_post(Request $request) {
         $post_id = $request->post_id;
 
         $fetch_details_of_group_post = QuickPost::where([['id',$post_id],['current_status','1']])->get()->toArray();
 
-        if(empty($fetch_details_of_group_post)){
+        if (empty($fetch_details_of_group_post)) {
             return redirect('/group/dashboard/'.base64_encode($group_id));
-        }else{
+        } else {
             return response()->json(['fetch_details_of_group_post'=>$fetch_details_of_group_post]);
         }
     }
 
-    public function check_user (Request $request){
+    public function check_user(Request $request) {
         $group_id = $request->group_id;
         
         $user_array = array();
@@ -541,7 +549,7 @@ class GroupController extends Controller
         }])->get()->toArray();
 
         foreach ($user_list as $key => $value) {
-            if(count($value['invitations']) <= 0) {
+            if (count($value['invitations']) <= 0) {
                 $user_array[] = array('user_id' => $value['id'], 'first_name' => $value['first_name'], 'last_name' => $value['last_name']);
             }
         }
@@ -565,10 +573,9 @@ class GroupController extends Controller
 
         $notes = $request->notes;
 
-        for($i = 0; $i<count($user_ids); $i++){
+        for ($i = 0; $i<count($user_ids); $i++) {
             $if_allready_exit = Invitation::where([['group_id',$group_id],['user_id',$user_ids[$i]],['status','=','1']])->get()->toArray();
-
-            if(count($if_allready_exit) == 0){
+            if (count($if_allready_exit) == 0) {
                 $add = new Invitation();
                 $add->group_id = $group_id;
                 $add->user_id = $user_ids[$i];
@@ -585,16 +592,15 @@ class GroupController extends Controller
             echo 1;
             exit();
         }
-
     }
 
-    public function join_group_request ($invitation_id) {
+    public function join_group_request($invitation_id) {
         $details = \App\Invitation::with('groups')->where([['id',$invitation_id],['status','=','2'],['user_id','=',Auth::guard('crypto')->user()->id]])
         ->orderby('id','desc')
         ->get()
         ->toArray();
 
-        if(!empty($details)){
+        if (!empty($details)) {
             $id = $details[0]['id'];
             $edit = Invitation::find($id);
             $edit->read_status = 0;
@@ -608,11 +614,9 @@ class GroupController extends Controller
                 $details['sent_invitation_user_name'] = $sent_invitation_user_name;
             }
             return view('frontend.group.groups_invitation_list')->with('details_array', $details);
-        }else{
+        } else {
             return redirect('/group');
         }
-
-        
     }
 
     public function group_invitation_accept (Request $request,$invitation_id) {
@@ -635,7 +639,7 @@ class GroupController extends Controller
         }
     }
 
-    public function leave_group (Request $request) {
+    public function leave_group(Request $request) {
         $group_id = $request->group_id;
         $notes = $request->notes;
         $user_id = Auth::guard('crypto')->user()->id;
@@ -645,7 +649,7 @@ class GroupController extends Controller
         $leave_group = Invitation::find($fetch_group_details[0]['id']);
         $leave_group->status = 6;
 
-        if($leave_group->save()){
+        if ($leave_group->save()) {
             echo 1;
             exit;
         }
