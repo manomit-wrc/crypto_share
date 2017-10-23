@@ -1,17 +1,28 @@
 @extends('dashboard_layout')
 @section('content')
 <style type="text/css">
-	.carousel-inner.onebyone-carosel { margin: auto; width: 90%; }
+	/*.carousel-inner.onebyone-carosel { margin: auto; width: 90%; }
 	.onebyone-carosel .active.left { left: -33.33%; }
 	.onebyone-carosel .active.right { left: 33.33%; }
 	.onebyone-carosel .next { left: 33.33%; }
-	.onebyone-carosel .prev { left: -33.33%; }
+	.onebyone-carosel .prev { left: -33.33%; }*/
 	.widget-stats .stats-info p { font-size: 20px; }
 	.error { text-align: left; }
+	#carousel {
+        height:153px;
+        position:relative;
+        clear:both;
+        overflow:hidden;
+        background:#FFF;
+	}
+	#carousel img {
+        visibility:hidden; /* hide images until carousel can handle them */
+        cursor:pointer; /* otherwise it's not as obvious items can be clicked */
+  	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function () {
-	    $('#myCarousel').carousel({
+	    /*$('#myCarousel').carousel({
 	        interval: 10000
 	    })
 	    $('.fdi-Carousel .item').each(function () {
@@ -27,7 +38,26 @@
 	        else {
 	            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
 	        }
-	    });
+	    });*/
+
+	    var carousel = $("#carousel").waterwheelCarousel({
+			flankingItems: 3,
+			movingToCenter: function ($item) {
+				$('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movedToCenter: function ($item) {
+				$('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movingFromCenter: function ($item) {
+				$('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
+			},
+			movedFromCenter: function ($item) {
+				$('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
+			},
+			clickedCenter: function ($item) {
+				$('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
+			}
+		});
 	});
 </script>
 <div id="content" class="content">
@@ -42,7 +72,7 @@
 			@if(count($fetch_latest_post_image) > 0)
 				<div class="span12">
 	                <div class="well">
-	                    <div id="myCarousel" class="carousel fdi-Carousel slide">
+	                    <?php /* ?> <div id="myCarousel" class="carousel fdi-Carousel slide">
 							<!-- Carousel items -->
 	                        <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
 	                            <div class="carousel-inner onebyone-carosel">
@@ -66,7 +96,12 @@
 	                            @endif
 	                        </div>
 	                        <!--/carousel-inner-->
-	                    </div><!--/myCarousel-->
+	                    </div><!--/myCarousel--> <?php */ ?>
+	                    <div id="carousel">
+	                    	@foreach($fetch_latest_post_image as $key => $value)
+								<img class="img-responsive" src="{{ url('/upload/quick_post/resize/'.$value['post_image'])}}" alt="" />
+							@endforeach
+						</div>
 	                </div><!--/well-->
 	            </div>
             @endif
@@ -269,8 +304,8 @@
 			                            <td><img class="" width="50" height="50" src="https://www.cryptocompare.com{{$value['coinlists']['image_url']}}" alt="{{$value['coinlists']['coin_name']}}"><br />{{$value['coinlists']['coin_name']}}</td>
 			                            <td style="text-align: center;">@if($value['transaction_type'] == 1) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-anchor fa-2x"></i></a> @elseif($value['transaction_type'] == 2) <a title="Click here to view more details" href="/#details-{{$value['id']}}" data-toggle="modal"><i class="fa fa-handshake-o fa-2x"></i></a> @else <i class="fa fa-eye fa-2x"></i> @endif</td>
 			                            <td>{{$value['user_info']['first_name']}} {{$value['user_info']['last_name']}}</td>
-			                            <td style="text-align: right;">{{$value['chip_value']}}</td>
-			                            <td style="text-align: right;">{{$value['current_price']}}</td>
+			                            <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['chip_value']}}@endif</td>
+			                            <td style="text-align: right;">@if($value['transaction_type'] != 3) {{$value['current_price']}}@endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_1']}} @endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_2']}} @endif</td>
 			                            <td>@if ($value['transaction_type'] == 2) {{$value['target_3']}} @endif</td>
