@@ -209,7 +209,7 @@
 	<div class="row">
 		<!-- begin col-8 -->
 		<div class="col-md-8">
-			<div class="panel panel-inverse" data-sortable-id="index-2">
+			<div class="panel panel-inverse" data-sortable-id="index-20">
 				<div class="panel-heading">
 					<h4 class="panel-title">Group Activities</h4>
 				</div>
@@ -277,7 +277,7 @@
 			</div>
 
 			{{-- //coin list view --}}
-			<div class="panel panel-inverse" data-sortable-id="index-1">
+			<div class="panel panel-inverse" data-sortable-id="index-21">
 				<div class="panel-heading">
 	                <h4 class="panel-title">Recent Transactions</h4>
 	            </div>
@@ -373,14 +373,14 @@
 			{{-- //end --}}
 
 			<div class="latest">
-				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
+				<ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-30">
 					<li class="active"><a href="#latest-post" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i> <span class="hidden-xs">Latest Post</span></a></li>
 
 					<li class=""><a href="#pinned_post" data-toggle="tab"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <span class="hidden-xs">Pinned Post</span></a></li>
 
 					<!-- <li class=""><a href="#chat" data-toggle="tab"><i class="fa fa-comments" aria-hidden="true"></i> <span class="hidden-xs">Chat</span></a></li> -->
 				</ul>
-				<div class="tab-content" data-sortable-id="index-3">
+				<div class="tab-content" data-sortable-id="index-4">
 					<div class="tab-pane fade active in" id="latest-post">
 						<div class="height-sm" data-scrollbar="true">
 							<ul class="media-list media-list-with-divider">
@@ -454,7 +454,7 @@
 				@if($fetch_group_details && $fetch_group_details['activity_status'] == 1)
 					<div class="post">
 						@if($group_status && $group_status[0]['status'] == "1")
-							<div class="panel panel-inverse" data-sortable-id="index-8">
+							<div class="panel panel-inverse" data-sortable-id="index-80">
 								<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 									{{ csrf_field() }}
 					                <div class="panel-heading">
@@ -512,7 +512,7 @@
 		        @endif
 		    @else
 		    	<div class="post">
-					<div class="panel panel-inverse" data-sortable-id="index-8">
+					<div class="panel panel-inverse" data-sortable-id="index-81">
 						<form name="quick_post_form" id="quick_post_form" method="post" action="/group/quick_post_submit/{{$group_id}}" enctype="multipart/form-data">
 							{{ csrf_field() }}
 			                <div class="panel-heading">
@@ -561,7 +561,7 @@
 		<!-- end col-8 -->
 		<!-- begin col-4 -->
 		<div class="col-md-4">
-			<div class="panel panel-inverse" data-sortable-id="index-4">
+			<div class="panel panel-inverse" data-sortable-id="index-5">
 				<div class="panel-heading">
 					<h4 class="panel-title">Analytics Details</h4>
 				</div>
@@ -610,7 +610,7 @@
 				</div>
 			</div>
 
-			<div class="panel panel-inverse" data-sortable-id="index-4">
+			<div class="panel panel-inverse" data-sortable-id="index-6">
 				<div class="panel-heading">
 					<h4 class="panel-title"><i class="fa fa-comments"></i> Chat</h4>
 				</div>
