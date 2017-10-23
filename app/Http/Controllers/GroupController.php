@@ -477,6 +477,16 @@ class GroupController extends Controller
         return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
     }
 
+    public function group_members($group_id) {
+        $group_id = base64_decode($group_id);
+        $group_info = Group::find($group_id)->toArray();
+        $fetch_group_wise_member_list = UserCoin::with('userInfo')->where([['group_id', '=', $group_id],['status', '=', 1]])->get()->toArray();
+        echo "<pre>";
+        print_r($fetch_group_wise_member_list); exit;
+        //$fetch_group_wise_coin_list = UserCoin::with('coinlists','userInfo')->where([['group_id', '=', $group_id],['status', '=', 1]])->get()->toArray();
+        return view('frontend.transaction_group_wise_listings')->with('fetch_group_wise_coin_list', $fetch_group_wise_coin_list)->with('group_id', $group_id)->with('group_info', $group_info);
+    }
+
     public function feedback_submit (Request $request) {
         $group_id = base64_decode($request->group_id);
         $message = $request->feedback_msg;
@@ -530,8 +540,6 @@ class GroupController extends Controller
         ]);
         }])->get()->toArray();
 
-
-        
         foreach ($user_list as $key => $value) {
             if(count($value['invitations']) <= 0) {
                 $user_array[] = array('user_id' => $value['id'], 'first_name' => $value['first_name'], 'last_name' => $value['last_name']);

@@ -228,6 +228,13 @@
           $("#register").modal('show');
           $("#login").modal('hide');
         });
+
+        $(document).keyup(function(e) {
+          if (e.keyCode === 27) {
+            $("#login").modal('hide');
+            $("#register").modal('hide');
+          }
+        });
     });  
   </script>
 </body>
